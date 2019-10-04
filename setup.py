@@ -26,4 +26,5 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     license="WTFPL",
+    install_requires=['requests']
 )
