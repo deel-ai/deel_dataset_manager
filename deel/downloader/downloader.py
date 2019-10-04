@@ -20,11 +20,13 @@ except ImportError:
 
 def download_progress(file_name, url):
     print("Downloading %s from %s" % (file_name, url))
-    
+
     with open(file_name, 'wb') as f:
-        response = requests.get(url, stream=True, verify=False, auth=("deel-datasets", "e]{qE/Pc65z\'Nt?zLe-cK!_y?6f6"))
+        print(url)
+        response = requests.get(url, stream=True, verify=True,
+                                auth=("deel-datasets", "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"))
         total_length = response.headers.get('content-length')
-        
+
         if total_length is None: # no content length header
             f.write(response.content)
         else:
@@ -34,7 +36,7 @@ def download_progress(file_name, url):
                 dl += len(data)
                 f.write(data)
                 done = int(50 * dl / total_length)
-                sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
+                sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )
                 sys.stdout.flush()
 
 def download(file_name, url, forceDownload):
@@ -53,14 +55,14 @@ def download(file_name, url, forceDownload):
 def removeArchiveAndExtracted(datasetFolder, archiveName):
     localArchivePath = os.path.join(datasetFolder, archiveName)
     localArchivePathExtracted = localArchivePath + "_extracted"
-    
+
     if (os.path.exists(localArchivePath)):
         os.remove(localArchivePath)
     if (os.path.exists(localArchivePathExtracted)):
         shutil.rmtree(localArchivePathExtracted)
 
 def downloadDataset(datasetName, urlList, forceDownload=False):
-    datasetFolder = os.path.expanduser(os.path.join(DEEL_BASE_DIR, datasetName))    
+    datasetFolder = os.path.expanduser(os.path.join(DEEL_BASE_DIR, datasetName))
     os.makedirs(datasetFolder, exist_ok=True)
     pathExtracted = []
 
