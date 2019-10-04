@@ -1,20 +1,29 @@
 This project aims to ease the installation of DEEL's datasets.
 
-# Install
-NOTE : You need to have ssh key correctly setuped with forge.deel.ai
+# Installation
 
->  pip install git+ssh://git@forge.deel.ai:22012/bertrand.cayssiols/deel_dataset_manager.git
+```
+pip install git+ssh://git@forge.deel.ai:22012/bertrand.cayssiols/deel_dataset_manager.git
+```
 
-# How To Use:
+**Important:** You need correctly setup SSH keys on
+[https://forge.deel.ai](https://forge.deel.ai).
 
-## Exemple for blink dataset in pytorch
 
->  import deel.datasets.blink.pytorch as dataset
->  
->  myDataset = dataset.load()
+# Usage
 
-## Exemple for generic dataset, just download and decompress
+## Exemple for the blink dataset using pytorch
 
->  import deel.datasets.base as dataset
->  
->  myDataset = dataset.load("test")
+```
+import deel.datasets.blink.pytorch as dataset
+
+dataset = dataset.load()
+```
+
+## Exemple for generic dataset (download and decompress)
+
+```
+import deel.datasets.base as dataset
+
+dataset = dataset.load('test')
+```
