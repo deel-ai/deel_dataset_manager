@@ -5,11 +5,13 @@ import argparse
 import gzip
 import zipfile
 import os
+import requests
 import sys
 import shutil
 
-import requests
-DEEL_BASE_DIR = os.path.join(os.getenv("HOME"), ".deeldataset")
+from pathlib import Path
+
+DEEL_BASE_DIR = str(Path.home().joinpath('.deeldataset'))
 
 try:
     from urllib.error import URLError
