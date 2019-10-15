@@ -36,6 +36,7 @@ setup(
 
     # Requirements:
     install_requires=[
-        'requests==2.22.0'
+        'requests==2.22.0',
+        'h5py'
     ]
 )
