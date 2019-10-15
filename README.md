@@ -3,7 +3,7 @@ This project aims to ease the installation of DEEL's datasets.
 # Installation
 
 ```
-pip install git+ssh://git@forge.deel.ai:22012/bertrand.cayssiols/deel_dataset_manager.git
+pip install git+ssh://git@forge.deel.ai:22012/devops/deel_dataset_manager.git
 ```
 
 **Important:** You need correctly setup SSH keys on
