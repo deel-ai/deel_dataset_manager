@@ -99,11 +99,8 @@ def unzip(zipped_path, archiveName, quiet=False):
                 if not quiet:
                     print('Unzipped {} ...'.format(zipped_path))
 
-    elif (compressionType == "csv"):
-        os.makedirs(unzipped_path)
-        shutil.copyfile(zipped_path, os.path.join(unzipped_path, archiveName))
-
     else:
-        raise RuntimeError('Format <%s> not supported for decompression !' % compressionType)
+        os.makedirs(unzipped_path)
+        shutil.move(zipped_path, os.path.join(unzipped_path, archiveName))
 
     return unzipped_path
