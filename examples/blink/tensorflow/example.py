@@ -1,7 +1,3 @@
-from os import path
-from pathlib import Path
-import glob
-
 from model import Model
 import deel.datasets.blink.tensorflow as dataset
 
