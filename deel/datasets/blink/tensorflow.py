@@ -78,7 +78,6 @@ class TensorflowData:
       '''A transformation function to preprocess raw data into trainable input. '''
       x = self.__resize_image(image, self._IMAGE_SHAPE)
       y = tf.one_hot(tf.cast(label, tf.uint8), self._NUM_CLASSES)
-      print(y)
 
       return x, y
 

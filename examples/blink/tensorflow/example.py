@@ -14,8 +14,6 @@ if __name__ == '__main__':
     #aModel.load(name="yolo")
 
     print(label_names)
-    _DEELDATASET_BASE_DIR = str(Path.home().joinpath('.deeldataset'))
-
     # Prediction on 1 image
     img_path = x_test[0]
     pred_index = aModel.predict(img_path)
