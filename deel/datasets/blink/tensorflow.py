@@ -4,7 +4,6 @@ from deel.datasets.blink.blink_dataset import DatasetBlink
 import tensorflow as tf
 import random
 import numpy as np
-import cv2
 
 def load(forceDownload=False, percent_train=40, percent_val=40, image_shape=(64,64,3)):
   # Download Part
