@@ -12,13 +12,21 @@ pip install git+ssh://git@forge.deel.ai:22012/devops/deel_dataset_manager.git
 
 # Usage
 
-## Exemple for the blink dataset using pytorch
+## Exemple for the blink dataset using tensorflow
 
 ```
-import deel.datasets.blink.pytorch as dataset
-
-dataset = dataset.load()
+git clone https://forge.deel.ai/DevOps/deel_dataset_manager.git
+cd deel_dataset_manager/examples/blink/tensorflow
+python example.py
 ```
+This example is running following steps :
+- download dataset
+- decompress dataset
+- parse dataset 
+- run a training
+- save the builded model
+- execute some predictions
+
 
 ## Exemple for generic dataset (download and decompress)
 
