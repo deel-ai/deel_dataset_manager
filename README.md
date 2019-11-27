@@ -15,6 +15,12 @@ pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 # Usage
 
 ## Exemple for the blink dataset using tensorflow
+>NOTES :  
+    - Tensorflow 2 required  
+    - Number of epoch is set to 1 : do not expect a good prediction :)  
+&nbsp;&nbsp;&rarr; epochs set to 30 starts to have :  
+&nbsp;&nbsp;&nbsp;&nbsp;- 95% of accurracy on train dataset  
+&nbsp;&nbsp;&nbsp;&nbsp;- 90% of accurracy on valid dataset
 
 ```
 git clone https://forge.deel.ai/DevOps/deel_dataset_manager.git
@@ -31,9 +37,4 @@ This example is running following steps :
 - run a training
 - save the builded model
 - execute some predictions  
->NOTES :  
-    - Tensorflow 2 required  
-    - Number of epoch is set to 1 : do not expect a good prediction :)  
-&nbsp;&nbsp;&rarr; epochs set to 30 starts to have :  
-&nbsp;&nbsp;&nbsp;&nbsp;- 95% of accurracy on train dataset  
-&nbsp;&nbsp;&nbsp;&nbsp;- 90% of accurracy on valid dataset
+
