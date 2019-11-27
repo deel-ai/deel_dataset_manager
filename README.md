@@ -25,7 +25,7 @@ pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 ```
 git clone https://forge.deel.ai/DevOps/deel_dataset_manager.git
 or
-ssh://git@forge.deel.ai:22012/DevOps/deel_dataset_manager.git
+git clone ssh://git@forge.deel.ai:22012/DevOps/deel_dataset_manager.git
 
 cd deel_dataset_manager/examples/blink/tensorflow
 python example.py
