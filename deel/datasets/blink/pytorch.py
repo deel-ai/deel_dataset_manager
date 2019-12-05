@@ -1,9 +1,19 @@
-import torchvision
-import os
-from deel.datasets.blink.blink_dataset import DatasetBlink
+# -*- encoding: utf-8 -*-
 
-def load(forceDownload=False):
-    deelDataset = DatasetBlink()
-    deelDataset.load(forceDownload)
-    dataset = torchvision.datasets.ImageFolder(os.path.join(deelDataset.unzippedPaths[0], "final_db_anonymous"))
-    return dataset
+from torchvision.datasets import ImageFolder
+
+from . import BlinkDataset
+
+
+def load(version: str = "latest", force_update: bool = False) -> ImageFolder:
+    """ Load the blink dataset and returns a corresponding torch wrapper.
+
+    Args:
+        version: Version of the dataset.
+        settings: The settings to use for this dataset, or `None` to use the
+        default settings.
+
+    Returns:
+        A `ImageFolder` object for the blink dataset.
+    """
+    return ImageFolder(BlinkDataset(version).load(force_update))
