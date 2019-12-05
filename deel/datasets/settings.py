@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 # Name of the environment variable containing the path to
 # the settings:
-ENV_DEFAULT_FILE: str = "DEEL_DATASETS_CONF"
+ENV_DEFAULT_FILE: str = "DEEL_CONFIGURATION_FILE"
 
 # Default location for the settings file:
 DEFAULT_FILE_LOCATION: Path = Path(
