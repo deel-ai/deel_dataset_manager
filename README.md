@@ -85,3 +85,41 @@ fetch data from the specified `storage`.
 
 When using the `webdav` provider, the `storage` parameter indicates where the datasets
 should be stored locally.
+
+
+## Contributing
+
+The first step for contributing is to open
+[a new issue](https://forge.deel.ai/DevOps/deel_dataset_manager/issues/new).
+
+You then need to fork this repository, or create a dedicated branch if you have
+sufficient privileges.
+Once you are done, you can open a merge request for your changes to be integrated
+in this repository.
+
+### Environment
+
+In order to locally run the test suite, you need a proper `tox` installation:
+
+```bash
+# You should install tox globally on your system, not on a dedicated
+# environment:
+pip install tox
+```
+
+You can install the development dependencies by running the following
+command within the repository:
+
+```bash
+# You should do this in a dedicated virtual environment:
+pip install -e .[dev]
+```
+
+This will install the required linters (`black`, `flake8`, `mypy`) and the
+unit test library `pytest`.
+
+Once you are done, you can run `tox` to check that your code is correct:
+
+```
+tox
+```
