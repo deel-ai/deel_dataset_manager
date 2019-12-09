@@ -25,7 +25,7 @@ class TensorflowData:
         self._classes = [
             c.name
             for c in self._path.iterdir()
-            if c.suffix != ".csv" and c.name != "warmings"
+            if c.suffix != ".csv" and c.name != "warnings"
         ]
         self._classes.sort()
 

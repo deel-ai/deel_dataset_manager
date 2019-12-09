@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+import numpy as np
 import pathlib
 import typing
 
@@ -30,6 +31,7 @@ def load(
     framework: typing.Optional[str] = None,
     version: str = "latest",
     force_update: bool = False,
+    image_shape: typing.Tuple[int, int, int] = (64, 64, 3),
 ) -> typing.Any:
     """ Load the blink dataset in the queried format.
 
@@ -37,6 +39,7 @@ def load(
         framework: Framework to use ("pytorch" or "tensorflow").
         version: Version of the dataset.
         force_update: Force update of the local dataset if possible.
+        image_shape: Shape of the image (3-tuple) in the dataset.
 
     Returns:
         The blink dataset in the format specified by `framework`.
@@ -45,15 +48,18 @@ def load(
         ValueError: If the `framework` is invalid.
     """
 
-    # No framework, load the dataset from the HDF5 file as numpy arrays
+    # Pytorch:
     if framework in ["pytorch", "torch"]:
         from .pytorch import load as load_pytorch
 
         return load_pytorch(version=version, force_update=force_update)
+    # Tensorflow:
     elif framework == "tensorflow":
         from .tensorflow import load as load_tensorflow
 
-        return load_tensorflow(version=version, force_update=force_update)
+        return load_tensorflow(
+            version=version, force_update=force_update, image_shape=image_shape
+        )
 
     else:
         raise ValueError(

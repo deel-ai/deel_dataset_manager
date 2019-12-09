@@ -25,7 +25,7 @@ pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 Each DEEL dataset has its own structure (e.g., `tensorflow`, `pytorch`, etc.). To load
 a dataset, you can simply do:
 
-```
+```python
 import deel.datasets
 
 # Load the raw data from the landcover dataset:
@@ -58,7 +58,7 @@ can be used to specify the location of the configuration file).
 
 The configuration file is a YAML file:
 
-```
+```yaml
 # Version of the configuration (currently 1):
 version: 1
 
