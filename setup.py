@@ -37,7 +37,5 @@ setup(
     license="WTFPL",
     # Requirements:
     install_requires=["requests==2.22.0", "webdavclient3", "tqdm", "h5py", "pyyaml"],
-    extra_requires={
-        "dev": dev_requires
-    }
+    extra_requires={"dev": dev_requires},
 )
