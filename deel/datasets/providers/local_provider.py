@@ -32,7 +32,7 @@ class LocalProvider(Provider):
         Returns:
             A path to the root folder for the given dataset name.
         """
-        return self._root_folder.joinpath(name)
+        return self._root_folder.joinpath(name, version)
 
     def get_folder(
         self, name: str, version: str = "latest", force_update: bool = False

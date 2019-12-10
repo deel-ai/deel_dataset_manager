@@ -1,16 +1,14 @@
 # -*- encoding: utf-8 -*-
 
-import logging
 import os
 import typing
 import yaml
 
 from pathlib import Path
 
+from . import logger
 from .providers import make_provider, Provider
 
-# Logger for settings:
-logger = logging.getLogger(__name__)
 
 # Name of the environment variable containing the path to
 # the settings:
@@ -51,7 +49,7 @@ class Settings(object):
     }
 
     # The root folder containing the datasets:
-    _base: Path = Path.home().joinpath(".deel", "datasets")
+    _base: Path
 
     def __init__(self, io: typing.Optional[typing.TextIO] = None):
         """
@@ -70,13 +68,42 @@ class Settings(object):
 
         # Retrieve the provider:
         if "provider" in data:
-            self._provider_type = data["provider"]["type"]
-            self._provider_options = data["provider"]
-            del self._provider_options["type"]
+            if isinstance(data["provider"], dict):
+                self._provider_type = data["provider"]["type"]
+                self._provider_options = data["provider"]
+                del self._provider_options["type"]
+            else:
+                self._provider_type = data["provider"]
+                self._provider_options = {}
 
         # Retrieve the base folder:
         if "path" in data:
-            self._base = data["path"]
+            self._base = Path(data["path"])
+        else:
+            self._base = self._get_default_path(self._provider_type)
+
+    def _get_default_path(self, provider_type: str) -> Path:
+        """ Retrieve the default dataset root path for the given provider type.
+
+        Args:
+            provider_type: The type of provider to retrieve the path for.
+
+        Returns:
+            The default path for the given provider.
+        """
+
+        # Default path is $HOME/.deel/datasets
+        path = Path.home().joinpath(".deel", "datasets")
+
+        # For GCloud, we try to find the mount point:
+        if provider_type == "gcloud":
+            from ._gcloud_utils import find_gcloud_mount_path
+
+            gcloud_path = find_gcloud_mount_path()
+            if gcloud_path is not None:
+                path = gcloud_path
+
+        return path
 
     def make_provider(self) -> Provider:
         """ Creates and returns the provider corresponding to these settings.
@@ -85,6 +112,20 @@ class Settings(object):
             A new `Provider` created from these settings.
         """
         return make_provider(self._provider_type, self._base, self._provider_options)
+
+    def __repr__(self) -> str:
+        """ Output a basic representation of these settings.
+
+        Returns:
+            A basic representation of these settings.
+        """
+        return "{}(version={}, provider_type={}, provider_options={}, base={})".format(
+            self.__class__.__name__,
+            self._version,
+            self._provider_type,
+            self._provider_options,
+            self._base,
+        )
 
 
 def get_default_settings() -> Settings:
@@ -106,13 +147,19 @@ def get_default_settings() -> Settings:
                     DEFAULT_FILE_LOCATION
                 )
             )
-        else:
-            logger.warning(
-                (
-                    "[Deprecated] Missing deel.datasets settings file. "
-                    "Create a configuration file at {} or set the {} environment "
-                    "variable accordingly."
-                ).format(DEFAULT_FILE_LOCATION, ENV_DEFAULT_FILE)
-            )
+    else:
+        logger.warning(
+            (
+                "[Deprecated] Missing deel.datasets settings file. "
+                "Create a configuration file at {} or set the {} environment "
+                "variable accordingly."
+            ).format(DEFAULT_FILE_LOCATION, ENV_DEFAULT_FILE)
+        )
 
     return settings
+
+
+if __name__ == "__main__":
+    settings = get_default_settings()
+    print(settings)
+    print(settings.make_provider())
