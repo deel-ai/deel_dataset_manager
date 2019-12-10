@@ -37,6 +37,11 @@ def make_provider(
 
         return LocalProvider(root_path)
 
+    if provider_type == "gcloud":
+        from .gcloud_provider import GCloudProvider
+
+        return GCloudProvider(root_path)
+
     if provider_type == "webdav":
         from .webdav_provider import (
             WebDavProvider,

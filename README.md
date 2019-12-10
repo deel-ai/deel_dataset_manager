@@ -64,15 +64,46 @@ version: 1
 
 # Provider for the datasets:
 provider:
-    type: "webdav"
-    url: "https://datasets.deel.ai"
+    type: webdav
+    url: https://datasets.deel.ai
     auth:
         method: "simple"
         username: "deel-datasets"
         password: "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"
 
 # Local storage for the datasets:
-storage: /data/datasets
+path: /data/datasets
+```
+
+### GCloud configuration
+
+If you are using a GCloud virtual machine, you can avoid the download of the datasets
+by using the `deel-datasets` gcloud drive.
+
+You first need to attach the disk to your machine using the GCloud console, then run
+the following command to add a line to `/etc/fstab` (assuming you are using `bash` or
+a compliant shell):
+
+```
+echo UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-deel-datasets` /mnt/deel-datasets ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
+```
+
+You can then mount the drive:
+
+```
+sudo mount /mnt/deel-datasets
+```
+
+You only need to do this manually the first time. The disk will be mounted automatically on the next
+restart of the virtual machine.
+
+You then need to configure the package for GCloud. You can do so by creating a
+file under ``$HOME/.deel/config.yml` with the following content:
+
+```
+version: 1
+
+provider: gcloud
 ```
 
 ### Providers
@@ -81,9 +112,9 @@ Currently available providers are `webdav` and `local`. The `webdav` provider is
 default-one and will fetch datasets from a WebDAV server and needs at least the `url`
 configuration parameter (`auth` is not mandatory but required for the `https://datasets.deel.ai`
 server). The `local` provider does not require any extra configuration and will simply
-fetch data from the specified `storage`.
+fetch data from the specified `path`.
 
-When using the `webdav` provider, the `storage` parameter indicates where the datasets
+When using the `webdav` provider, the `path` parameter indicates where the datasets
 should be stored locally.
 
 

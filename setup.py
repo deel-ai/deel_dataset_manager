@@ -8,7 +8,7 @@ dev_requires = [
     "flake8-black",
     "mypy",
     "pytest",
-    "git+https://github.com/numpy/numpy-stubs.git",
+    "numpy-stubs @ git+https://github.com/numpy/numpy-stubs.git",
 ]
 
 setup(
@@ -36,6 +36,13 @@ setup(
     # License:
     license="WTFPL",
     # Requirements:
-    install_requires=["requests==2.22.0", "webdavclient3", "tqdm", "h5py", "pyyaml"],
-    extra_requires={"dev": dev_requires},
+    install_requires=[
+        "requests==2.22.0",
+        "webdavclient3",
+        "tqdm",
+        "h5py",
+        "pyyaml",
+        "psutil",
+    ],
+    extras_require={"dev": dev_requires},
 )
