@@ -14,7 +14,12 @@ from webdav3.client import Client
 from webdav3.urn import Urn
 
 from . import logger
-from .local_provider import LocalProvider, DatasetNotFoundError
+from .exceptions import (
+    DatasetNotFoundError,
+    VersionNotFoundError,
+    DatasetVersionNotFoundError,
+)
+from .local_provider import LocalProvider
 
 
 class WebDavAuthenticator(abc.ABC):
@@ -206,14 +211,12 @@ class WebDavProvider(LocalProvider):
         self, name: str, version: str = "latest", force_update: bool = False
     ) -> pathlib.Path:
 
-        # If download is not require, try to retrieve the local dataset:
-        if not force_update:
-
-            # Try to retrieve the local dataset (do nothing on except):
-            try:
-                return super().get_folder(name, version)
-            except DatasetNotFoundError:
-                pass
+        # Find the local path (if any):
+        local_path: typing.Optional[pathlib.Path] = None
+        try:
+            local_path = super().get_folder(name, version)
+        except DatasetNotFoundError:
+            pass
 
         # Create the WebDAV client:
         options = {"webdav_hostname": self._remote_url}
@@ -222,32 +225,66 @@ class WebDavProvider(LocalProvider):
             options["webdav_password"] = self._authenticator.password
         client = Client(options)
 
-        # Check that the remote dataset exists (must have a trailing /):
-        remote_dataset = name + "/" + version + "/"
-        if not client.check(remote_dataset):
-            raise DatasetNotFoundError(name, version)
+        # Remote dataset path (must have a trailing /):
+        remote_dataset = name + "/"
 
-        # Create the local folder if it does not exists:
-        local_folder = self._make_folder(name, version)
-        if local_folder.exists():
-            shutil.rmtree(local_folder)
-        local_folder.mkdir(parents=True, exist_ok=True)
+        # List of remote versions:
+        remote_versions: typing.List[str] = []
+
+        # Check the remote client and list the versions:
+        if client.check(remote_dataset):
+            remote_versions = [v.strip("/") for v in client.list(remote_dataset)]
+
+        # Check failed and we have no local version, we throw:
+        elif local_path is None:
+            raise DatasetNotFoundError(name)
+
+        # We find the best matching version (if the check failed on the
+        # the previous if, remote_versions is empty, and VersionNotFoundError
+        # will be thrown):
+        try:
+            remote_version = self.get_version(version, remote_versions)
+        except VersionNotFoundError:
+
+            # Remote version not found, and there is no local path, we throw:
+            if local_path is None:
+                raise DatasetVersionNotFoundError(name, version)
+
+            # Otherwize we warn user that dataset might be outdated, and return
+            # the local path:
+            logger.warning(
+                "Remote dataset not found, using local one, version might be outdated."
+            )
+            return local_path
+
+        # Create the local folder using the exact version:
+        local_exact_path = super()._make_folder(name, remote_version)
+
+        # If the local path is exact and a force update is not required,
+        # we simply return:
+        if local_path == local_exact_path and not force_update:
+            return local_path
+
+        if local_exact_path.exists():
+            shutil.rmtree(local_exact_path)
+        local_exact_path.mkdir(parents=True, exist_ok=True)
 
         # List the files in the remote folder:
-        files = client.list(remote_dataset)
+        remote_location = remote_dataset + remote_version + "/"
+        files = client.list(remote_location)
 
         # Download all the files and apply the modifier:
         for file in files:
 
             # The local file:
-            local_file = local_folder.joinpath(file)
+            local_file = local_exact_path.joinpath(file)
 
             # Download the file:
-            self._download_file(client, remote_dataset + file, local_file)
+            self._download_file(client, remote_location + file, local_file)
 
             # Apply the modifiers:
             for modifier in self.modifiers:
                 if modifier.accept(local_file):
                     modifier.apply(local_file)
 
-        return local_folder
+        return local_exact_path

@@ -16,8 +16,11 @@ ENV_DEFAULT_FILE: str = "DEEL_CONFIGURATION_FILE"
 
 # Default location for the settings file:
 DEFAULT_FILE_LOCATION: Path = Path(
-    os.getenv(ENV_DEFAULT_FILE, os.path.join(Path.home(), ".deel", "config.yml"))
+    os.getenv(ENV_DEFAULT_FILE, Path.home().joinpath(".deel", "config.yml"))
 )
+
+# Default datasets storage location:
+DEFAULT_DATASETS_PATH = Path.home().joinpath(".deel", "datasets")
 
 
 class Settings(object):
@@ -49,7 +52,7 @@ class Settings(object):
     }
 
     # The root folder containing the datasets:
-    _base: Path
+    _base: Path = DEFAULT_DATASETS_PATH
 
     def __init__(self, io: typing.Optional[typing.TextIO] = None):
         """
@@ -93,7 +96,7 @@ class Settings(object):
         """
 
         # Default path is $HOME/.deel/datasets
-        path = Path.home().joinpath(".deel", "datasets")
+        path = DEFAULT_DATASETS_PATH
 
         # For GCloud, we try to find the mount point:
         if provider_type == "gcloud":
