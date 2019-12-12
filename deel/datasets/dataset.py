@@ -1,18 +1,46 @@
 # -*- encoding: utf-8 -*-
 
-import abc
 import pathlib
 import typing
 
 from .settings import Settings, get_default_settings
 
 
-class Dataset(abc.ABC):
+class InvalidModeError(Exception):
+
+    """ Exception raised when a mode is not available for a
+    given dataset. """
+
+    def __init__(self, dataset: "Dataset", mode: str):
+        """
+        Args:
+            dataset: Dataset for which the mode is not available.
+            mode: Mode not available.
+        """
+        super().__init__(
+            "Mode {} not available for dataset {}.".format(mode, dataset.name)
+        )
+
+
+class Dataset(object):
 
     """
-    Dataset is the base class for all DEEL dataset. A `Dataset` object
-    is an abstract class that can be used to easily interface with the local
+    Dataset is the base class for all DEEL dataset and can be used as
+    a non-specific dataset handler.
+
+    A `Dataset` object can be extended to easily interface with the local
     file system to access datasets files using the `load` method.
+
+    A dataset can be loaded using different modes (see `available_modes`
+    and `default_mode`). Inheriting classes can add extra modes by providing
+    `_load_MODE` method and overriding `_default_mode`.
+
+    Example:
+        Basic usage of the `Dataset` class is via the `load` method.
+
+        >>> dataset = Dataset("blink")
+        >>> dataset.load()
+        PosixPath('/home/username/.deel/datasets/blink/3.0.1')
     """
 
     # Name and version of the dataset:
@@ -21,6 +49,12 @@ class Dataset(abc.ABC):
 
     # The settings to use:
     _settings: Settings
+
+    # The default mode:
+    _default_mode: str = "path"
+
+    # Indicates if this dataset consists of a single file:
+    _single_file: bool = False
 
     def __init__(
         self,
@@ -44,16 +78,89 @@ class Dataset(abc.ABC):
         else:
             self._settings = settings
 
-    def load(self, force_update: bool = False) -> pathlib.Path:
-        """ Load this dataset and the return the location of the
-        dataset.
+    @property
+    def name(self) -> str:
+        """ Returns: The name of the dataset. """
+        return self._name
 
-        Args:
-            force_update: Force update of the dataset if possible.
+    @property
+    def version(self) -> str:
+        """ Returns: The requested version of the dataset. """
+        return self._version
+
+    @property
+    def available_modes(self) -> typing.List[str]:
+        """ Retrieve the list of available modes for this dataset.
 
         Returns:
-            A path to the location of the local dataset.
+            The list of available modes for this dataset.
         """
-        return self._settings.make_provider().get_folder(
+        return [
+            fn.lstrip("load_")
+            for fn in dir(self)
+            if fn.startswith("load") and fn != "load" and callable(getattr(self, fn))
+        ]
+
+    @property
+    def default_mode(self) -> str:
+        """ Retrieve the default mode for this dataset.
+
+        Returns:
+            The default mode for this dataset.
+        """
+        return self._default_mode
+
+    def load_path(self, path: pathlib.Path) -> pathlib.Path:
+        """ Load method for path mode.
+
+        Args:
+            path: Path of the dataset.
+
+        Returns:
+            The actual path to the dataset.
+        """
+        return path
+
+    def load(
+        self, mode: typing.Optional[str] = None, force_update: bool = False, **kargs
+    ) -> typing.Any:
+        """ Load this dataset as specified by `mode`.
+
+        This method checks that the given `mode` is valid, retrieve the dataset
+        files using a `Provider` and then dispatches the actual loading of the
+        data to a `_load_MODE` method.
+
+        If this dataset consists of a single file as specified by `_single_file`,
+        the path used will be the one of this file, otherwize, the folder will
+        be used.
+
+        Args:
+            mode: Mode to load the dataset, or `None` to use the default mode.
+            force_update: Force update of the dataset if possible.
+            **kargs: Extra arguments for the specific mode.
+
+        Returns:
+            The dataset as specified by `mode` and the given extra arguments.
+
+        Raises:
+            InvalidModeError: If the given mode is not available for this dataset.
+        """
+
+        if mode is None:
+            mode = self.default_mode
+
+        if mode not in self.available_modes:
+            raise InvalidModeError(self, mode)
+
+        path = self._settings.make_provider().get_folder(
             self._name, self._version, force_update=force_update
         )
+
+        # If single file, retrieve the path to the first file:
+        if self._single_file:
+            path = next(path.iterdir())
+
+        # Retrieve the method:
+        load_fn = getattr(self, "load_" + mode)
+
+        return load_fn(path, **kargs)
