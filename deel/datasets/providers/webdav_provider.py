@@ -148,6 +148,9 @@ class WebDavProvider(LocalProvider):
     # Authenticator to use:
     _authenticator: typing.Optional[WebDavAuthenticator]
 
+    # The WebDAV client:
+    _client: Client
+
     # List of modifiers to apply to the files:
     modifiers: typing.List[WebDavFileModifier] = [
         WebDavZipExtractor(),
@@ -171,19 +174,23 @@ class WebDavProvider(LocalProvider):
         self._remote_url = remote_url
         self._authenticator = authenticator
 
-    def _download_file(
-        self, webdav_client: Client, remote_file: str, local_file: pathlib.Path
-    ):
+        # Create the WebDAV client:
+        options = {"webdav_hostname": self._remote_url}
+        if isinstance(self._authenticator, WebDavSimpleAuthenticator):
+            options["webdav_login"] = self._authenticator.username
+            options["webdav_password"] = self._authenticator.password
+        self._client = Client(options)
+
+    def _download_file(self, remote_file: str, local_file: pathlib.Path):
         """ Download the given file using the given client.
 
         Args:
-            webdav_client: Client to use to download the file.
             remote_file: Relative path to the remote file to download (without URL).
             local_file: Local path where the file should be downloaded.
         """
 
         # Retrieve information (size) of the file:
-        file_info = webdav_client.info(remote_file)
+        file_info = self._client.info(remote_file)
         file_size = int(file_info["size"])
 
         # The code below is taken from webdav3.Client.download_file, and is adapted
@@ -192,7 +199,7 @@ class WebDavProvider(LocalProvider):
 
         logger.info("Downloading {}... ".format(local_file))
         with open(local_file, "wb") as fp:
-            response = webdav_client.execute_request("download", urn.quote())
+            response = self._client.execute_request("download", urn.quote())
 
             # TODO: Remove logging if logger is disabled:
             pbar = tqdm(
@@ -207,6 +214,18 @@ class WebDavProvider(LocalProvider):
                 pbar.update(len(block))
             pbar.close()
 
+    def list_datasets(self) -> typing.List[str]:
+        return [name for name in self._client.list()]
+
+    def list_versions(self, dataset: str) -> typing.List[str]:
+
+        # Check that the dataset exists:
+        remote_path = dataset + "/"
+        if not self._client.check(remote_path):
+            raise DatasetNotFoundError(remote_path)
+
+        return [name for name in self._client.list(remote_path)]
+
     def get_folder(
         self, name: str, version: str = "latest", force_update: bool = False
     ) -> pathlib.Path:
@@ -218,13 +237,6 @@ class WebDavProvider(LocalProvider):
         except DatasetNotFoundError:
             pass
 
-        # Create the WebDAV client:
-        options = {"webdav_hostname": self._remote_url}
-        if isinstance(self._authenticator, WebDavSimpleAuthenticator):
-            options["webdav_login"] = self._authenticator.username
-            options["webdav_password"] = self._authenticator.password
-        client = Client(options)
-
         # Remote dataset path (must have a trailing /):
         remote_dataset = name + "/"
 
@@ -232,8 +244,8 @@ class WebDavProvider(LocalProvider):
         remote_versions: typing.List[str] = []
 
         # Check the remote client and list the versions:
-        if client.check(remote_dataset):
-            remote_versions = [v.strip("/") for v in client.list(remote_dataset)]
+        if self._client.check(remote_dataset):
+            remote_versions = [v.strip("/") for v in self._client.list(remote_dataset)]
 
         # Check failed and we have no local version, we throw:
         elif local_path is None:
@@ -271,7 +283,7 @@ class WebDavProvider(LocalProvider):
 
         # List the files in the remote folder:
         remote_location = remote_dataset + remote_version + "/"
-        files = client.list(remote_location)
+        files = self._client.list(remote_location)
 
         # Download all the files and apply the modifier:
         for file in files:
@@ -280,7 +292,7 @@ class WebDavProvider(LocalProvider):
             local_file = local_exact_path.joinpath(file)
 
             # Download the file:
-            self._download_file(client, remote_location + file, local_file)
+            self._download_file(remote_location + file, local_file)
 
             # Apply the modifiers:
             for modifier in self.modifiers:
