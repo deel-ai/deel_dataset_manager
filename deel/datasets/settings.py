@@ -23,6 +23,12 @@ DEFAULT_FILE_LOCATION: Path = Path(
 DEFAULT_DATASETS_PATH = Path.home().joinpath(".deel", "datasets")
 
 
+class ParseSettingsError(Exception):
+    """ Exception raised if an issue occurs while parsing the settings. """
+
+    pass
+
+
 class Settings(object):
 
     """ The `settings` class is a read-only class that contains
@@ -59,14 +65,22 @@ class Settings(object):
         Args:
             io: File-like object containing the configuration. If `None`,
             created a default configuration.
+
+        Raises:
+            yaml.YAMLError: If the given stream does not contain valid YAML.
+            ParseSettingsError: If the given YAML is not valid for settings.
         """
 
         if io is None:
             return
 
+        # We let the error propagate to distinguish between error in
+        # parsing YAML and error in constructing settings:
         data = yaml.safe_load(io)
 
         # Retrieve the version:
+        if "version" not in data:
+            raise ParseSettingsError("Missing version.")
         self._version = int(data["version"])
 
         # Retrieve the provider:
