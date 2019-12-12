@@ -14,7 +14,7 @@ from tensorflow.keras.layers import (
     MaxPooling2D,
 )
 
-import deel.datasets.blink.tensorflow as blink_tf
+from deel.datasets import load as load_dataset
 
 
 class Model:
@@ -144,8 +144,9 @@ class Model:
         return model
 
 
-train_set, valid_set, x_test, y_test, label_names = blink_tf.load(
-    percent_train=40, percent_val=40
+# Tensorflow is the default mode for blink so mode="tensorflow" is not required:
+train_set, valid_set, x_test, y_test, label_names = load_dataset(
+    "blink", mode="tensorflow", percent_train=40, percent_val=40
 )
 
 model = Model(train_set.element_spec[0].shape, len(label_names))

@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-import deel.datasets.landcover as landcover
+import deel.datasets as datasets
 
 
 # Load the dataset:
-patches, labels = landcover.load()
+patches, labels = datasets.load("landcover")
 print("Successfully loaded landcover dataset!")
 print(
     (
