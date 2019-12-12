@@ -59,6 +59,15 @@ class LocalProvider(Provider):
         """
         return [c.name for c in path.iterdir()]
 
+    def list_datasets(self) -> typing.List[str]:
+        return [c.name for c in self._root_folder.iterdir()]
+
+    def list_versions(self, dataset: str) -> typing.List[str]:
+        path = self._make_folder(dataset)
+        if not path.exists():
+            raise DatasetNotFoundError(dataset)
+        return self._list_version(path)
+
     def get_folder(
         self, name: str, version: str = "latest", force_update: bool = False
     ) -> pathlib.Path:

@@ -12,6 +12,27 @@ class Provider(abc.ABC):
     """ The `Provider` class is an abstract interface for classes
     that provides access to dataset storages. """
 
+    def list_datasets(self) -> typing.List[str]:
+        """ List the available datasets for this provider.
+
+        Returns:
+            The list of datasets available for this provider.
+        """
+        pass
+
+    def list_versions(self, dataset: str) -> typing.List[str]:
+        """ List the available versions of the given dataset for this
+        provider.
+
+        Returns:
+            The list of available versions of the given dataset for this
+            provider.
+
+        Raises:
+            DatasetNotFoundError: If the given dataset does not exist.
+        """
+        pass
+
     def get_version(self, version: str, versions: typing.List[str]) -> str:
         """ Retrieve the version from the list of `versions` that best match
         the given one.
