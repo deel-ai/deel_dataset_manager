@@ -154,20 +154,5 @@ class TensorflowData:
         return x
 
 
-def load(
-    version: str = "latest",
-    force_update: bool = False,
-    percent_train: int = 40,
-    percent_val: int = 40,
-    random_seed: int = 0,
-    image_shape: typing.Tuple[int, int, int] = (64, 64, 3),
-) -> typing.Tuple[
-    tf.data.Dataset,
-    tf.data.Dataset,
-    typing.List[pathlib.Path],
-    typing.List[int],
-    typing.List[str],
-]:
-    return TensorflowData(
-        BlinkDataset(version).load(force_update), random_seed
-    ).prepare(percent_train, percent_val, image_shape)
+def load(version: str = "latest", force_update: bool = False, **kargs):
+    return BlinkDataset(version).load("tensorflow", force_update=force_update, **kargs)

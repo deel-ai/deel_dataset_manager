@@ -16,4 +16,4 @@ def load(version: str = "latest", force_update: bool = False) -> ImageFolder:
     Returns:
         A `ImageFolder` object for the blink dataset.
     """
-    return ImageFolder(BlinkDataset(version).load(force_update))
+    return BlinkDataset(version).load(mode="pytorch", force_update=force_update)

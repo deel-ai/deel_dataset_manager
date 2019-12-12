@@ -11,6 +11,8 @@ class BlinkDataset(Dataset):
 
     """ Class for the blink dataset. """
 
+    _default_mode: str = "tensorflow"
+
     def __init__(
         self, version: str = "latest", settings: typing.Optional[Settings] = None
     ):
@@ -22,45 +24,40 @@ class BlinkDataset(Dataset):
         """
         super().__init__("blink", version, settings)
 
-    def load(self, force_update: bool = False) -> pathlib.Path:
-        return super().load(force_update=force_update).joinpath("final_db_anonymous")
+    def load_pytorch(self, path: pathlib.Path):
+        """ Load method for `pytorch` mode. """
+        from torchvision.datasets import ImageFolder
 
+        return ImageFolder(self.load_path(path))
 
-def load(
-    framework: typing.Optional[str] = None,
-    version: str = "latest",
-    force_update: bool = False,
-    image_shape: typing.Tuple[int, int, int] = (64, 64, 3),
-) -> typing.Any:
-    """ Load the blink dataset in the queried format.
+    def load_tensorflow(
+        self,
+        path: pathlib.Path,
+        percent_train: int = 40,
+        percent_val: int = 40,
+        random_seed: int = 0,
+        image_shape: typing.Tuple[int, int, int] = (64, 64, 3),
+    ):
+        """ Load method for the `tensorflow` mode.
 
-    Args:
-        framework: Framework to use ("pytorch" or "tensorflow").
-        version: Version of the dataset.
-        force_update: Force update of the local dataset if possible.
-        image_shape: Shape of the image (3-tuple) in the dataset.
+        Args:
+            percent_train: Percentage of training data ([0, 100]).
+            percent_val: Percentage of validation data ([0, 100]).
+            random_seed: Random seed to use to dispatch data.
+            image_shape: Shape of the generated image.
 
-    Returns:
-        The blink dataset in the format specified by `framework`.
+        Returns:
+            A tuple `(train, valildation, xtest, ytest, label_names)` where
+            `train` and `validation` are `tensorflow.data.Dataset`s corresponding
+            to training and validation data, `xtest` are the inputs for
+            test dataset (list of `Path`), `ytest` the labels, and `label_names`
+            the label names.
+        """
+        from .tensorflow import TensorflowData
 
-    Raises:
-        ValueError: If the `framework` is invalid.
-    """
-
-    # Pytorch:
-    if framework in ["pytorch", "torch"]:
-        from .pytorch import load as load_pytorch
-
-        return load_pytorch(version=version, force_update=force_update)
-    # Tensorflow:
-    elif framework == "tensorflow":
-        from .tensorflow import load as load_tensorflow
-
-        return load_tensorflow(
-            version=version, force_update=force_update, image_shape=image_shape
+        return TensorflowData(self.load_path(path), random_seed).prepare(
+            percent_train, percent_val, image_shape
         )
 
-    else:
-        raise ValueError(
-            "Framework '{}' not implemented for blink dataset.".format(framework)
-        )
+    def load_path(self, path: pathlib.Path) -> pathlib.Path:
+        return path.joinpath("final_db_anonymous")
