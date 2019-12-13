@@ -95,10 +95,13 @@ class Dataset(object):
         Returns:
             The list of available modes for this dataset.
         """
+        # We lookup all attributes of the class starting with load_,
+        # and we discard the ones that are not callable (even if there
+        # should not be any most of the time):
         return [
             fn.lstrip("load_")
             for fn in dir(self)
-            if fn.startswith("load") and fn != "load" and callable(getattr(self, fn))
+            if fn.startswith("load_") and callable(getattr(self, fn))
         ]
 
     @property

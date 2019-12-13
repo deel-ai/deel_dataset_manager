@@ -11,10 +11,10 @@ from ..settings import Settings
 class LandcoverDataset(Dataset):
 
     # Default (and only) mode:
-    _default_mode = "basic"
+    _default_mode: str = "basic"
 
     # Dataset consists of a single ".h5" file:
-    _single_file = True
+    _single_file: bool = True
 
     # Available keys:
     h5_keys: typing.List[str] = ["patches", "labels"]
