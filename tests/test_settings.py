@@ -1,27 +1,20 @@
 # -*- encoding: utf-8 -*-
 
 import io
+import pytest
 
 from pathlib import Path
 
-from deel.datasets.settings import Settings
+from deel.datasets.settings import read_settings, ParseSettingsError
 
 
 def test_constructor():
 
-    # Default constructor:
-    settings = Settings()
-    assert settings._version == Settings._version
-    assert settings._provider_type == Settings._provider_type
-    assert settings._provider_options == Settings._provider_options
-
     # Constructor without provider:
     yaml = """version: 1"""
-    settings = Settings(io.StringIO(yaml))
-    assert settings._version == 1
-    assert settings._provider_type == Settings._provider_type
-    assert settings._provider_options == Settings._provider_options
-    assert settings._base == Path.home().joinpath(".deel", "datasets")
+    with pytest.raises(ParseSettingsError) as ex:
+        settings = read_settings(io.StringIO(yaml))
+    assert "Missing provider." in str(ex.value)
 
     # Constructor with local provider:
     yaml = """version: 1
@@ -31,7 +24,7 @@ provider:
     type: local
 
 """
-    settings = Settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
     assert settings._version == 1
     assert settings._provider_type == "local"
     assert settings._provider_options == {}
@@ -45,7 +38,7 @@ provider:
     type: webdav
 
 """
-    settings = Settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
     assert settings._version == 1
     assert settings._provider_type == "webdav"
     assert settings._provider_options == {}
@@ -61,7 +54,7 @@ provider:
         username: "user"
         password: "pass"
 """
-    settings = Settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
     assert settings._version == 1
     assert settings._provider_type == "webdav"
     assert settings._provider_options == {
@@ -83,7 +76,7 @@ def test_gcloud_settings():
     yaml = """version: 1
 
 provider: gcloud"""
-    settings = Settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
     assert settings._base == Path("/mnt/deel-datasets")
@@ -93,7 +86,7 @@ provider: gcloud"""
 
 provider: gcloud
 path: /vol/deel-datasets"""
-    settings = Settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
     assert settings._base == Path("/vol/deel-datasets")
@@ -105,7 +98,7 @@ path: /vol/deel-datasets"""
     yaml = """version: 1
 
 provider: gcloud"""
-    settings = Settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
     assert settings._base == Path.home().joinpath(".deel", "datasets")
