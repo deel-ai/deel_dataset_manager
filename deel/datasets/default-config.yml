@@ -1,0 +1,11 @@
+# Version of the configuration (currently 1):
+version: 1
+
+# Provider for the datasets:
+provider:
+    type: webdav
+    url: https://datasets.deel.ai
+    auth:
+        method: "simple"
+        username: "deel-datasets"
+        password: "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"

@@ -190,28 +190,6 @@ def write_settings(settings: Settings, stream: TextIO, **kwargs):
     yaml.dump(data, stream, **kwargs)
 
 
-# Default settings if the config.yml file is not found:
-_DEFAULT_SETTINGS = Settings(
-    # Version not set (0):
-    version=0,
-    # Provider WebDAV by default:
-    provider_type="webdav",
-    # With the DEEL remote server:
-    provider_options={
-        # Authentication method:
-        "auth": {
-            "method": "simple",
-            "username": "deel-datasets",
-            "password": "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6",
-        },
-        # URL for the provider (if any):
-        "url": "https://datasets.deel.ai",
-    },
-    # The root folder containing the datasets:
-    path=DEFAULT_DATASETS_PATH,
-)
-
-
 def get_default_settings() -> Settings:
     """ Retrieve the default settings for the current machine.
 
@@ -219,26 +197,22 @@ def get_default_settings() -> Settings:
         The default settings for the current machine.
     """
 
-    settings: Settings = _DEFAULT_SETTINGS
+    file_location: Path = DEFAULT_FILE_LOCATION
 
-    if DEFAULT_FILE_LOCATION.exists():
-        try:
-            with open(DEFAULT_FILE_LOCATION, "r") as fp:
-                settings = read_settings(fp)
-        except Exception:
-            logger.warning(
-                "Failed to load deel.datasets settings from {}.".format(
-                    DEFAULT_FILE_LOCATION
-                )
-            )
-    else:
+    if not file_location.exists():
         logger.warning(
             (
-                "[Deprecated] Missing deel.datasets settings file. "
+                "[Deprecated] Missing deel.datasets user settings file. "
                 "Create a configuration file at {} or set the {} environment "
                 "variable accordingly."
             ).format(DEFAULT_FILE_LOCATION, ENV_DEFAULT_FILE)
         )
+
+        # We use the default location:
+        file_location = Path(__file__).parent.joinpath("default-config.yml")
+
+    with open(file_location, "r") as fp:
+        settings = read_settings(fp)
 
     return settings
 
