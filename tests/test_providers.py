@@ -2,9 +2,13 @@
 
 import pathlib
 import pytest
+import typing
 
 from deel.datasets.providers import make_provider, Provider
-from deel.datasets.providers.exceptions import VersionNotFoundError
+from deel.datasets.providers.exceptions import (
+    DatasetNotFoundError,
+    VersionNotFoundError,
+)
 
 from deel.datasets.providers.local_provider import LocalProvider
 from deel.datasets.providers.webdav_provider import (
@@ -16,8 +20,21 @@ from deel.datasets.providers.webdav_provider import (
 def test_get_version():
     """ Test the get_version  method. """
 
+    # Fake provider class:
+    class NoProvider(Provider):
+        def list_datasets(self) -> typing.List[str]:
+            return []
+
+        def list_versions(self, dataset: str) -> typing.List[str]:
+            return []
+
+        def get_folder(
+            self, name: str, version: str = "latest", force_update: bool = False
+        ) -> pathlib.Path:
+            raise DatasetNotFoundError("")
+
     # Fake provider:
-    provider = Provider()
+    provider = NoProvider()
 
     # Check latest:
     assert provider.get_version("latest", ["1.0.2", "1.0.3", "2.0.4"]) == "2.0.4"

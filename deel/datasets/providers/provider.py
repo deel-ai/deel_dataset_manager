@@ -12,6 +12,7 @@ class Provider(abc.ABC):
     """ The `Provider` class is an abstract interface for classes
     that provides access to dataset storages. """
 
+    @abc.abstractmethod
     def list_datasets(self) -> typing.List[str]:
         """ List the available datasets for this provider.
 
@@ -20,6 +21,7 @@ class Provider(abc.ABC):
         """
         pass
 
+    @abc.abstractmethod
     def list_versions(self, dataset: str) -> typing.List[str]:
         """ List the available versions of the given dataset for this
         provider.
@@ -88,6 +90,7 @@ class Provider(abc.ABC):
 
         return "{}.{}.{}".format(vu, vy, vz)
 
+    @abc.abstractmethod
     def get_folder(
         self, name: str, version: str = "latest", force_update: bool = False
     ) -> pathlib.Path:
