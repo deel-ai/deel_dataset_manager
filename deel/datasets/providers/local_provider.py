@@ -27,6 +27,11 @@ class LocalProvider(Provider):
         """
         self._root_folder = pathlib.Path(root_folder)
 
+    @property
+    def root_folder(self) -> pathlib.Path:
+        """ Returns: The local path to root folder for the datasets. """
+        return self._root_folder
+
     def _make_folder(
         self, name: str, version: typing.Optional[str] = None
     ) -> pathlib.Path:
