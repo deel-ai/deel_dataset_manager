@@ -2,6 +2,7 @@
 
 import os
 import pathlib
+import shutil
 import typing
 
 from .exceptions import (
@@ -72,6 +73,23 @@ class LocalProvider(Provider):
         if not path.exists():
             raise DatasetNotFoundError(dataset)
         return self._list_version(path)
+
+    def del_folder(self, name: str, version: str, keep_dataset: bool = False):
+        """ Delete the folder corresponding to the given dataset version.
+        If after deleting this dataset, there are no versions remaining,
+        the dataset folder is also removed, unless `keep_dataset` is `True`.
+
+        Args:
+            name: Name of the dataset to delete.
+            version: Version of the dataset to delete.
+            keep_dataset: `True` to not remove the dataset folder
+            when there are no remaining versions.
+        """
+        path = self._make_folder(name, version)
+        shutil.rmtree(path)
+
+        if not keep_dataset and not self.list_versions(name):
+            self._make_folder(name).rmdir()
 
     def get_folder(
         self, name: str, version: str = "latest", force_update: bool = False

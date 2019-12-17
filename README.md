@@ -179,6 +179,10 @@ blink-3.0.0-20191004.zip: 100%|████████████████�
 Dataset blink:3.0.0 stored at '/opt/datasets/blink/3.0.0'.
 ```
 
+- `remove NAME[:VERSION]` &mdash; Remove the specified dataset from the local storage (if
+  possible). If `:VERSION` is omitted, the whole dataset corresponding to `NAME` is
+  deleted. If the `--all` option is used, all datasets are removed from the local storage.
+
 ### Providers
 
 Currently available providers are `webdav`, `local` and `gcloud`.
