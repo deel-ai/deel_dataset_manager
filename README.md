@@ -3,7 +3,7 @@
 This project aims to ease the installation and usage of the datasets for the DEEL
 project.
 
-## Installation:
+## Installation
 
 You can install this package by using `pip`. If you have set-up SSH keys properly
 for [https://forge.deel.ai](https://forge.deel.ai), you can use the SSH version:
@@ -19,11 +19,18 @@ manually:
 pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 ```
 
+### Uninstalling
+
+To uninstall the package, simply run `pip uninstall`:
+
+```
+pip uninstall deel-datasets
+```
+
 
 ## Basic usage
 
-Each DEEL dataset has its own structure (e.g., `tensorflow`, `pytorch`, etc.). To load
-a dataset, you can simply do:
+To load a dataset, you can simply do:
 
 ```python
 import deel.datasets
@@ -31,11 +38,11 @@ import deel.datasets
 # Load the default mode of landcover dataset:
 landcover = deel.datasets.load("landcover")
 
-# Load the tensorflow version of the blink dataset:
-blink_tf = deel.datasets.load("blink", mode="tensorflow")
+# Load the tensorflow version of the blink dataset (default mode for blink):
+blink = deel.datasets.load("blink")
 
 # Load the pytorch version of the blink dataset:
-blink_torch = deel.datasets.load("blink", mode="pytorch")
+blink = deel.datasets.load("blink", mode="pytorch")
 ```
 
 The `deel.datasets.load` function is the basic entry to access the datasets.
@@ -47,7 +54,7 @@ dataset:
 import deel.datasets
 
 # Load the tensorflow version of the blink dataset:
-blink_tf = deel.datasets.load("blink", mode="tensorflow", percent_train=60)
+blink = deel.datasets.load("blink", mode="tensorflow", percent_train=60)
 ```
 
 The following files contain examples for the `blink` and `landcover` dataset:
@@ -57,15 +64,23 @@ The following files contain examples for the `blink` and `landcover` dataset:
 
 ## Configuration:
 
-While a configuration file is not strictly required for the moment, it is still recommended
-to create one.
-The configuration file specifies where the datasets should be downloaded from, or
+While a configuration file is not strictly required for the moment, it is still
+recommended to create one.
+The configuration file specifies how the datasets should be downloaded, or
 if the datasets do no have to be downloaded (e.g. on Google Cloud).
 
-The configuration file should be at `$HOME/.deel/config.yml` (the `DEEL_CONFIGURATION_FILE`
-can be used to specify the location of the configuration file).
+The configuration file should be at `$HOME/.deel/config.yml`:
 
-The configuration file is a simple YAML file:
+- On Windows system it is `C:\Users\$USERNAME\.deel\config.yml` unless you
+  have set the `HOME` environment variable.
+- The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
+  location of the configuration file if you do not want to use the default one.
+
+### Basic configuration
+
+The configuration file is a simple YAML file. Below is the default example for
+a WebDAV configuration using the standard `https://datasets.deel.ai` server
+for fetching datasets.
 
 ```yaml
 # Version of the configuration (currently 1):
@@ -73,8 +88,13 @@ version: 1
 
 # Provider for the datasets:
 provider:
+    # Possible types: webdav, local, gcloud
     type: webdav
+
+    # Only required for webdav currently
     url: https://datasets.deel.ai
+
+    # Only for webdav, not required:
     auth:
         method: "simple"
         username: "deel-datasets"
@@ -87,7 +107,17 @@ path: /home/username/.deel/datasets
 ### GCloud configuration
 
 If you are using a Google Cloud virtual machine, you can avoid downloading the datasets
-by mounting and using the `deel-datasets` gcloud drive.
+by mounting and using the `deel-datasets` gcloud drive (see below).
+This can be done by using the following (very simple) configuration (still at
+`$HOME/.deel/config.yml`):
+
+```yaml
+version: 1
+
+provider: gcloud
+```
+
+#### Accessing the `deel-datasets` on a Google Cloud virtual machine
 
 You first need to attach the disk to your machine using the Google Cloud console, then run
 the following command that add a line to `/etc/fstab` to ease the mount of the drive (this
@@ -103,16 +133,50 @@ You can then mount the drive:
 sudo mount /mnt/deel-datasets
 ```
 
-You only need to do this manually the first time. The disk will be automatically mounted on the
-next restarts of the virtual machine.
+**Note:** You only need to do this manually the first time. The disk will be automatically
+mounted on the next restarts of the virtual machine.
 
-You then need to configure the package for Google Cloud. You can do so by creating a
-file under `$HOME/.deel/config.yml` with the following content:
+### Command line utilities
 
-```yaml
-version: 1
+The `deel-datasets` package comes with some command line utilities that can be accessed using:
 
-provider: gcloud
+```
+python -m deel.datasets ARGS...
+```
+
+The `--help` option can be used to view the full capabilities of the command line program.
+By default, the program uses the configuration at `$HOME/.deel/config.yml`, but the `-c`
+argument can be used to specified a custom configuration file.
+
+The following commands are available (not exhaustive):
+
+- `list` &mdash; List the available datasets. If the configuration specify a remote provider
+  (e.g., WebDAV), this will list the datasets available remotely. To list the dataset already
+  downloaded, you can use the `--local` option.
+
+```bash
+$ python -m deel.datasets list
+Listing datasets at https://datasets.deel.ai:
+  blink: 3.0.1 [latest], 3.0.0
+  landcover: 1.0 [latest]
+  landcover-resolution: 1.0 [latest]
+$ python -m deel.datasets list --local
+Listing datasets at /opt/datasets:
+  blink: 3.0.1 [latest], 3.0.0
+  landcover: 1.0 [latest]
+  landcover-resolution: 1.0 [latest]
+```
+
+- `download NAME[:VERSION]` &mdash; Download the specified dataset. If the configuration
+  does not specify a remote provider, this does nothing except outputing some information.
+  The `:VERSION` can be omitted, in which case `:latest` is implied. To force the re-download
+  of a dataset, the `--force` option can be used.
+
+```bash
+$ python -m deel.datasets download blink:3.0.0
+Fetching blink:3.0.0...
+blink-3.0.0-20191004.zip: 100%|█████████████████████████████████████████| 122M/122M [00:03<00:00, 39.3Mbytes/s]
+Dataset blink:3.0.0 stored at '/opt/datasets/blink/3.0.0'.
 ```
 
 ### Providers
@@ -129,7 +193,6 @@ should be stored locally.
 
 The `gcloud` provider is similar to the `local` provider, except that it will try to
 locate the dataset storage location automatically based on the currently mounted drives.
-
 
 ## Contributing
 
@@ -150,8 +213,9 @@ on the `deel-datasets` gcloud-drive.
 
 #### 2. Create the interface
 
-The second step is to create the `python` interface. The `deel.datasets` package
-is written such that adding extra datasets should be quite easy.
+The second step is to create the `python` interface for the dataset.
+The `deel.datasets` package is written such that adding extra datasets should
+be quite easy.
 Assuming you want to add a `mock` dataset, you simply need to provide `MockDataset`
 class extending `Dataset` under `deel.datasets.mock`.
 Here is possible implementation of a `MockDataset` that consists of a single `.csv`
