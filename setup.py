@@ -13,11 +13,16 @@ dev_requires = [
 
 setup(
     # Name of the package:
-    name="deel-dataset",
+    name="deel-datasets",
     # Version of the package:
-    version="0.0.4",
+    version="0.0.5",
     # Find the package automatically (include everything):
     packages=find_packages(),
+    package_data={
+        "deel.datasets": [
+            "default-config.yml"
+        ]
+    },
     # Author information:
     author="DEEL",
     author_email="collaborateurs.du.projet.deel@irt-saintexupery.com",
