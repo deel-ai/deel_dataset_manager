@@ -2,19 +2,30 @@
 
 import importlib
 import logging
-import typing
+
+from typing import Any, Dict, List, Optional
 
 
 logger = logging.getLogger(__name__)
 
 
+# List of aliases module: [alias1, alias2, alias3, ...]. The name
+# of the module is always an alias.
+_aliases: Dict[str, List[str]] = {
+    "blink": ["blink"],
+    "landcover": ["landcover"],
+    "landcover.resolution": ["landcover.resolution", "landcover-resolution"],
+    "airbus.helicopter": ["helicopter", "vibration", "airbus-helicopter"],
+}
+
+
 def load(
     dataset: str,
-    mode: typing.Optional[str] = None,
+    mode: Optional[str] = None,
     version: str = "latest",
     force_update: bool = False,
     **kwargs
-) -> typing.Any:
+) -> Any:
 
     """ Load the given dataset using the given arguments.
 
@@ -33,6 +44,15 @@ def load(
     Raises:
         ValueError: If the `dataset` does not exist.
     """
+
+    # Replace - with .:
+    dataset = dataset.replace("-", ".")
+
+    # Check if this is an alias:
+    for k, v in _aliases.items():
+        if dataset in v:
+            dataset = k
+            break
 
     # Find the module:
     try:
