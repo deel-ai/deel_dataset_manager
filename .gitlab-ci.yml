@@ -1,0 +1,9 @@
+image: themattrix/tox
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - tox
