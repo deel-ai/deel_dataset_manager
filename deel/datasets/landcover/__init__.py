@@ -1,27 +1,38 @@
 # -*- encoding: utf-8 -*-
 
 import h5py
-import os
+import pathlib
+import typing
 
-from .landcover_dataset import LandCoverDataset, LandCoverResolutionDataset
+from ..dataset import Dataset
+from ..settings import Settings
 
 
-def load(bias='distribution', framework=None, forceDownload=False):
+class LandcoverDataset(Dataset):
 
-    # Load the dataset
-    if bias == 'distribution':
-        dataset = LandCoverDataset()
-    elif bias == 'resolution':
-        dataset = LandCoverResolutionDataset()
-    else:
-        raise ValueError('Unknown bias for landcover dataset.')
-    dataset.load(forceDownload)
+    # Default (and only) mode:
+    _default_mode: str = "basic"
 
-    # No framework, load the dataset from the HDF5 file as numpy arrays
-    if framework is None:
-        path = os.path.join(
-            dataset.unzippedPaths[0],  dataset.h5_file)
-        hdf5 = h5py.File(path, 'r')
-        data = tuple(hdf5[k][:] for k in dataset.h5_keys)
+    # Dataset consists of a single ".h5" file:
+    _single_file: bool = True
+
+    # Available keys:
+    h5_keys: typing.List[str] = ["patches", "labels"]
+
+    def __init__(
+        self, version: str = "latest", settings: typing.Optional[Settings] = None
+    ):
+        """
+        Args:
+            version: Version of the dataset.
+            settings: The settings to use for this dataset, or `None` to use the
+            default settings.
+        """
+        super().__init__("landcover", version, settings)
+
+    def load_basic(self, path: pathlib.Path):
+        # Basic load of patches / labels:
+        hdf5 = h5py.File(path, "r")
+        data = tuple(hdf5[k][:] for k in self.h5_keys)
         hdf5.close()
         return data
