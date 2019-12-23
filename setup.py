@@ -18,11 +18,7 @@ setup(
     version="0.0.5",
     # Find the package automatically (include everything):
     packages=find_packages(),
-    package_data={
-        "deel.datasets": [
-            "default-config.yml"
-        ]
-    },
+    package_data={"deel.datasets": ["default-config.yml"]},
     # Author information:
     author="DEEL",
     author_email="collaborateurs.du.projet.deel@irt-saintexupery.com",
@@ -43,7 +39,7 @@ setup(
     # Requirements:
     install_requires=[
         "requests==2.22.0",
-        "webdavclient3",
+        "webdavclient3==0.13",
         "tqdm",
         "h5py",
         "pyyaml",
