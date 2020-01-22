@@ -7,6 +7,7 @@ import typing
 
 from tqdm import tqdm
 from webdav3.client import Client
+from webdav3.exceptions import WebDavException
 from webdav3.urn import Urn
 
 from . import logger
@@ -150,7 +151,10 @@ class WebDavProvider(RemoteProvider):
         self._client = Client(options)
 
     def _is_available(self) -> bool:
-        return self._client.check()  # type: ignore
+        try:
+            return self._client.check()  # type: ignore
+        except WebDavException:
+            return False
 
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
         # Path to the dataset:
