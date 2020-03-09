@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-import numpy as np
 import pathlib
 
-from PIL import Image
 from typing import List, Tuple, Optional, Union, Dict, Callable
 
 
@@ -41,6 +39,7 @@ def load_tensorflow_image_dataset(
     Returns: Two or three datasets corresponding to training, validation and
     testing dataset.
     """
+
     # We only import tensorflow here to avoid breaking utils import when
     # tensorflow is not available.
     import tensorflow as tf
@@ -81,16 +80,13 @@ def load_tensorflow_image_dataset(
         dataset = dataset.shuffle(n_images, seed=shuffle)
 
     # Preprocess function to load, resize and scale the image to [0, 1].
-    # We combine PIL and tf.py_func because standard tf.io and tf.image
-    # methods are kind messy to handle multiple image types.
     def preprocess(filename, label):
-        def py_preprocess(fname, labelpy):
-            x = Image.open(fname)
-            if image_size is not None:
-                x = x.resize(image_size)
-            return np.array(x, dtype=np.float32)[:, :, :3] / 255.0, labelpy
-
-        return tf.py_func(py_preprocess, [filename, label], [tf.float32, label.dtype])
+        x = tf.io.read_file(filename)
+        x = tf.image.decode_image(x, channels=3, expand_animations=False)
+        x = tf.image.convert_image_dtype(x, tf.float32)
+        if image_size is not None:
+            x = tf.image.resize(x, image_size)
+        return x, label
 
     # Split dataset:
     if isinstance(train_split, float):
