@@ -227,7 +227,7 @@ class RemoteProvider(LocalProvider):
             return local_path
 
         if local_exact_path.exists():
-            shutil.rmtree(local_exact_path)
+            shutil.rmtree(local_exact_path, ignore_errors=True)
         local_exact_path.mkdir(parents=True, exist_ok=True)
 
         # List the files in the remote folder:
