@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 dev_requires = [
     "black",
@@ -17,7 +17,7 @@ setup(
     # Version of the package:
     version="0.0.5",
     # Find the package automatically (include everything):
-    packages=find_packages(),
+    packages=find_namespace_packages(include=["deel.*"]),
     package_data={"deel.datasets": ["default-config.yml"]},
     # Author information:
     author="DEEL",
@@ -37,13 +37,6 @@ setup(
     # License:
     license="WTFPL",
     # Requirements:
-    install_requires=[
-        "requests==2.22.0",
-        "webdavclient3==0.13",
-        "tqdm",
-        "h5py",
-        "pyyaml",
-        "psutil",
-    ],
+    install_requires=["webdavclient3==0.13", "tqdm", "h5py", "pyyaml", "psutil",],
     extras_require={"dev": dev_requires},
 )
