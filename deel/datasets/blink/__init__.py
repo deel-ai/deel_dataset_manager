@@ -33,30 +33,32 @@ class BlinkDataset(Dataset):
     def load_tensorflow(
         self,
         path: pathlib.Path,
-        percent_train: int = 40,
-        percent_val: int = 40,
-        random_seed: int = 0,
-        image_shape: typing.Tuple[int, int, int] = (64, 64, 3),
+        percent_train: float = 0.4,
+        percent_val: float = 0.4,
+        shuffle: typing.Union[int, bool] = True,
+        image_size: typing.Tuple[int, int] = (64, 64),
     ):
         """ Load method for the `tensorflow` mode.
 
         Args:
-            percent_train: Percentage of training data ([0, 100]).
-            percent_val: Percentage of validation data ([0, 100]).
-            random_seed: Random seed to use to dispatch data.
-            image_shape: Shape of the generated image.
+            percent_train: Percentage of training data ([0, 1]).
+            percent_val: Percentage of validation data ([0, 1]).
+            shuffle: True to shuffle, or the random seed to use to shuffle data,
+            or False to not shuffle at all.
+            image_size: Size of the generated image.
 
         Returns:
-            A tuple `(train, valildation, xtest, ytest, label_names)` where
-            `train` and `validation` are `tensorflow.data.Dataset`s corresponding
-            to training and validation data, `xtest` are the inputs for
-            test dataset (list of `Path`), `ytest` the labels, and `label_names`
-            the label names.
+            A tuple `(train, valildation, test)` where `train`, `validation`
+            and `test` are `tensorflow.data.Dataset`s corresponding
+            to training, validation data and test data.
         """
-        from .tensorflow import TensorflowData
+        from ..utils import load_tensorflow_image_dataset
 
-        return TensorflowData(self.load_path(path), random_seed).prepare(
-            percent_train, percent_val, image_shape
+        return load_tensorflow_image_dataset(
+            self.load_path(path),
+            image_size=image_size,
+            train_split=(percent_train, percent_val),
+            shuffle=shuffle,
         )
 
     def load_path(self, path: pathlib.Path) -> pathlib.Path:
