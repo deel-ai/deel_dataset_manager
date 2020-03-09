@@ -71,7 +71,7 @@ class WebDavRemoteFile(RemoteFile):
         Args:
             client: The WebDAV client (used for download).
             dataset_path: Path to the dataset, relative the root of the server.
-            file_path: Path to the file of the dataset, relative to the dataset path..
+            file_path: Path to the file of the dataset, relative to the dataset path.
         """
         self._client = client
         self._dataset_path = dataset_path.rstrip("/")
