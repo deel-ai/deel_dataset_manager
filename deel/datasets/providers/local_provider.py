@@ -33,6 +33,31 @@ class LocalProvider(Provider):
         """ Returns: The local path to root folder for the datasets. """
         return self._root_folder
 
+    def _remove_hidden_values(self, values: typing.List[str]) -> typing.List[str]:
+        """ Filter the given list by removing hidden values (folders, files). A value
+        is considered hidden if:
+          - it starts with a dot;
+          - it is exactly "lost+found".
+
+        Args:
+            values: The list of values to filter.
+
+        Returns:
+            The filtered list of values.
+        """
+
+        def accept(value):
+
+            if value.startswith("."):
+                return False
+
+            if value == "lost+found":
+                return False
+
+            return True
+
+        return [value for value in values if accept(value)]
+
     def _make_folder(
         self, name: str, version: typing.Optional[str] = None
     ) -> pathlib.Path:
@@ -63,10 +88,10 @@ class LocalProvider(Provider):
         Returns:
             A list of versions for the given folder.
         """
-        return [c.name for c in path.iterdir()]
+        return self._remove_hidden_values([c.name for c in path.iterdir()])
 
     def list_datasets(self) -> typing.List[str]:
-        return [c.name for c in self._root_folder.iterdir()]
+        return self._remove_hidden_values([c.name for c in self._root_folder.iterdir()])
 
     def list_versions(self, dataset: str) -> typing.List[str]:
         path = self._make_folder(dataset)
