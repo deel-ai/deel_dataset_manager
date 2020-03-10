@@ -166,7 +166,9 @@ class WebDavProvider(RemoteProvider):
         ]
 
     def list_datasets(self) -> typing.List[str]:
-        return [name.strip("/") for name in self._client.list()]
+        return self._remove_hidden_values(
+            [name.strip("/") for name in self._client.list()]
+        )
 
     def list_versions(self, dataset: str) -> typing.List[str]:
 
@@ -175,4 +177,6 @@ class WebDavProvider(RemoteProvider):
         if not self._client.check(remote_path):
             raise DatasetNotFoundError(remote_path)
 
-        return [name.strip("/") for name in self._client.list(remote_path)]
+        return self._remove_hidden_values(
+            [name.strip("/") for name in self._client.list(remote_path)]
+        )
