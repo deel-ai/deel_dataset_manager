@@ -64,9 +64,9 @@ def load_tensorflow_image_dataset(
 
     filenames: List[str] = []
     labels: List[int] = []
-    for i, (keys, values) in enumerate(class_files.items()):
-        filenames.extend(map(str, values))
-        labels.extend([i] * len(values))
+    for i, k in enumerate(sorted(class_files.keys())):
+        filenames.extend(map(str, class_files[k]))
+        labels.extend([i] * len(class_files[k]))
 
     n_images = len(filenames)  # The amount of images in the dataset
     dataset = tf.data.Dataset.from_tensor_slices(
