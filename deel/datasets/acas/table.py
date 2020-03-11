@@ -147,7 +147,7 @@ class CostTable:
         for k, v in entries.items():
             self.tables[k] = np.array([cost_values[i] for i in v])
 
-    def get_round_idx(self, array: np.ndarry, value: float) -> int:
+    def get_round_idx(self, array: np.ndarray, value: float) -> int:
 
         """ Retrieve the index of the closest value from the given array.
 
