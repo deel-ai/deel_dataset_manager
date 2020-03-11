@@ -35,6 +35,8 @@ class BlinkDataset(Dataset):
         path: pathlib.Path,
         percent_train: float = 0.4,
         percent_val: float = 0.4,
+        include_warnings: bool = False,
+        include_flips: bool = False,
         shuffle: typing.Union[int, bool] = True,
         image_size: typing.Tuple[int, int] = (64, 64),
     ):
@@ -43,6 +45,8 @@ class BlinkDataset(Dataset):
         Args:
             percent_train: Percentage of training data ([0, 1]).
             percent_val: Percentage of validation data ([0, 1]).
+            include_warnings: Include the warning class in the datasets.
+            include_flips: Include flipped images in the datasets.
             shuffle: True to shuffle, or the random seed to use to shuffle data,
             or False to not shuffle at all.
             image_size: Size of the generated image.
@@ -54,11 +58,35 @@ class BlinkDataset(Dataset):
         """
         from ..utils import load_tensorflow_image_dataset
 
+        if not include_warnings:
+            # Aggregate rotation classes:
+            def aggregate_fn(x: str) -> typing.Optional[str]:
+                if x == "warnings":
+                    return None
+                return x
+
+        else:
+            # Default aggregate function:
+            def aggregate_fn(x: str) -> typing.Optional[str]:
+                return x
+
+        if not include_flips:
+
+            def filter_fn(x: str, y: pathlib.Path) -> bool:
+                return x.find("_flip") == -1
+
+        else:
+
+            def filter_fn(x: str, y: pathlib.Path) -> bool:
+                return True
+
         return load_tensorflow_image_dataset(
             self.load_path(path),
             image_size=image_size,
             train_split=(percent_train, percent_val),
             shuffle=shuffle,
+            aggregate_fn=aggregate_fn,
+            filter_fn=filter_fn,
         )
 
     def load_path(self, path: pathlib.Path) -> pathlib.Path:

@@ -10,7 +10,7 @@ def load_tensorflow_image_dataset(
     image_size: Optional[Tuple[int, int]] = None,
     train_split: Union[float, Tuple[float, float]] = 0.8,
     shuffle: Union[bool, int] = True,
-    aggregate_fn: Callable[[str], str] = lambda x: x,
+    aggregate_fn: Callable[[str], Optional[str]] = lambda x: x,
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
 ):
     """ Creates a tensorflow image dataset from the given folder and
