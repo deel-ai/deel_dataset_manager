@@ -17,6 +17,7 @@ _aliases: Dict[str, List[str]] = {
     "landcover.resolution": ["landcover.resolution", "landcover-resolution"],
     "airbus.helicopter": ["helicopter", "vibration", "airbus-helicopter"],
     "elecboards.components": ["components", "elecboards-components"],
+    "acas": ["acas.xu", "acas-xu"],
 }
 
 
