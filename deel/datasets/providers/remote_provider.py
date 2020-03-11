@@ -9,6 +9,8 @@ import tarfile
 import typing
 import zipfile
 
+from tqdm import tqdm
+
 from . import logger
 from .exceptions import (
     DatasetNotFoundError,
@@ -80,13 +82,30 @@ class GzExtractor(FileModifier):
     """ Modifier that extract files from gz archives and delete
     them afterwards. """
 
+    # Size of the buffer to use for extraction:
+    _buffer_size = 4096
+
     def accept(self, file: pathlib.Path) -> bool:
         return file.suffix == ".gz" and file.with_suffix("").suffix != ".tar"
 
     def apply(self, file: pathlib.Path):
+
         # Extract the content using gzip then remove the file:
-        with gzip.open(file, "rb") as zp, gzip.open(file.with_suffix(""), "wb") as fp:
-            fp.write(zp.read())
+        with gzip.open(file, "rb") as zp, open(file.with_suffix(""), "wb") as fp:
+            pbar = tqdm(
+                desc="Extracting " + file.name,
+                unit="bytes",
+                unit_scale=True,
+                unit_divisor=1024,
+            )
+            while True:
+                data = zp.read(self._buffer_size)
+                if not data:
+                    break
+                fp.write(data)
+                pbar.update(len(data))
+            pbar.close()
+
         file.unlink()
 
 
