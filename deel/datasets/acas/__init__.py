@@ -13,7 +13,9 @@ class AcasDataset(Dataset):
 
     """ Class for the blink dataset. """
 
-    _default_mode: str = "basic"
+    _default_mode: str = "table"
+
+    _single_file: bool = True
 
     def __init__(
         self, version: str = "latest", settings: typing.Optional[Settings] = None
@@ -26,10 +28,11 @@ class AcasDataset(Dataset):
         """
         super().__init__("acas-xu", version, settings)
 
-    def load_path(self, path: pathlib.Path) -> pathlib.Path:
-        return path.joinpath("q_xuhtrm_v5r0_23ec_allSplits_noMB.dat")
-
     def load_basic(self, path: pathlib.Path) -> CostTable:
+        """ See `load_table`. """
+        return self.load_table(path)
+
+    def load_table(self, path: pathlib.Path) -> CostTable:
         """ Load the ACAS-Xu dataset into a more suitable structure.
 
         Args:
@@ -38,4 +41,4 @@ class AcasDataset(Dataset):
         Returns:
             A `CostTable` instance from the given path.
         """
-        return CostTable(self.load_path(path))
+        return CostTable(path)
