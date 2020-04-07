@@ -10,7 +10,7 @@ from ...settings import Settings
 class ElecboardsComponentsDataset(Dataset):
 
     # Default mode for the dataset (basic):
-    _default_mode = "path"
+    _default_mode = "numpy"
 
     def __init__(
         self, version: str = "latest", settings: typing.Optional[Settings] = None
@@ -25,6 +25,57 @@ class ElecboardsComponentsDataset(Dataset):
 
     def load_path(self, path: pathlib.Path) -> pathlib.Path:
         return path.joinpath("components")
+
+    def _aggregate_rotation_fn(self, x: str):
+        split = x.split("_")
+        if split[-1].startswith("Rot"):
+            split = split[:-1]
+        return "_".join(split)
+
+    def load_numpy(
+        self,
+        path: pathlib.Path,
+        percent_train: float = 0.4,
+        percent_val: float = 0.4,
+        shuffle: typing.Union[int, bool] = True,
+        image_size: typing.Tuple[int, int] = (64, 64),
+        aggregate_rotation: bool = False,
+    ) -> pathlib.Path:
+        """ Load method for the `numpy` mode.
+
+        Args:
+            percent_train: Percentage of training data ([0, 1]).
+            percent_val: Percentage of validation data ([0, 1]).
+            shuffle: True to shuffle, or the random seed to use to shuffle data,
+            or False to not shuffle at all.
+            image_size: Size of the generated image.
+            aggregate_rotation: If True, rotations for a single components will
+            aggregated into a single class, if False, no aggregation is made and
+            each rotation of each component will be a different class.
+
+        Returns:
+            A tuple `(train, valildation, test)` where `train`, `validation`
+            and `test` are `numpy.ndarray`s corresponding to training, validation
+            data and test data.
+        """
+
+        from ...utils import load_numpy_image_dataset
+
+        if aggregate_rotation:
+            # Aggregate rotation classes:
+            aggregate_fn = self._aggregate_rotation_fn
+        else:
+            # Default aggregate function:
+            def aggregate_fn(x: str) -> str:
+                return x
+
+        return load_numpy_image_dataset(
+            self.load_path(path),
+            image_size=image_size,
+            train_split=(percent_train, percent_val),
+            shuffle=shuffle,
+            aggregate_fn=aggregate_fn,
+        )
 
     def load_tensorflow(
         self,
@@ -56,12 +107,7 @@ class ElecboardsComponentsDataset(Dataset):
 
         if aggregate_rotation:
             # Aggregate rotation classes:
-            def aggregate_fn(x: str) -> str:
-                split = x.split("_")
-                if split[-1].startswith("Rot"):
-                    split = split[:-1]
-                return "_".join(split)
-
+            aggregate_fn = self._aggregate_rotation_fn
         else:
             # Default aggregate function:
             def aggregate_fn(x: str) -> str:
