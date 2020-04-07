@@ -5,7 +5,6 @@ import logging
 
 from typing import Any, Dict, List, Optional
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -18,6 +17,7 @@ _aliases: Dict[str, List[str]] = {
     "airbus.helicopter": ["helicopter", "vibration", "airbus-helicopter"],
     "elecboards.components": ["components", "elecboards-components"],
     "acas": ["acas.xu", "acas-xu"],
+    "bde": ["braking-distance-estimation"],
 }
 
 
@@ -56,23 +56,32 @@ def load(
             dataset = k
             break
 
-    # Find the module:
-    try:
-        module = importlib.import_module("." + dataset, __name__)
-    except ImportError:
-        raise ValueError("Dataset '{}' not found.".format(dataset))
-
     # Create the dataset class name:
     dataset_class_name = (
         "".join(part.capitalize() for part in dataset.split(".")) + "Dataset"
     )
 
-    # Check that the class exists:
-    if not hasattr(module, dataset_class_name):
-        raise ValueError("Dataset '{}' not found.".format(dataset))
+    # Find the module and the class:
+    try:
+        module = importlib.import_module("." + dataset, __name__)
+        dataset_class = getattr(module, dataset_class_name)
 
-    # Retrieve the class:
-    dataset_class = getattr(module, dataset_class_name)
+        # Instantiate the class:
+        dataset_object = dataset_class(version)
+    except (ImportError, AttributeError):
+
+        # Default mode is then path:
+        if mode is None:
+            mode = "path"
+
+        # If the module or class is not found, and the mode is not path, we throw:
+        if mode != "path":
+            raise ValueError("Dataset '{}' not found.".format(dataset))
+
+        from .dataset import Dataset
+
+        # Otherwize we can use the default dataset class:
+        dataset_object = Dataset(dataset, version)
 
     # Create the dataset object and load:
-    return dataset_class(version).load(mode=mode, force_update=force_update, **kwargs)
+    return dataset_object.load(mode=mode, force_update=force_update, **kwargs)
