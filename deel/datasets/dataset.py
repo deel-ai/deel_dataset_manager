@@ -99,7 +99,7 @@ class Dataset(object):
         # and we discard the ones that are not callable (even if there
         # should not be any most of the time):
         return [
-            fn.lstrip("load_")
+            fn[5:]
             for fn in dir(self)
             if fn.startswith("load_") and callable(getattr(self, fn))
         ]
@@ -151,6 +151,9 @@ class Dataset(object):
 
         if mode is None:
             mode = self.default_mode
+
+        # Replace characters:
+        mode = mode.replace(".", "_").replace("-", "_")
 
         if mode not in self.available_modes:
             raise InvalidModeError(self, mode)
