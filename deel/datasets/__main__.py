@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from .dataset import Dataset
+from . import load as load_dataset
 from .settings import read_settings, get_default_settings
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
@@ -70,7 +70,13 @@ def download_datasets(args: argparse.Namespace):
         name, version = parts
 
         # Download the dataset:
-        path = Dataset(name, version, settings).load(force_update=args.force)
+        path = load_dataset(
+            name,
+            mode="path",
+            version=version,
+            settings=settings,
+            force_update=args.force,
+        )
 
         print("Dataset {} stored at '{}'.".format(dataset, path))
 
