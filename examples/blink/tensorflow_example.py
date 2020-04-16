@@ -14,6 +14,10 @@ from tensorflow.keras.layers import (
     MaxPooling2D,
 )
 
+# uncomment 2 lines below for local test
+# import os, sys
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
+
 from deel.datasets import load as load_dataset
 
 
@@ -66,6 +70,8 @@ class Model:
             validation_set, batch_size, is_training=False
         )
 
+        print("train : {} valid : {}".format(train_size, valid_size))
+
         self._model.fit(
             train_set,
             steps_per_epoch=train_size // batch_size,
@@ -87,10 +93,22 @@ class Model:
 
         x = tf.io.read_file(str(path))
         x = tf.image.decode_bmp(x, channels=self._image_shape[2])
+        return self.predict_image(x)
+
+    def predict_image(self, x: tf.Tensor):
+        """ Predict the label of the image.
+
+        Args:
+            x: the image to predict a label for.
+
+        Returns:
+            Prediction for the image (index of the class).
+        """
         x = tf.image.resize(x, [self._image_shape[0], self._image_shape[1]])
         x = x / 255.0
+        x = tf.expand_dims(x, 0)
 
-        pred = self._model.predict(tf.expand_dims(x, 0), 32, 0, 1)
+        pred = self._model.predict(x, 32, 0, 1)
         return pred[0].tolist().index(max(pred[0].tolist()))
 
     def _prepare_dataset(self, dataset, batch_size, is_training):
@@ -145,14 +163,34 @@ class Model:
 
 
 # Tensorflow is the default mode for blink so mode="tensorflow" is not required:
-train_set, valid_set, x_test, y_test, label_names = load_dataset(
-    "blink", mode="tensorflow", percent_train=40, percent_val=40
+label_names = ["blink_left", "blink_right", "noblink", "warnings"]
+
+train_set, valid_set, test_set = load_dataset(
+    "blink",
+    mode="tensorflow",
+    percent_train=0.4,
+    percent_val=0.4,
+    include_warnings=True,
+    include_flips=True,
 )
 
-model = Model(train_set.element_spec[0].shape, len(label_names))
-model.train(train_set, valid_set, nepochs=1)
+# image_shape to build model
+image_shape = train_set.element_spec[0].shape
+if image_shape[2] is None:
+    image_shape = image_shape[:2] + (3,)
+
+model = Model(image_shape, len(label_names))
+model.train(train_set, valid_set, batch_size=32, nepochs=1)
 
 # Prediction on the first image:
-img_path = x_test[0]
-pred_index = model.predict(img_path)
-print("{}: {}".format(img_path, label_names[pred_index]))
+for example in test_set.take(1):  # Only take a single example
+    image, label = example
+    label_index = tf.keras.backend.eval(tf.math.argmax(label))
+
+    pred_index = model.predict_image(image)
+
+    print(
+        "Test prediction is {} expected {}".format(
+            label_names[pred_index], label_names[label_index]
+        )
+    )
