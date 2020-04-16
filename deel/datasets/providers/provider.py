@@ -10,7 +10,12 @@ from .exceptions import VersionNotFoundError
 class Provider(abc.ABC):
 
     """ The `Provider` class is an abstract interface for classes
-    that provides access to dataset storages. """
+    that provides access to dataset storages.
+
+    The list of methods that should be overriden by all child classes
+    are indicated with the `abc.abstractmethod` decorator. If a class
+    requires specific clean-up, the `__enter__` and `__exit__` special
+    functions can be overriden. """
 
     @abc.abstractmethod
     def list_datasets(self) -> typing.List[str]:
@@ -33,6 +38,12 @@ class Provider(abc.ABC):
         Raises:
             DatasetNotFoundError: If the given dataset does not exist.
         """
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
         pass
 
     def get_version(self, version: str, versions: typing.List[str]) -> str:

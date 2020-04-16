@@ -3,6 +3,7 @@
 import pathlib
 import typing
 
+from .providers.provider import Provider
 from .settings import Settings, get_default_settings
 
 
@@ -77,6 +78,19 @@ class Dataset(object):
             self._settings = get_default_settings()
         else:
             self._settings = settings
+
+    def _get_provider(self) -> Provider:
+        """ Create and returns a provider for this dataset.
+
+        By default, this uses creates the provider using `self._settings`.
+        This method should only be overriden if the dataset requires a
+        custom provider, e.g., because the dataset is not hosted on the
+        standard dataset repository.
+
+        Returns:
+            A provider suitable to retrieve this dataset.
+        """
+        return self._settings.make_provider()
 
     @property
     def name(self) -> str:
@@ -158,9 +172,10 @@ class Dataset(object):
         if mode not in self.available_modes:
             raise InvalidModeError(self, mode)
 
-        path = self._settings.make_provider().get_folder(
-            self._name, self._version, force_update=force_update
-        )
+        with self._get_provider() as provider:
+            path = provider.get_folder(
+                self._name, self._version, force_update=force_update
+            )
 
         # If single file, retrieve the path to the first file:
         if self._single_file:
