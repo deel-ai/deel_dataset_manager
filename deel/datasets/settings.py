@@ -73,6 +73,11 @@ class Settings(object):
         """
         return make_provider(self._provider_type, self._base, self._provider_options)
 
+    @property
+    def local_storage(self) -> Path:
+        """ Returns: The path to the local storage for the datasets. """
+        return self._base
+
     def __repr__(self) -> str:
         """ Output a basic representation of these settings.
 

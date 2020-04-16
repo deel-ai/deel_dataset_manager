@@ -7,6 +7,9 @@ from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
+from .providers.exceptions import DatasetNotFoundError  # noqa
+from .settings import Settings  # noqa
+
 
 # List of aliases module: [alias1, alias2, alias3, ...]. The name
 # of the module is always an alias.
@@ -26,6 +29,7 @@ def load(
     mode: Optional[str] = None,
     version: str = "latest",
     force_update: bool = False,
+    settings: Settings = None,
     **kwargs
 ) -> Any:
 
@@ -67,7 +71,7 @@ def load(
         dataset_class = getattr(module, dataset_class_name)
 
         # Instantiate the class:
-        dataset_object = dataset_class(version)
+        dataset_object = dataset_class(version, settings)
     except (ImportError, AttributeError):
 
         # Default mode is then path:
@@ -76,12 +80,18 @@ def load(
 
         # If the module or class is not found, and the mode is not path, we throw:
         if mode != "path":
-            raise ValueError("Dataset '{}' not found.".format(dataset))
+            raise DatasetNotFoundError(dataset)
 
         from .dataset import Dataset
 
         # Otherwize we can use the default dataset class:
-        dataset_object = Dataset(dataset, version)
+        dataset_object = Dataset(dataset, version, settings)
+
+    # If the dataset object is required, we must download
+    # it:
+    if mode == "dataset":
+        dataset_object.load(mode="path", force_update=force_update, **kwargs)
+        return dataset_object
 
     # Create the dataset object and load:
     return dataset_object.load(mode=mode, force_update=force_update, **kwargs)
