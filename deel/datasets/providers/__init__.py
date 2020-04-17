@@ -37,12 +37,12 @@ def make_provider(
 
         return LocalProvider(root_path)
 
-    if provider_type == "gcloud":
+    elif provider_type == "gcloud":
         from .gcloud_provider import GCloudProvider
 
         return GCloudProvider(root_path)
 
-    if provider_type == "webdav":
+    elif provider_type == "webdav":
         from .webdav_provider import (
             WebDavProvider,
             WebDavAuthenticator,
@@ -50,12 +50,12 @@ def make_provider(
         )
 
         # If authentication is required:
-        authenticator: typing.Optional[WebDavAuthenticator] = None
+        webdav_authenticator: typing.Optional[WebDavAuthenticator] = None
         if "auth" in provider_options:
 
             # We currently only support simple authentication:
             if provider_options["auth"]["method"] == "simple":
-                authenticator = WebDavSimpleAuthenticator(
+                webdav_authenticator = WebDavSimpleAuthenticator(
                     provider_options["auth"]["username"],
                     provider_options["auth"]["password"],
                 )
@@ -67,7 +67,35 @@ def make_provider(
                 )
 
         return WebDavProvider(
-            root_path, remote_url=provider_options["url"], authenticator=authenticator
+            root_path,
+            remote_url=provider_options["url"],
+            authenticator=webdav_authenticator,
+        )
+
+    elif provider_type == "ftp":
+        from .ftp_providers import FtpProvider, FtpSimpleAuthenticator
+
+        # If authentication is required:
+        ftp_authenticator: typing.Optional[FtpSimpleAuthenticator] = None
+        if "auth" in provider_options:
+
+            # We currently only support simple authentication:
+            if provider_options["auth"]["method"] == "simple":
+                ftp_authenticator = FtpSimpleAuthenticator(
+                    provider_options["auth"]["username"],
+                    provider_options["auth"]["password"],
+                )
+            else:
+                raise ValueError(
+                    "Invalid authentication method '{}' for FTP provider.".format(
+                        provider_options["auth"]["method"]
+                    )
+                )
+
+        return FtpProvider(
+            root_path,
+            remote_url=provider_options["url"],
+            authenticator=ftp_authenticator,
         )
 
     raise ValueError("Invalid provider type '{}'.".format(provider_type))
