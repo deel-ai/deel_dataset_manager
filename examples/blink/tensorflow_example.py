@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-import pathlib
 import tensorflow as tf
 import typing
 
@@ -45,7 +44,7 @@ class Model:
 
         optimizer = "adam"
         loss = "categorical_crossentropy"
-        self._model.compile(optimizer=optimizer, loss=loss, metrics=["acc"])
+        self._model.compile(optimizer=optimizer, loss=loss, metrics=["accuracy"])
 
     def train(
         self,
@@ -81,35 +80,16 @@ class Model:
             verbose=2,
         )
 
-    def predict(self, path: pathlib.Path):
+    def predict(self, x: tf.Tensor):
         """ Predict the label of the image.
 
         Args:
-            path: Path to the image to predict a label for.
+            x: Images to predict a label for.
 
         Returns:
-            Prediction for the image (index of the class).
+            Prediction for the image (score for each class).
         """
-
-        x = tf.io.read_file(str(path))
-        x = tf.image.decode_bmp(x, channels=self._image_shape[2])
-        return self.predict_image(x)
-
-    def predict_image(self, x: tf.Tensor):
-        """ Predict the label of the image.
-
-        Args:
-            x: the image to predict a label for.
-
-        Returns:
-            Prediction for the image (index of the class).
-        """
-        x = tf.image.resize(x, [self._image_shape[0], self._image_shape[1]])
-        x = x / 255.0
-        x = tf.expand_dims(x, 0)
-
-        pred = self._model.predict(x, 32, 0, 1)
-        return pred[0].tolist().index(max(pred[0].tolist()))
+        return self._model.predict(x)
 
     def _prepare_dataset(self, dataset, batch_size, is_training):
 
@@ -152,7 +132,7 @@ class Model:
 
         model.add(Flatten())
         model.add(Dropout(0.5))
-        model.add(Dense(1052, activation="relu"))
+        model.add(Dense(512, activation="relu"))
         model.add(Dropout(0.5))
         model.add(Dense(128, activation="relu"))
         model.add(Dense(64, activation="relu"))
@@ -163,16 +143,17 @@ class Model:
 
 
 # Tensorflow is the default mode for blink so mode="tensorflow" is not required:
-label_names = ["blink_left", "blink_right", "noblink", "warnings"]
-
-train_set, valid_set, test_set = load_dataset(
+(train_set, valid_set, test_set), info = load_dataset(
     "blink",
     mode="tensorflow",
     percent_train=0.4,
     percent_val=0.4,
     include_warnings=True,
     include_flips=True,
+    with_info=True,
 )
+label_names = info["classes"]
+print("Classes in dataset: {}".format(label_names))
 
 # image_shape to build model
 image_shape = train_set.element_spec[0].shape
@@ -180,17 +161,20 @@ if image_shape[2] is None:
     image_shape = image_shape[:2] + (3,)
 
 model = Model(image_shape, len(label_names))
-model.train(train_set, valid_set, batch_size=32, nepochs=1)
+model.train(train_set, valid_set, batch_size=32, nepochs=2)
 
 # Prediction on the first image:
-for example in test_set.take(1):  # Only take a single example
+for example in test_set.take(32).batch(32):  # Only take a single example
     image, label = example
-    label_index = tf.keras.backend.eval(tf.math.argmax(label))
+    labels = tf.math.argmax(label, axis=-1).numpy()
+    predictions = tf.math.argmax(model.predict(image), axis=-1).numpy()
 
-    pred_index = model.predict_image(image)
+    # get correct and incorrect predictions
+    correct = predictions == labels
+    incorrect = predictions != labels
 
     print(
-        "Test prediction is {} expected {}".format(
-            label_names[pred_index], label_names[label_index]
+        "Evaluation: {} correct predictions and {} incorrect".format(
+            sum(correct), sum(incorrect)
         )
     )
