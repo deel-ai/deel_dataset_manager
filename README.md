@@ -46,6 +46,20 @@ blink = deel.datasets.load("blink", mode="pytorch")
 ```
 
 The `deel.datasets.load` function is the basic entry to access the datasets.
+By passing `with_info=True`, extra information can be retrieved as a python
+dictionary. Information are not standardized, so each dataset may provide
+different ones:
+
+```python
+import deel.datasets
+
+# Load the tensorflow version of the blink dataset:
+blink, info = deel.datasets.load("blink", mode="tensorflow", with_info=True)
+
+print(info["classes"])
+```
+
+
 The function can take extra parameters depending on the chosen dataset and mode,
 for instance, you can specify the percentage of training data for the `blink`
 dataset:
@@ -185,14 +199,16 @@ Dataset blink:3.0.0 stored at '/opt/datasets/blink/3.0.0'.
 
 ### Providers
 
-Currently available providers are `webdav`, `local` and `gcloud`.
+Currently available providers are `webdav`, `ftp`, `local` and `gcloud`.
 The `webdav` provider is the default-one and will fetch datasets from a WebDAV server
 and needs at least the `url` configuration parameter (`auth` is not mandatory but required
 for the `https://datasets.deel.ai` server).
+The `ftp` provider is similar to the `webdav` provider except that it will fetch datasets
+from a FTP server instead of a WebDAV one and needs at least the `url` configuration parameter.
 The `local` provider does not require any extra configuration and will simply
 fetch data from the specified `path`.
 
-When using the `webdav` provider, the `path` parameter indicates where the datasets
+When using the `webdav` or `ftp` provider, the `path` parameter indicates where the datasets
 should be stored locally.
 
 The `gcloud` provider is similar to the `local` provider, except that it will try to
@@ -267,6 +283,40 @@ class MockDataset(Dataset):
         import pandas as pd
 
         return pd.read_csv(path)
+```
+
+By default, the `with_info` option will return a dictionary containing the name and
+the version of the dataset.
+If you want to provide extra information, you can return a dictionary from the `load_XXX`
+methods, e.g.:
+
+```python
+def load_pytorch(self, path: pathlib.Path):
+    # Load a pytorch dataset:
+    dataset = ...
+
+    return dataset, {"classes": ["foo", "bar"}
+```
+
+The `deel.datasets.utils` package contains utility functions to load `numpy`, `pytorch`
+and `tensorflow` image dataset in a consistent way, and the `Dataset` class contains some
+utiity methods to generate the information dictionary from the return of these methods.
+Here is a very simple example for loading a dataset:
+
+```python
+def load_pytorch(self, path: pathlib.Path, image_size: Tuple[int, int]):
+    # Use relative import only if you are inside the deel package:
+    from ..utils import load_pytorch_image_dataset
+
+    # Load the dataset using the utility function:
+    dataset, idx_to_class = load_pytorch_image_dataset(
+        self.load_path(path),  # This is require only if `load_path` modifies the path.
+        image_size=image_size,
+        train_split=.7,
+    )
+
+    # The `_make_class_info` is provided by `Dataset`:
+    return dataset, self._make_class_info(idx_to_class)
 ```
 
 ### Environment
