@@ -24,6 +24,9 @@ class BlinkDataset(Dataset):
         """
         super().__init__("blink", version, settings)
 
+    def load_path(self, path: pathlib.Path) -> pathlib.Path:
+        return path.joinpath("final_db_anonymous")
+
     def load_pytorch(
         self,
         path: pathlib.Path,
@@ -45,44 +48,49 @@ class BlinkDataset(Dataset):
             shuffle: True to shuffle, or the random seed to use to shuffle data,
             or False to not shuffle at all.
             image_size: Size of the generated image.
-            transform: transformation to apply on dataset
+            transform: Transformation to apply on dataset.
 
         Returns:
-            A tuple `(train, valildation, test)` where `train`, `validation`
-            and `test` are `tensorflow.data.Dataset`s corresponding
-            to training, validation data and test data.
+            A two-tuple whose first element is a tuple `(train, valildation, test)`
+            where `train`, `validation` and `test` are `torch.utils.data.Dataset`s
+            corresponding to training, validation data and test data, and whose
+            second element is a dictionary containing dataset extra information.
         """
         from ..utils import load_pytorch_image_dataset
 
-        filters = []
-
         if not include_warnings:
-            filters.append(lambda cls, filepath: cls != "warnings")
+            # Aggregate rotation classes:
+            def aggregate_fn(x: str) -> typing.Optional[str]:
+                if x == "warnings":
+                    return None
+                return x
+
+        else:
+            # Default aggregate function:
+            def aggregate_fn(x: str) -> typing.Optional[str]:
+                return x
 
         if not include_flips:
-            filters.append(lambda cls, filepath: cls.find("_flip") == -1)
 
-        def filter_fn(cls: str, filepath: pathlib.Path):
-            for filter_func in filters:
-                if not filter_func(cls, filepath):
-                    return False
-            return True
+            def filter_fn(x: str, y: pathlib.Path) -> bool:
+                return x.find("_flip") == -1
 
-        # example of aggregation function
-        # def aggregate_fn(cls:str):
-        #    if cls.startswith('blink'):
-        #        return 'blink'
-        #    return cls
+        else:
 
-        return load_pytorch_image_dataset(
+            def filter_fn(x: str, y: pathlib.Path) -> bool:
+                return True
+
+        datasets, idx_to_class = load_pytorch_image_dataset(
             self.load_path(path),
             image_size=image_size,
             train_split=(percent_train, percent_val),
             shuffle=shuffle,
-            aggregate_fn=None,
+            aggregate_fn=aggregate_fn,
             filter_fn=filter_fn,
             transform=transform,
         )
+
+        return datasets, self._make_class_info(idx_to_class)
 
     def load_tensorflow(
         self,
@@ -106,9 +114,10 @@ class BlinkDataset(Dataset):
             image_size: Size of the generated image.
 
         Returns:
-            A tuple `(train, valildation, test)` where `train`, `validation`
-            and `test` are `tensorflow.data.Dataset`s corresponding
-            to training, validation data and test data.
+            A two-tuple whose first element is a tuple `(train, valildation, test)`
+            where `train`, `validation` and `test` are `tensorflow.data.Dataset`s
+            corresponding to training, validation data and test data, and whose
+            second element is a dictionary containing dataset extra information.
         """
         from ..utils import load_tensorflow_image_dataset
 
@@ -134,7 +143,7 @@ class BlinkDataset(Dataset):
             def filter_fn(x: str, y: pathlib.Path) -> bool:
                 return True
 
-        return load_tensorflow_image_dataset(
+        datasets, idx_to_class = load_tensorflow_image_dataset(
             self.load_path(path),
             image_size=image_size,
             train_split=(percent_train, percent_val),
@@ -143,5 +152,4 @@ class BlinkDataset(Dataset):
             filter_fn=filter_fn,
         )
 
-    def load_path(self, path: pathlib.Path) -> pathlib.Path:
-        return path.joinpath("final_db_anonymous")
+        return datasets, self._make_class_info(idx_to_class)

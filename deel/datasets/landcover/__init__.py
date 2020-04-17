@@ -11,7 +11,7 @@ from ..settings import Settings
 class LandcoverDataset(Dataset):
 
     # Default (and only) mode:
-    _default_mode: str = "basic"
+    _default_mode: str = "numpy"
 
     # Dataset consists of a single ".h5" file:
     _single_file: bool = True
@@ -30,7 +30,7 @@ class LandcoverDataset(Dataset):
         """
         super().__init__("landcover", version, settings)
 
-    def load_basic(self, path: pathlib.Path):
+    def load_numpy(self, path: pathlib.Path):
         # Basic load of patches / labels:
         hdf5 = h5py.File(path, "r")
         data = tuple(hdf5[k][:] for k in self.h5_keys)

@@ -6,6 +6,8 @@ import logging
 
 from typing import List, Tuple, Optional, Union, Dict, Callable
 
+from PIL import Image
+
 log = logging.getLogger("deel.dataset.manager.utils")
 
 
@@ -20,7 +22,7 @@ def load_python_image_dataset(
 
     Args:
         folder: The folder containing the dataset. The folder should contain,
-        for each classes, a subfolder with only images inside.
+        for each class, a subfolder with only images inside.
         shuffle: If True, shuffle images with the default seed. If an int is given,
         use it as the seed for shufling. If False, do not shuffle. Shuffle is done
         using the standard `random.shuffle` module
@@ -113,17 +115,18 @@ def load_numpy_image_dataset(
         a string (name of the file) and a path to the file and returns True
         if the image should be included, False if it should be excluded.
 
-    Returns: Two or three 2-tuple of numpy arrays corresponding to training,
-    validation and testing dataset. Each dataset is a 2-tuple (x, y) where
-    `x` is a 4-dimensional numpy array containing images and `y` a
-    one-dimensional numpy array containing classes.
+    Returns:
+        A two-tuple whose first element is another tuple containing two or three
+        2-tuple of numpy arrays corresponding to training, validation and testing
+        dataset, and the second element is mapping from class labels to class names.
+        Each dataset is a 2-tuple (x, y) where `x` is a 4-dimensional numpy array
+        containing images and `y` a one-dimensional numpy array containing classes.
     """
 
     import numpy as np
-    from PIL import Image
 
     # Retrieve files:
-    files, plabels, _ = load_python_image_dataset(
+    files, plabels, idx_to_class = load_python_image_dataset(
         folder, shuffle, aggregate_fn, filter_fn
     )
 
@@ -148,168 +151,23 @@ def load_numpy_image_dataset(
     if isinstance(train_split, float):
         train_n = int(n_images * train_split)
         return (
-            (images[:train_n], labels[:train_n]),
-            (images[train_n:], labels[train_n:]),
+            (
+                (images[:train_n], labels[:train_n]),
+                (images[train_n:], labels[train_n:]),
+            ),
+            idx_to_class,
         )
     else:
         train_n = int(n_images * train_split[0])
         val_n = train_n + int(n_images * train_split[1])
         return (
-            (images[:train_n], labels[:train_n]),
-            (images[train_n:val_n], labels[train_n:val_n]),
-            (images[val_n:], labels[val_n:]),
+            (
+                (images[:train_n], labels[:train_n]),
+                (images[train_n:val_n], labels[train_n:val_n]),
+                (images[val_n:], labels[val_n:]),
+            ),
+            idx_to_class,
         )
-
-
-def aggregate_pytorch_dataset(
-    dataset, aggregate_fn: Callable[[str], Optional[str]] = None
-):
-    """ Aggregate classes in a pytorch image dataset from.
-
-    Args:
-        dataset: The dataset.
-        aggregate_fn: Callable to aggregate classes. The function should take
-        the name of an original class (subfolder) and returns the name of the
-        "parent" class. If the call returns `None`, the class is discarded.
-
-    Returns: The aggregated dataset.
-    """
-    if aggregate_fn:  # there is an aggregation filter function, so do aggregate
-        # run aggregation function on classes
-        new_classes = {cls: aggregate_fn(cls) for cls in dataset.classes}
-        new_classes_list = list(set(new_classes.values()))
-        if len(new_classes_list) < len(dataset.classes):
-            log.debug(
-                "aggregation changed classes count {} => {}".format(
-                    len(dataset.classes), len(new_classes_list)
-                )
-            )
-            # number of class is different, modify indices to reflect changes
-            convert_old_class_new = {
-                old_idx: new_classes_list.index(new_classes[dataset.classes[old_idx]])
-                for old_idx in range(len(dataset.classes))
-            }
-            dataset.samples = dataset.imgs = [
-                (img[0], convert_old_class_new[img[1]]) for img in dataset.imgs
-            ]
-            dataset.targets = [convert_old_class_new[cls] for cls in dataset.targets]
-
-        # only names may have changed
-        dataset.classes = new_classes_list
-        dataset.class_to_idx = {cls: idx for idx, cls in enumerate(new_classes_list)}
-
-    return dataset
-
-
-def filter_pytorch_dataset(
-    dataset, filter_fn: Callable[[str, pathlib.Path], bool] = None
-):
-    """ Filters a pytorch image dataset from.
-
-    Args:
-        dataset: The dataset.
-        filter_fn: A function to filter out images. This function should take
-        a string (name of the file) and a path to the file and returns True
-        if the image should be included, False if it should be excluded.
-
-    Returns: The filtered dataset.
-    """
-    if filter_fn:  # there is a filter function, so do filter
-        modified = False
-        imgs, targets = [], []
-
-        # inverse dict dataset.class_to_idx
-        idx_to_class_str = {v: k for k, v in dataset.class_to_idx.items()}
-        log.debug("filtering {} elements".format(len(dataset)))
-        for cls, img in zip(dataset.targets, dataset.imgs):
-            if filter_fn(idx_to_class_str[cls], img[0]):
-                targets.append(cls)
-                imgs.append(img)
-            else:
-                modified = True
-        if modified:
-            all_classes_idx_new = list(set(targets))
-            if len(all_classes_idx_new) < len(dataset.classes):
-                log.debug(
-                    "filtering changed classes count {} => {}".format(
-                        len(dataset.classes), len(all_classes_idx_new)
-                    )
-                )
-                # some classes were filtered out so we remove them and recompute indices
-                convert_old_class_new = {
-                    val: idx for idx, val in enumerate(all_classes_idx_new)
-                }
-                new_classes = [dataset.classes[cls] for cls in all_classes_idx_new]
-                targets = [convert_old_class_new[cls] for cls in targets]
-                imgs = [(img[0], convert_old_class_new[img[1]]) for img in imgs]
-                dataset.classes = new_classes
-                dataset.class_to_idx = {cls: idx for idx, cls in enumerate(new_classes)}
-
-            dataset.samples = dataset.imgs = imgs
-            dataset.targets = targets
-            log.debug("filtered {} elements".format(len(dataset)))
-        else:
-            log.debug("No element filtered out")
-
-        # log.debug("classes idx", set([el[1] for el in dataset.samples]))
-        # log.debug("classes idx", set([el[1] for el in dataset.imgs]))
-    return dataset
-
-
-def split_pytorch_dataset(
-    dataset,
-    train_split: Union[float, Tuple[float, float]] = 0.8,
-    shuffle: Union[bool, int] = True,
-):
-    """ Splits the pytorch image dataset into train, [valid,] test.
-
-    Args:
-        dataset: The dataset to split.
-        train_split: One or two float values. If a single value is specified,
-        two datasets will be returned, one for training (using a percentage
-        `train_split` of data) and one for testing. If two values are specified,
-        three datasets will be returned: a training dataset, a validation
-        dataset and a testing dataset.
-        shuffle: If True, shuffle images before spliting with the default seed.
-        If an int is given, use it as the seed for shufling. If False, do not
-        shuffle.
-        False otherwize.
-
-    Returns: Two or three datasets corresponding to training, validation and
-    testing dataset.
-    """
-    import numpy as np
-    from torch.utils.data import Subset
-
-    # list the indices of the dataset
-    dataset_size = len(dataset)
-    indices = list(range(dataset_size))
-    if shuffle:
-        np.random.shuffle(indices)
-
-    # Thank you tox for not accepting a simplier expression...
-    if isinstance(train_split, float):
-        train_splits = [
-            train_split,
-        ]
-    else:
-        train_splits = list(train_split)
-
-    numbers = [int(np.floor(percent * dataset_size)) for percent in train_splits]
-    splits = [0]
-    split = 0
-    for number in numbers:
-        split += number
-        splits.append(split)
-    if splits[-1] < dataset_size:
-        splits.append(dataset_size)
-
-    all_indices = [
-        indices[split_min:split_max]
-        for split_min, split_max in zip(splits[:-1], splits[1:])
-    ]
-
-    return tuple(Subset(dataset, split_indices) for split_indices in all_indices)
 
 
 def load_pytorch_image_dataset(
@@ -317,9 +175,9 @@ def load_pytorch_image_dataset(
     image_size: Optional[Tuple[int, int]] = None,
     train_split: Union[float, Tuple[float, float]] = 0.8,
     shuffle: Union[bool, int] = True,
-    aggregate_fn: Callable[[str], Optional[str]] = None,
-    filter_fn: Callable[[str, pathlib.Path], bool] = None,
-    transform: Callable = None,
+    aggregate_fn: Callable[[str], Optional[str]] = lambda x: x,
+    filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
+    transform: Optional[Callable[[Image.Image], Image.Image]] = None,
 ):
     """ Creates a pytorch image dataset from the given folder and
     parameters.
@@ -343,22 +201,94 @@ def load_pytorch_image_dataset(
         filter_fn: A function to filter out images. This function should take
         a string (name of the file) and a path to the file and returns True
         if the image should be included, False if it should be excluded.
+        transform: Transformation to apply to the image before the conversion
+        to a torch tensor via `ToTensor()`. If `image_size` is not None, the
+        resize transform will be applied before these, if you want to do the
+        opposite, simply pass `None` as `image_size` and add the resize
+        transformation manually.
 
-    Returns: Two or three datasets corresponding to training, validation and
-    testing dataset.
+
+    Returns:
+        A two-tuple whose first element is another tuple containing two or three
+        datasets corresponding to training, validation and testing dataset, and the
+        second element is mapping from class labels to class names.
     """
-    from torchvision.datasets import ImageFolder
 
-    # create PyTorch dataset from image folder
-    dataset = ImageFolder(folder, transform=transform)
-    # use filter
-    if filter_fn:
-        dataset = filter_pytorch_dataset(dataset, filter_fn=filter_fn)
-    if aggregate_fn:
-        dataset = aggregate_pytorch_dataset(dataset, aggregate_fn=aggregate_fn)
+    from torch.utils.data import Dataset, Subset
 
-    # split the dataset
-    return split_pytorch_dataset(dataset, train_split=train_split, shuffle=shuffle)
+    import torchvision.transforms
+
+    class CustomDataset(Dataset):
+        def __init__(
+            self,
+            files: List[pathlib.Path],
+            labels: List[int],
+            transform: Optional[Callable[[Image.Image], Image.Image]] = None,
+        ):
+            self.files = files
+            self.labels = labels
+            self.transform = transform
+
+        def loader(self, path):
+            with open(path, "rb") as fp:
+                return Image.open(fp).convert("RGB")
+
+        def __len__(self):
+            return len(self.files)
+
+        # Copy from: torchvision.datasets.DatasetFolder
+        def __getitem__(self, index):
+            """
+            Args:
+                index (int): Index
+
+            Returns:
+                tuple: (sample, target) where target is class_index of the target class.
+            """
+            path, target = self.files[index], self.labels[index]
+            sample = self.loader(path)
+
+            if self.transform is not None:
+                sample = self.transform(sample)
+
+            return sample, target
+
+    # Retrieve files:
+    files, labels, idx_to_class = load_python_image_dataset(
+        folder, shuffle, aggregate_fn, filter_fn
+    )
+
+    # Create the transform:
+    transforms: List[Callable[[Image.Image], Image.Image]] = []
+    if image_size is not None:
+        transforms.append(torchvision.transforms.Resize(image_size))
+    if transform is not None:
+        transforms.append(transform)
+    transforms.append(torchvision.transforms.ToTensor())
+
+    transform = torchvision.transforms.Compose(transforms)
+
+    # Create the dataset:
+    dataset = CustomDataset(files, labels, transform)
+
+    # Split dataset:
+    if isinstance(train_split, float):
+        i1 = int(train_split * len(dataset))
+        return (
+            (Subset(dataset, range(i1)), Subset(dataset, range(i1, len(dataset))),),
+            idx_to_class,
+        )
+    else:
+        i1 = int(train_split[0] * len(dataset))
+        i2 = i1 + int(train_split[1] * len(dataset))
+        return (
+            (
+                Subset(dataset, range(i1)),
+                Subset(dataset, range(i1, i2)),
+                Subset(dataset, range(i2, len(dataset))),
+            ),
+            idx_to_class,
+        )
 
 
 def load_tensorflow_image_dataset(
@@ -392,8 +322,10 @@ def load_tensorflow_image_dataset(
         a string (name of the file) and a path to the file and returns True
         if the image should be included, False if it should be excluded.
 
-    Returns: Two or three datasets corresponding to training, validation and
-    testing dataset.
+    Returns:
+        A two-tuple whose first element is another tuple containing two or three
+        datasets corresponding to training, validation and testing dataset, and the
+        second element is mapping from class labels to class names.
     """
 
     # We only import tensorflow here to avoid breaking utils import when
@@ -401,7 +333,7 @@ def load_tensorflow_image_dataset(
     import tensorflow as tf
 
     # Retrieve files:
-    files, labels, _ = load_python_image_dataset(
+    files, labels, idx_to_class = load_python_image_dataset(
         folder, shuffle, aggregate_fn, filter_fn
     )
 
@@ -426,16 +358,22 @@ def load_tensorflow_image_dataset(
     # Split dataset:
     if isinstance(train_split, float):
         return (
-            dataset.map(preprocess).take(int(train_split * n_images)),
-            dataset.map(preprocess).skip(int(train_split * n_images)),
+            (
+                dataset.map(preprocess).take(int(train_split * n_images)),
+                dataset.map(preprocess).skip(int(train_split * n_images)),
+            ),
+            idx_to_class,
         )
     else:
         return (
-            dataset.map(preprocess).take(int(train_split[0] * n_images)),
-            dataset.map(preprocess)
-            .skip(int(train_split[0] * n_images))
-            .take(int(train_split[1] * n_images)),
-            dataset.map(preprocess)
-            .skip(int(train_split[0] * n_images))
-            .skip(int(train_split[1] * n_images)),
+            (
+                dataset.map(preprocess).take(int(train_split[0] * n_images)),
+                dataset.map(preprocess)
+                .skip(int(train_split[0] * n_images))
+                .take(int(train_split[1] * n_images)),
+                dataset.map(preprocess)
+                .skip(int(train_split[0] * n_images))
+                .skip(int(train_split[1] * n_images)),
+            ),
+            idx_to_class,
         )
