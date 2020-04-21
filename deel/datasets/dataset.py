@@ -224,9 +224,11 @@ class Dataset(object):
         retvalue = load_fn(path, **kargs)
 
         # Extract information from the returned value:
-        if len(retvalue) == 2 and isinstance(retvalue[1], dict):
+        try:
+            assert len(retvalue) == 2
+            assert isinstance(retvalue[1], dict)
             retvalue, info = retvalue
-        else:
+        except (TypeError, AssertionError):
             info = {}
 
         # If information are requested, returns it:
