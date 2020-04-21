@@ -103,8 +103,12 @@ class Provider(abc.ABC):
 
     @abc.abstractmethod
     def get_folder(
-        self, name: str, version: str = "latest", force_update: bool = False
-    ) -> pathlib.Path:
+        self,
+        name: str,
+        version: str = "latest",
+        force_update: bool = False,
+        returns_version: bool = False,
+    ) -> typing.Union[pathlib.Path, typing.Tuple[pathlib.Path, str]]:
         """ Retrieve the root folder for the given dataset.
 
         Args:
@@ -114,9 +118,12 @@ class Provider(abc.ABC):
             `"3.1.*"`.
             force_update: Force the update of the local dataset if possible.
             May have no effect on some providers.
+            returns_version: If `True`, the exact version of the dataset will be
+            returned along the path.
 
         Returns:
-            A path to the root folder for the given dataset name.
+            A path to the root folder for the given dataset name, or a tuple containing
+            the path and the exact version.
 
         Raises:
             DatasetNotFoundError: If the requested dataset was not found by this

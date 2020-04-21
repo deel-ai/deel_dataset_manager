@@ -29,6 +29,7 @@ def load(
     mode: Optional[str] = None,
     version: str = "latest",
     force_update: bool = False,
+    with_info: bool = False,
     settings: Settings = None,
     **kwargs
 ) -> Any:
@@ -42,6 +43,9 @@ def load(
         own sets of available modes.
         version: Version of the dataset.
         force_update: Force update of the local dataset if possible.
+        with_info: Returns information about the dataset alongside the actual
+            dataset(s).
+        settings: Settings to use to load the dataset.
         **kwargs: Extra arguments for the given dataset and mode.
 
     Returns:
@@ -94,4 +98,6 @@ def load(
         return dataset_object
 
     # Create the dataset object and load:
-    return dataset_object.load(mode=mode, force_update=force_update, **kwargs)
+    return dataset_object.load(
+        mode=mode, force_update=force_update, with_info=with_info, **kwargs
+    )

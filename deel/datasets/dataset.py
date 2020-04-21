@@ -34,7 +34,7 @@ class Dataset(object):
 
     A dataset can be loaded using different modes (see `available_modes`
     and `default_mode`). Inheriting classes can add extra modes by providing
-    `_load_MODE` method and overriding `_default_mode`.
+    `load_MODE` method and overriding `_default_mode`.
 
     Example:
         Basic usage of the `Dataset` class is via the `load` method.
@@ -47,6 +47,9 @@ class Dataset(object):
     # Name and version of the dataset:
     _name: str
     _version: str
+
+    # Information about this dataset:
+    _info: typing.Dict[str, typing.Any] = {}
 
     # The settings to use:
     _settings: Settings
@@ -74,6 +77,8 @@ class Dataset(object):
         self._name = name
         self._version = version
 
+        self._info[name] = name
+
         if settings is None:
             self._settings = get_default_settings()
         else:
@@ -91,6 +96,26 @@ class Dataset(object):
             A provider suitable to retrieve this dataset.
         """
         return self._settings.make_provider()
+
+    def _make_class_info(
+        self, idx_to_class: typing.Dict[int, str]
+    ) -> typing.Dict[str, typing.Any]:
+        """ Utility function that can be used to convert a mapping
+        from class labels to class names into a valid information
+        dictionary that can be returned by a `load_` method.
+
+        Args:
+            idx_to_class: Mapping from class labels to class names.
+
+        Returns:
+            A dictionary containing information about the class in the
+            given mapping.
+        """
+
+        classes = [idx_to_class[k] for k in sorted(idx_to_class.keys())]
+        class_to_idx = {v: k for k, v in idx_to_class.items()}
+
+        return {"classes": classes, "class_to_idx": class_to_idx}
 
     @property
     def name(self) -> str:
@@ -139,13 +164,17 @@ class Dataset(object):
         return path
 
     def load(
-        self, mode: typing.Optional[str] = None, force_update: bool = False, **kargs
+        self,
+        mode: typing.Optional[str] = None,
+        force_update: bool = False,
+        with_info: bool = False,
+        **kargs
     ) -> typing.Any:
         """ Load this dataset as specified by `mode`.
 
         This method checks that the given `mode` is valid, retrieve the dataset
         files using a `Provider` and then dispatches the actual loading of the
-        data to a `_load_MODE` method.
+        data to a `load_MODE` method.
 
         If this dataset consists of a single file as specified by `_single_file`,
         the path used will be the one of this file, otherwize, the folder will
@@ -154,6 +183,8 @@ class Dataset(object):
         Args:
             mode: Mode to load the dataset, or `None` to use the default mode.
             force_update: Force update of the dataset if possible.
+            with_info: Returns information about the dataset alongside the actual
+                dataset(s).
             **kargs: Extra arguments for the specific mode.
 
         Returns:
@@ -173,9 +204,15 @@ class Dataset(object):
             raise InvalidModeError(self, mode)
 
         with self._get_provider() as provider:
-            path = provider.get_folder(
-                self._name, self._version, force_update=force_update
+            path, version = provider.get_folder(
+                self._name,
+                self._version,
+                force_update=force_update,
+                returns_version=True,
             )
+
+        # Update version:
+        self._info["version"] = version
 
         # If single file, retrieve the path to the first file:
         if self._single_file:
@@ -184,4 +221,17 @@ class Dataset(object):
         # Retrieve the method:
         load_fn = getattr(self, "load_" + mode)
 
-        return load_fn(path, **kargs)
+        retvalue = load_fn(path, **kargs)
+
+        # Extract information from the returned value:
+        if len(retvalue) == 2 and isinstance(retvalue[1], dict):
+            retvalue, info = retvalue
+        else:
+            info = {}
+
+        # If information are requested, returns it:
+        if with_info:
+            info.update(self._info)
+            return retvalue, info
+
+        return retvalue
