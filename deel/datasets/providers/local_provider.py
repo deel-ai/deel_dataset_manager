@@ -117,8 +117,12 @@ class LocalProvider(Provider):
             self._make_folder(name).rmdir()
 
     def get_folder(
-        self, name: str, version: str = "latest", force_update: bool = False
-    ) -> pathlib.Path:
+        self,
+        name: str,
+        version: str = "latest",
+        force_update: bool = False,
+        returns_version: bool = False,
+    ) -> typing.Union[pathlib.Path, typing.Tuple[pathlib.Path, str]]:
 
         # Retrieve the path of the dataset:
         path = self._make_folder(name)
@@ -132,4 +136,9 @@ class LocalProvider(Provider):
         except VersionNotFoundError:
             raise DatasetVersionNotFoundError(name, version)
 
-        return path.joinpath(version)
+        path = path.joinpath(version)
+
+        if returns_version:
+            return path, version
+        else:
+            return path

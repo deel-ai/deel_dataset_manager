@@ -29,8 +29,12 @@ def test_get_version():
             return []
 
         def get_folder(
-            self, name: str, version: str = "latest", force_update: bool = False
-        ) -> pathlib.Path:
+            self,
+            name: str,
+            version: str = "latest",
+            force_update: bool = False,
+            returns_version: bool = False,
+        ) -> typing.Union[pathlib.Path, typing.Tuple[pathlib.Path, str]]:
             raise DatasetNotFoundError("")
 
     # Fake provider:

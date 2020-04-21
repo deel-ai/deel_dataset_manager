@@ -234,13 +234,19 @@ class RemoteProvider(LocalProvider):
             raise DatasetVersionNotFoundError(name, version)
 
     def get_folder(
-        self, name: str, version: str = "latest", force_update: bool = False
-    ) -> pathlib.Path:
+        self,
+        name: str,
+        version: str = "latest",
+        force_update: bool = False,
+        returns_version: bool = False,
+    ) -> typing.Union[pathlib.Path, typing.Tuple[pathlib.Path, str]]:
 
         # Find the local path (if any):
         local_path: typing.Optional[pathlib.Path] = None
         try:
-            local_path = super().get_folder(name, version)
+            local_path, local_version = super().get_folder(  # type: ignore
+                name, version, returns_version=True
+            )
         except DatasetNotFoundError:
             pass
 
@@ -258,7 +264,11 @@ class RemoteProvider(LocalProvider):
             logger.warning(
                 "Remote dataset not found, using local one, version might be outdated."
             )
-            return local_path
+
+            if returns_version:
+                return local_path, local_version
+            else:
+                return local_path
 
         # Create the local folder using the exact version:
         local_exact_path = self._make_folder(name, remote_version)
@@ -266,7 +276,10 @@ class RemoteProvider(LocalProvider):
         # If the local path is exact and a force update is not required,
         # we simply return:
         if local_path == local_exact_path and not force_update:
-            return local_path
+            if returns_version:
+                return local_exact_path, remote_version
+            else:
+                return local_exact_path
 
         if local_exact_path.exists():
             shutil.rmtree(local_exact_path, ignore_errors=True)
@@ -289,7 +302,10 @@ class RemoteProvider(LocalProvider):
                 if modifier.accept(local_file):
                     modifier.apply(local_file)
 
-        return local_exact_path
+        if returns_version:
+            return local_exact_path, remote_version
+        else:
+            return local_exact_path
 
 
 class RemoteSingleFileProvider(RemoteProvider):
