@@ -38,7 +38,7 @@ class BlinkDataset(Dataset):
         image_size: typing.Tuple[int, int] = (64, 64),
         transform: typing.Callable = None,
     ):
-        """ Load method for the `tensorflow` mode.
+        """ Load method for the `pytorch` mode.
 
         Args:
             percent_train: Percentage of training data ([0, 1]).

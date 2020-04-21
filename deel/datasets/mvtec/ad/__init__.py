@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+import pathlib
 import typing
 
 from ...dataset import Dataset
@@ -17,7 +18,7 @@ class MvtecAdDataset(Dataset):
         "ftp://ftp.softronics.ch/mvtec_anomaly_detection/mvtec_anomaly_detection.tar.xz"
     )
 
-    _default_mode: str = "path"
+    _default_mode: str = "pytorch"
 
     def __init__(
         self, version: str = "latest", settings: typing.Optional[Settings] = None
@@ -36,4 +37,37 @@ class MvtecAdDataset(Dataset):
             MvtecAdDataset.MVTEC_AD_REMOTE_FILE,
             "mvtec-ad",
             authenticator=MvtecAdDataset.MVTEC_AUTHENTICATOR,
+        )
+
+    def _dispatch_fn(
+        self, path: pathlib.Path
+    ) -> typing.Optional[typing.Tuple[typing.List[str], str]]:
+        parts = path.parts
+
+        if parts[1] == "train":
+            return ["train"], parts[0]
+
+        elif parts[1] == "test":
+
+            if parts[2] == "good":
+                return ["test"], parts[0]
+            else:
+                return ["unknown"], "{}_{}".format(parts[0], parts[-1])
+
+        else:
+            return ["ground_truth"], "{}_{}".format(parts[0], parts[-1])
+
+    def load_pytorch(
+        self,
+        path: pathlib.Path,
+        image_size: typing.Tuple[int, int] = (64, 64),
+        unique_labels: bool = False,
+        transform: typing.Callable = None,
+    ):
+        """ Load method for the `pytorch` mode.
+        """
+        from ...utils import load_hierarchical_pytorch_image_dataset
+
+        return load_hierarchical_pytorch_image_dataset(
+            path, self._dispatch_fn, image_size=image_size, unique_labels=unique_labels
         )
