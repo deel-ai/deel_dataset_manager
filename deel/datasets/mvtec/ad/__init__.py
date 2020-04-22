@@ -10,7 +10,7 @@ from ...providers.ftp_providers import FtpSimpleAuthenticator, FtpSingleFileProv
 
 class MvtecAdDataset(Dataset):
 
-    """ Class for the blink dataset. """
+    """ Class for the MVTEC anomaly detection dataset. """
 
     # URL of the remote file:
     MVTEC_AUTHENTICATOR = FtpSimpleAuthenticator("guest", "GU.205dldo")
@@ -42,6 +42,11 @@ class MvtecAdDataset(Dataset):
     def _dispatch_fn(
         self, path: pathlib.Path
     ) -> typing.Optional[typing.Tuple[typing.List[str], str]]:
+        """
+        Args:
+            path: path of the folder containing the images
+        Returns a tuple with the name of the dataset
+        """
         parts = path.parts
 
         if parts[1] == "train":
@@ -49,7 +54,7 @@ class MvtecAdDataset(Dataset):
 
         elif parts[1] == "test":
 
-            if parts[2] == "good":
+            if parts[2] == "good":  # good are without anomaly
                 return ["test"], parts[0]
             else:
                 return ["unknown"], "{}_{}".format(parts[0], parts[-1])
@@ -57,17 +62,52 @@ class MvtecAdDataset(Dataset):
         else:
             return ["ground_truth"], "{}_{}".format(parts[0], parts[-1])
 
+    def _dispatch_by_class_fn(
+        self, path: pathlib.Path
+    ) -> typing.Optional[typing.Tuple[typing.List[str], str]]:
+        parts = path.parts
+
+        if parts[1] == "train":
+            return ["{}_{}".format(parts[0], parts[1])], parts[0]
+
+        elif parts[1] == "test":
+
+            if parts[2] == "good":  # good are without anomaly
+                return ["{}_{}".format(parts[0], parts[1])], parts[0]
+            else:
+                return ["{}_{}".format(parts[0], "unknown")], parts[0]
+
+        else:
+            return ["{}_{}".format(parts[0], "ground_truth")], parts[0]
+
     def load_pytorch(
         self,
         path: pathlib.Path,
         image_size: typing.Tuple[int, int] = (64, 64),
         unique_labels: bool = False,
+        split_by_class: bool = True,
         transform: typing.Callable = None,
     ):
         """ Load method for the `pytorch` mode.
         """
         from ...utils import load_hierarchical_pytorch_image_dataset
 
-        return load_hierarchical_pytorch_image_dataset(
-            path, self._dispatch_fn, image_size=image_size, unique_labels=unique_labels
+        dispatch_fn = (
+            self._dispatch_fn if not split_by_class else self._dispatch_by_class_fn
         )
+
+        result = load_hierarchical_pytorch_image_dataset(
+            path, dispatch_fn, image_size=image_size, unique_labels=unique_labels
+        )
+
+        if split_by_class:
+            transformed_result: dict = {}
+            for k, v in result.items():
+                cls = k.split("_")[0]
+                split = "_".join(k.split("_")[1:])
+                if cls not in transformed_result:
+                    transformed_result[cls] = {}
+                transformed_result[cls][split] = v
+
+            result = transformed_result
+        return result
