@@ -4,11 +4,105 @@ import pathlib
 import random
 import logging
 
-from typing import List, Tuple, Optional, Union, Dict, Callable
+from typing import List, Tuple, Optional, Union, Dict, Callable, Set
 
 from PIL import Image
 
 log = logging.getLogger("deel.dataset.manager")
+
+
+def load_hierarchical_python_image_dataset(
+    folder: pathlib.Path,
+    dispatch_fn: Callable[[pathlib.Path], Optional[Tuple[List[str], str]]],
+    unique_labels: bool = False,
+):
+    """ Walk the given folder applying the given function to
+    find to which dataset and class each file should be associated
+    to.
+
+    The function should returns a list of parts. The number of
+    parts can be different for each file. For a list of N parts,
+    the N - 1 ones corresponds to the dataset while the last
+    one is the class.
+
+    Args:
+        folder: The folder to look for file.
+        dispatch_fn: A function that should return a 2-tuple where
+            the first element in a list of str to represent the
+            dataset (e.g, `["train", "a"]`) to represent the dataset
+            `train/a` and the second element is the class of the file.
+        unique_labels: If `True`, the labels will be unique across all
+            datasets, otherwize the labels will go from 0 to the number
+            of class in the datasets - 1.
+
+    Returns:
+        A dictionary mapping dataset hierarchy to 3-tuples `(paths, labels, classes)`
+        where `paths` is a list of paths, `labels` is a list of labels (integers) and
+        classes is a dictionary from labels to names.
+
+    Examples:
+        Let assume the folder contains image under `$class/train/` and
+        `$class/test`, where `$class` is a class name. We could have
+        `dispatch_fn` returns either `["train"], $class` or `["test"], $class`
+         which would result in creating two distinct datasets.
+    """
+
+    classes: Dict[Tuple[str, ...], Dict[str, List[pathlib.Path]]] = {}
+    for path in filter(pathlib.Path.is_file, folder.glob("*/**/*")):
+
+        # The "class" path:
+        if path.name.endswith(".txt"):
+            continue
+
+        ret = dispatch_fn(path.parent.relative_to(folder))
+
+        if ret is not None:
+            cpath, cls = ret
+            tpath = tuple(cpath)
+            if tpath not in classes:
+                classes[tpath] = {}
+            if cls not in classes[tpath]:
+                classes[tpath][cls] = []
+            classes[tpath][cls].append(path)
+
+    label_maps: Dict[Tuple[str, ...], Dict[str, int]] = {}
+
+    # Unique labels requested, we retrieve all the labels, and
+    # create a big dictionary:
+    if unique_labels:
+        all_labels: Set[str] = set()
+        for dset in classes.values():
+            all_labels = all_labels.union(dset.keys())
+
+        label_map: Dict[str, int] = {v: i for i, v in enumerate(sorted(all_labels))}
+        for tpath in classes.keys():
+            label_maps[tpath] = label_map
+    else:
+        for tpath, dset in classes.items():
+            label_maps[tpath] = {v: i for i, v in enumerate(sorted(dset.keys()))}
+
+    # Create the datasets:
+    datasets: Dict = {}
+    for tpath, data in classes.items():
+
+        # Population
+        label_map = label_maps[tpath]
+        value: Tuple[List[pathlib.Path], List[int], Dict[str, int]] = (
+            [],
+            [],
+            label_map,
+        )
+        for cls, paths in data.items():
+            value[0].extend(paths)
+            value[1].extend([label_map[cls]] * len(paths))
+
+        dt = datasets
+        for t in tpath[:-1]:
+            if t not in dt:
+                dt[t] = {}
+        dt[tpath[-1]] = value
+
+    return datasets
 
 
 def load_python_image_dataset(
@@ -168,6 +262,68 @@ def load_numpy_image_dataset(
             ),
             idx_to_class,
         )
+
+
+def load_hierarchical_pytorch_image_dataset(
+    folder: pathlib.Path,
+    dispatch_fn: Callable[[pathlib.Path], Optional[Tuple[List[str], str]]],
+    image_size: Optional[Tuple[int, int]] = None,
+    unique_labels: bool = False,
+    transform: Optional[Callable[[Image.Image], Image.Image]] = None,
+):
+    """ Creates a pytorch image dataset from the given folder and
+    parameters.
+
+    Args:
+        folder: The folder containing the dataset. The folder should contain,
+        for each classes, a subfolder with only images inside.
+        dispatch_fn: A function that should return a 2-tuple where
+            the first element in a list of str to represent the
+            dataset (e.g, `["train", "a"]`) to represent the dataset
+            `train/a` and the second element is the class of the file.
+        image_size: The size of the image, or None to not resize images.
+        unique_labels: If `True`, the labels will be unique across all
+            datasets, otherwize the labels will go from 0 to the number
+            of class in the datasets - 1.
+        transform: Transformation to apply to the image before the conversion
+        to a torch tensor via `ToTensor()`. If `image_size` is not None, the
+        resize transform will be applied before these, if you want to do the
+        opposite, simply pass `None` as `image_size` and add the resize
+        transformation manually.
+
+
+    Returns:
+        A two-tuple whose first element is another tuple containing two or three
+        datasets corresponding to training, validation and testing dataset, and the
+        second element is mapping from class labels to class names.
+    """
+
+    import torchvision.transforms
+
+    from .torch_utils import ImageDataset
+
+    # Retrieve files:
+    pdatasets = load_hierarchical_python_image_dataset(
+        folder, dispatch_fn, unique_labels=unique_labels
+    )
+
+    # Create the transform:
+    transforms: List[Callable[[Image.Image], Image.Image]] = []
+    if image_size is not None:
+        transforms.append(torchvision.transforms.Resize(image_size))
+    if transform is not None:
+        transforms.append(transform)
+    transforms.append(torchvision.transforms.ToTensor())
+
+    transform = torchvision.transforms.Compose(transforms)
+
+    def create_dict(from_):
+        if isinstance(from_, dict):
+            return {k: create_dict(v) for k, v in from_.items()}
+        else:
+            return (ImageDataset(from_[0], from_[1], transform), from_[2])
+
+    return create_dict(pdatasets)
 
 
 def load_pytorch_image_dataset(
