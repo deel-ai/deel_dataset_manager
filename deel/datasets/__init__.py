@@ -21,6 +21,7 @@ _aliases: Dict[str, List[str]] = {
     "elecboards.components": ["components", "elecboards-components"],
     "acas": ["acas.xu", "acas-xu"],
     "bde": ["braking-distance-estimation"],
+    "mvtec.ad": ["mvtec.anomaly.detecction", "mvtec_ad"],
 }
 
 
