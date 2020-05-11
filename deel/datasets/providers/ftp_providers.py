@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
+import ftplib
 import os
 import typing
 
-from ftplib import FTP, error_temp
 from pathlib import Path
 from tqdm import tqdm
 
@@ -46,7 +46,7 @@ class FtpRemoteFile(RemoteFile):
     """ Class representing a remote file for the FTP provider. """
 
     # The FTP client:
-    _client: FTP
+    _client: ftplib.FTP
 
     # Remote path of the file from the ROOT of the FTP server::
     _remote_path: Path
@@ -54,7 +54,7 @@ class FtpRemoteFile(RemoteFile):
     # Local path of the file relative to the dataset folder:
     _local_path: Path
 
-    def __init__(self, client: FTP, remote_path: Path, local_path: Path):
+    def __init__(self, client: ftplib.FTP, remote_path: Path, local_path: Path):
         """
         Args:
             client: The FTP client (used for download).
@@ -106,7 +106,8 @@ class FtpProvider(RemoteProvider):
     server. """
 
     # The FTP client:
-    _client: FTP
+    _client_alive: bool = False
+    _client: ftplib.FTP
 
     # Remote path to the folder containing the datasets:
     _remote_path: Path
@@ -141,19 +142,26 @@ class FtpProvider(RemoteProvider):
         parts = remote_url.split("/")
         remote_url = parts[0]
 
-        self._client = FTP(remote_url, **kwargs)
-        self._remote_path = Path(*parts[1:])
+        try:
+            self._client = ftplib.FTP(remote_url, **kwargs)
+            self._remote_path = Path(*parts[1:])
 
-        # Switch to binary mode:
-        self._client.sendcmd("type i")
+            # Switch to binary mode:
+            self._client.sendcmd("type i")
+            self._client_alive = True
+        # Mypy is broken here since ftplib.all_errors is a tuple
+        # of exception objects as far as I am aware, so it should
+        # be fine here:
+        except ftplib.all_errors:  # type: ignore
+            self._client_alive = False
 
     def __exit__(self, *args):
-        return self._client.__exit__(*args)
+        if self._client_alive:
+            self._client_alive = False
+            return self._client.__exit__(*args)
 
     def _is_available(self) -> bool:
-        # The provider is always available is the constructor did
-        # not throw.
-        return True
+        return self._client_alive
 
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
         # Path to the dataset:
@@ -183,7 +191,7 @@ class FtpProvider(RemoteProvider):
             return self._remove_hidden_values(
                 [name.strip("/") for name in self._client.nlst(remote_path.as_posix())]
             )
-        except error_temp:
+        except ftplib.error_temp:
             raise DatasetNotFoundError(dataset)
 
 
