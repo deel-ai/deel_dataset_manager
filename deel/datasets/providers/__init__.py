@@ -49,6 +49,11 @@ def make_provider(
             WebDavSimpleAuthenticator,
         )
 
+        # Remote path:
+        remote_path = ""
+        if "folder" in provider_options:
+            remote_path = provider_options["folder"]
+
         # If authentication is required:
         webdav_authenticator: typing.Optional[WebDavAuthenticator] = None
         if "auth" in provider_options:
@@ -69,6 +74,7 @@ def make_provider(
         return WebDavProvider(
             root_path,
             remote_url=provider_options["url"],
+            remote_path=remote_path,
             authenticator=webdav_authenticator,
         )
 

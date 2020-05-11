@@ -19,6 +19,42 @@ manually:
 pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 ```
 
+### Configuration
+
+The configuration file specifies how the datasets should be downloaded, or
+if the datasets do no have to be downloaded (e.g. on Google Cloud).
+
+The configuration file should be at `$HOME/.deel/config.yml`:
+
+- On Windows system it is `C:\Users\$USERNAME\.deel\config.yml` unless you
+  have set the `HOME` environment variable.
+- The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
+  location of the configuration file if you do not want to use the default one.
+
+Below is a basic authentication for DEEL core team members (replace `${username}` by
+your OS username (you can also store datasets somewhere else),
+and `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
+
+```yaml
+# Version of the configuration (currently 1):
+version: 1
+
+provider:
+    type: webdav
+
+    url: https://share.deel.ai/remote.php/webdav
+    folder: Datasets
+
+    auth:
+        method: "simple"
+        username: "${deel-user}"
+        password: "${deel-password}"
+
+path: /home/${username}/.deel/datasets
+```
+
+See below for other configuration options.
+
 ### Uninstalling
 
 To uninstall the package, simply run `pip uninstall`:
@@ -77,46 +113,6 @@ The following files contain examples for the `blink` and `landcover` dataset:
 - [examples/landcover/load_example.py](examples/landcover/load_example.py)
 
 ## Configuration:
-
-While a configuration file is not strictly required for the moment, it is still
-recommended to create one.
-The configuration file specifies how the datasets should be downloaded, or
-if the datasets do no have to be downloaded (e.g. on Google Cloud).
-
-The configuration file should be at `$HOME/.deel/config.yml`:
-
-- On Windows system it is `C:\Users\$USERNAME\.deel\config.yml` unless you
-  have set the `HOME` environment variable.
-- The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
-  location of the configuration file if you do not want to use the default one.
-
-### Basic configuration
-
-The configuration file is a simple YAML file. Below is the default example for
-a WebDAV configuration using the standard `https://datasets.deel.ai` server
-for fetching datasets.
-
-```yaml
-# Version of the configuration (currently 1):
-version: 1
-
-# Provider for the datasets:
-provider:
-    # Possible types: webdav, local, gcloud
-    type: webdav
-
-    # Only required for webdav currently
-    url: https://datasets.deel.ai
-
-    # Only for webdav, not required:
-    auth:
-        method: "simple"
-        username: "deel-datasets"
-        password: "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"
-
-# Local storage for the datasets:
-path: /home/username/.deel/datasets
-```
 
 ### GCloud configuration
 

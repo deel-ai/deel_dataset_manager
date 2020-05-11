@@ -3,6 +3,7 @@
 import abc
 import os
 import pathlib
+import re
 import typing
 
 from tqdm import tqdm
@@ -120,8 +121,14 @@ class WebDavProvider(RemoteProvider):
     """ The `WebDavProvider` is a `RemoteProvider` associated to a WebDAV
     server. """
 
+    # Version regex (to filter folders):
+    VERSION_REGEX: typing.Pattern = re.compile("[0-9]+[.][0-9]+[.][0-9]+")
+
     # Authenticator to use:
     _authenticator: typing.Optional[WebDavAuthenticator]
+
+    # Relative path from the root of the WebDAV server:
+    _remote_path: str
 
     # The WebDAV client:
     _client: Client
@@ -130,6 +137,7 @@ class WebDavProvider(RemoteProvider):
         self,
         root_folder: os.PathLike,
         remote_url: str,
+        remote_path: str = "",
         authenticator: typing.Optional[WebDavAuthenticator] = None,
     ):
         """
@@ -142,6 +150,11 @@ class WebDavProvider(RemoteProvider):
 
         # WebDAV specific members:
         self._authenticator = authenticator
+
+        # Remote path from the root of the webdav folder:
+        self._remote_path = remote_path
+        if self._remote_path and not self._remote_path.endswith("/"):
+            self._remote_path += "/"
 
         # Create the WebDAV client:
         options = {"webdav_hostname": self._remote_url}
@@ -156,9 +169,20 @@ class WebDavProvider(RemoteProvider):
         except WebDavException:
             return False
 
+    def _is_dataset_folder(self, name):
+        if self._remote_path:
+            relative_root = self._remote_path.rstrip("/").split("/")[-1]
+        else:
+            relative_root = self._remote_url.rstrip("/").split("/")[-1]
+
+        if name.strip("/") == relative_root:
+            return False
+
+        return any(self.VERSION_REGEX.match(v) for v in self.list_versions(name))
+
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
         # Path to the dataset:
-        dataset_path = "{}/{}/".format(name, version)
+        dataset_path = "{}{}/{}/".format(self._remote_path, name, version)
 
         return [
             WebDavRemoteFile(self._client, dataset_path, fpath)
@@ -167,16 +191,24 @@ class WebDavProvider(RemoteProvider):
 
     def list_datasets(self) -> typing.List[str]:
         return self._remove_hidden_values(
-            [name.strip("/") for name in self._client.list()]
+            [
+                name.strip("/")
+                for name in self._client.list(self._remote_path)
+                if self._is_dataset_folder(name)
+            ]
         )
 
     def list_versions(self, dataset: str) -> typing.List[str]:
 
         # Check that the dataset exists:
-        remote_path = dataset + "/"
+        remote_path = "{}{}/".format(self._remote_path, dataset)
         if not self._client.check(remote_path):
             raise DatasetNotFoundError(remote_path)
 
         return self._remove_hidden_values(
-            [name.strip("/") for name in self._client.list(remote_path)]
+            [
+                name.strip("/")
+                for name in self._client.list(remote_path)
+                if name.strip("/") != dataset
+            ]
         )
