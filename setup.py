@@ -8,7 +8,6 @@ dev_requires = [
     "flake8-black",
     "mypy",
     "pytest",
-    "numpy-stubs @ git+https://github.com/numpy/numpy-stubs.git",
 ]
 
 setup(
