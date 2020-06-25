@@ -91,6 +91,8 @@ class LocalProvider(Provider):
         return self._remove_hidden_values([c.name for c in path.iterdir()])
 
     def list_datasets(self) -> typing.List[str]:
+        if not self._root_folder.exists():
+            return []
         return self._remove_hidden_values([c.name for c in self._root_folder.iterdir()])
 
     def list_versions(self, dataset: str) -> typing.List[str]:
