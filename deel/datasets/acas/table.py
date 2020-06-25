@@ -159,7 +159,7 @@ class CostTable:
             The index of the closest value to `value` in `array`.
         """
 
-        idx: int = np.searchsorted(array, value)
+        idx: int = np.searchsorted(array, value)  # type: ignore
 
         if idx == 0:
             return idx
