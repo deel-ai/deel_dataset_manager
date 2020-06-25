@@ -115,6 +115,12 @@ class WebDavRemoteFile(RemoteFile):
         """
         return pathlib.Path(self._file_path)
 
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return "WebDavRemoteFile at {}//{}".format(self._dataset_path, self._file_path)
+
 
 class WebDavProvider(RemoteProvider):
 
@@ -183,10 +189,10 @@ class WebDavProvider(RemoteProvider):
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
         # Path to the dataset:
         dataset_path = "{}{}/{}/".format(self._remote_path, name, version)
-
         return [
             WebDavRemoteFile(self._client, dataset_path, fpath)
             for fpath in self._client.list(dataset_path)
+            if fpath.rstrip("/") != version
         ]
 
     def list_datasets(self) -> typing.List[str]:
