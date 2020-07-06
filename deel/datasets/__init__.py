@@ -92,8 +92,7 @@ def load(
         # Otherwize we can use the default dataset class:
         dataset_object = Dataset(dataset, version, settings)
 
-    # If the dataset object is required, we must download
-    # it:
+    # If the dataset object is required, we must download it:
     if mode == "dataset":
         dataset_object.load(mode="path", force_update=force_update, **kwargs)
         return dataset_object
