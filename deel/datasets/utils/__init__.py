@@ -340,28 +340,27 @@ def load_pytorch_image_dataset(
 
     Args:
         folder: The folder containing the dataset. The folder should contain,
-        for each classes, a subfolder with only images inside.
+            for each classes, a subfolder with only images inside.
         image_size: The size of the image, or None to not resize images.
         train_split: One or two float values. If a single value is specified,
-        two datasets will be returned, one for training (using a percentage
-        `train_split` of data) and one for testing. If two values are specified,
-        three datasets will be returned: a training dataset, a validation
-        dataset and a testing dataset.
+            two datasets will be returned, one for training (using a percentage
+            `train_split` of data) and one for testing. If two values are specified,
+            three datasets will be returned: a training dataset, a validation
+            dataset and a testing dataset.
         shuffle: If True, shuffle images before spliting with the default seed.
-        If an int is given, use it as the seed for shufling. If False, do not
-        shuffle.
-        False otherwize.
+            If an int is given, use it as the seed for shufling. If False, do not
+            shuffle.
         aggregate_fn: Callable to aggregate classes. The function should take
-        the name of an original class (subfolder) and returns the name of the
-        "parent" class. If the call returns `None`, the class is discarded.
+            the name of an original class (subfolder) and returns the name of the
+            "parent" class. If the call returns `None`, the class is discarded.
         filter_fn: A function to filter out images. This function should take
-        a string (name of the file) and a path to the file and returns True
-        if the image should be included, False if it should be excluded.
+            a string (name of the file) and a path to the file and returns True
+            if the image should be included, False if it should be excluded.
         transform: Transformation to apply to the image before the conversion
-        to a torch tensor via `ToTensor()`. If `image_size` is not None, the
-        resize transform will be applied before these, if you want to do the
-        opposite, simply pass `None` as `image_size` and add the resize
-        transformation manually.
+            to a torch tensor via `ToTensor()`. If `image_size` is not None, the
+            resize transform will be applied before these, if you want to do the
+            opposite, simply pass `None` as `image_size` and add the resize
+            transformation manually.
 
 
     Returns:
