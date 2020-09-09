@@ -50,7 +50,7 @@ class Model:
         batch_size: int = 32,
         nepochs: int = 100,
     ):
-        """ Train the model using the given sets and parameters.
+        """Train the model using the given sets and parameters.
 
         Args:
             train_set: Training set to use.
@@ -101,7 +101,7 @@ class Model:
             )
 
     def predict(self, x: Tensor):
-        """ Predict the label of the image.
+        """Predict the label of the image.
 
         Args:
             x: the images to predict a label for.
