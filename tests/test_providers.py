@@ -17,7 +17,6 @@ from deel.datasets.providers.webdav_provider import (
 )
 
 from deel.datasets.providers.ftp_providers import (
-    FtpSimpleAuthenticator,
     FtpProvider,
 )
 
