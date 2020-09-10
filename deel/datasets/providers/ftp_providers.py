@@ -132,7 +132,7 @@ class FtpProvider(RemoteProvider):
         """
         Args:
             root_folder: Root folder to look-up datasets.
-            remote_url: Remote URL of the WebDAV server.
+            remote_url: Remote URL of the Ftp server.
             authenticator: Authenticator to use.
             **kwargs: Extra arguments for the `FTP` constructor.
         """

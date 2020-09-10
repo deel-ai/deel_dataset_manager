@@ -16,11 +16,11 @@ from .settings import Settings  # noqa
 _aliases: Dict[str, List[str]] = {
     "blink": ["blink"],
     "landcover": ["landcover"],
-    "landcover.resolution": ["landcover.resolution", "landcover-resolution"],
+    "landcover.resolution": ["landcover-resolution"],
     "airbus.helicopter": ["helicopter", "vibration", "airbus-helicopter"],
     "elecboards.components": ["components", "elecboards-components"],
     "acas": ["acas.xu", "acas-xu"],
-    "bde": ["braking-distance-estimation"],
+    "bde": ["braking-distance-estimation", "braking.distance.estimation"],
     "mvtec.ad": ["mvtec.anomaly.detecction", "mvtec_ad"],
 }
 
@@ -70,6 +70,7 @@ def load(
     #     "".join(part.capitalize() for part in dataset.split(".")) + "Dataset"
     # )
 
+    dataset_object = None
     for entry_point in pkg_resources.iter_entry_points("plugins.deel.dataset"):
         if entry_point.name == dataset:
             dataset_class = entry_point.load()

@@ -16,9 +16,16 @@ from deel.datasets.providers.webdav_provider import (
     WebDavProvider,
 )
 
+from deel.datasets.providers.ftp_providers import (
+    FtpSimpleAuthenticator,
+    FtpProvider,
+)
+
 
 def test_get_version():
-    """ Test the get_version  method. """
+    """
+    Test the get_version  method.
+    """
 
     # Fake provider class:
     class NoProvider(Provider):
@@ -72,7 +79,9 @@ def test_get_version():
 
 
 def test_factory():
-    """ Test the provider factory. """
+    """
+    Test the provider factory.
+    """
 
     path = pathlib.Path("/data/datasetes")
 
@@ -116,3 +125,45 @@ def test_factory():
     # Incorrect provider type:
     with pytest.raises(ValueError):
         make_provider("aws", path)
+
+    # Ftp provider without authentication:
+    print("Ftp provider without authentication ...")
+    provider = make_provider(
+        "ftp", path, {"url": "ftp://ftp.softronics.ch/mvtec_anomaly_detection/"}
+    )
+    assert isinstance(provider, FtpProvider)
+    assert provider._root_folder == path
+    assert provider._remote_url == "ftp://ftp.softronics.ch/mvtec_anomaly_detection/"
+    # assert provider.authenticator is None
+
+    # Ftp provider with authentication:
+    print("Ftp provider with authentication ...")
+    provider = make_provider(
+        "ftp",
+        path,
+        {
+            "url": "ftp://ftp.softronics.ch/mvtec_anomaly_detection/",
+            "auth": {"method": "simple", "username": "guest", "password": "GU.205dldo"},
+        },
+    )
+    assert isinstance(provider, FtpProvider)
+    assert provider._root_folder == path
+    assert provider._remote_url == "ftp://ftp.softronics.ch/mvtec_anomaly_detection/"
+    assert len(provider.list_datasets()) > 1
+    if len(provider.list_versions(dataset="mvtec_anomaly_detection.tar.xz")) > 0:
+        assert (
+            provider.list_versions(dataset="mvtec_anomaly_detection.tar.xz")[0]
+            == "mvtec_anomaly_detection/mvtec_anomaly_detection.tar.xz"
+        )
+
+    # Ftp provider with bad authentication method:
+    print("Ftp provider with bad authentication method ...")
+    with pytest.raises(ValueError):
+        make_provider(
+            "ftp",
+            path,
+            {
+                "url": "ftp://ftp.softronics.ch/",
+                "auth": {"method": "token", "token": "abcdef"},
+            },
+        )
