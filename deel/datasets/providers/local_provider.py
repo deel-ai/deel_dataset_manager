@@ -15,8 +15,10 @@ from .provider import Provider
 
 class LocalProvider(Provider):
 
-    """ A `LocalProvider` is a provider that look-up datasets in
-    a local location (a folder). """
+    """
+    A `LocalProvider` is a provider that look-up datasets in
+    a local location (a folder).
+    """
 
     # The root folder where datasets should be looked-up:
     _root_folder: pathlib.Path
@@ -30,11 +32,14 @@ class LocalProvider(Provider):
 
     @property
     def root_folder(self) -> pathlib.Path:
-        """ Returns: The local path to root folder for the datasets. """
+        """
+        Returns: The local path to root folder for the datasets.
+        """
         return self._root_folder
 
     def _remove_hidden_values(self, values: typing.List[str]) -> typing.List[str]:
-        """ Filter the given list by removing hidden values (folders, files). A value
+        """
+        Filter the given list by removing hidden values (folders, files). A value
         is considered hidden if:
           - it starts with a dot;
           - it is exactly "lost+found".
@@ -61,7 +66,8 @@ class LocalProvider(Provider):
     def _make_folder(
         self, name: str, version: typing.Optional[str] = None
     ) -> pathlib.Path:
-        """ Create the path for the corresponding dataset, without checking
+        """
+        Create the path for the corresponding dataset, without checking
         if it exists or not.
 
         Args:
@@ -79,7 +85,8 @@ class LocalProvider(Provider):
         return folder
 
     def _list_version(self, path: pathlib.Path) -> typing.List[str]:
-        """ List the available versions for the dataset under the
+        """
+        List the available versions for the dataset under the
         given path.
 
         Args:
@@ -102,7 +109,8 @@ class LocalProvider(Provider):
         return self._list_version(path)
 
     def del_folder(self, name: str, version: str, keep_dataset: bool = False):
-        """ Delete the folder corresponding to the given dataset version.
+        """
+        Delete the folder corresponding to the given dataset version.
         If after deleting this dataset, there are no versions remaining,
         the dataset folder is also removed, unless `keep_dataset` is `True`.
 

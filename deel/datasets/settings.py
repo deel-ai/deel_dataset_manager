@@ -26,13 +26,15 @@ DEFAULT_DATASETS_PATH = Path.home().joinpath(".deel", "datasets")
 
 class Settings(object):
 
-    """ The `Settings` class is a read-only class that contains
+    """
+    The `Settings` class is a read-only class that contains
     settings for the `deel.datasets` package.
 
     Settings are stored in a YAML format. The default location
     for the settings file is `$HOME/.deel/config.yml`. The
     `DEEL_DATASETS_CONF` environment variable can be used to
-    specify the default location of the file. """
+    specify the default location of the file.
+    """
 
     # Version of the settings:
     _version: int
@@ -66,7 +68,8 @@ class Settings(object):
         self._base = path
 
     def make_provider(self) -> Provider:
-        """ Creates and returns the provider corresponding to these settings.
+        """
+        Creates and returns the provider corresponding to these settings.
 
         Returns:
             A new `Provider` created from these settings.
@@ -75,11 +78,14 @@ class Settings(object):
 
     @property
     def local_storage(self) -> Path:
-        """ Returns: The path to the local storage for the datasets. """
+        """
+        Returns: The path to the local storage for the datasets.
+        """
         return self._base
 
     def __repr__(self) -> str:
-        """ Output a basic representation of these settings.
+        """
+        Output a basic representation of these settings.
 
         Returns:
             A basic representation of these settings.
@@ -94,7 +100,8 @@ class Settings(object):
 
 
 def _get_default_path(provider_type: str) -> Path:
-    """ Retrieve the default dataset root path for the given provider type.
+    """
+    Retrieve the default dataset root path for the given provider type.
 
     Args:
         provider_type: The type of provider to retrieve the path for.
@@ -118,13 +125,16 @@ def _get_default_path(provider_type: str) -> Path:
 
 
 class ParseSettingsError(Exception):
-    """ Exception raised if an issue occurs while parsing the settings. """
+    """
+    Exception raised if an issue occurs while parsing the settings.
+    """
 
     pass
 
 
 def read_settings(stream: TextIO) -> Settings:
-    """ Load `Settings` from the given YAML stream.
+    """
+    Load `Settings` from the given YAML stream.
 
     Args:
         stream: File-like object containing the configuration.
@@ -168,7 +178,8 @@ def read_settings(stream: TextIO) -> Settings:
 
 
 def write_settings(settings: Settings, stream: TextIO, **kwargs):
-    """ Write the given `Settings` to the given stream as YAML.
+    """
+    Write the given `Settings` to the given stream as YAML.
 
     Args:
         settings: Settings to write.
@@ -196,7 +207,8 @@ def write_settings(settings: Settings, stream: TextIO, **kwargs):
 
 
 def get_default_settings() -> Settings:
-    """ Retrieve the default settings for the current machine.
+    """
+    Retrieve the default settings for the current machine.
 
     Returns:
         The default settings for the current machine.

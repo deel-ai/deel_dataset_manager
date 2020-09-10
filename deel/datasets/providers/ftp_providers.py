@@ -14,8 +14,10 @@ from .remote_provider import RemoteFile, RemoteProvider, RemoteSingleFileProvide
 
 class FtpSimpleAuthenticator:
 
-    """ Authenticator for a simple FTP authentication with a
-    username and a password. """
+    """
+    Authenticator for a simple FTP authentication with a
+    username and a password.
+    """
 
     # Username and password:
     _username: str
@@ -32,18 +34,24 @@ class FtpSimpleAuthenticator:
 
     @property
     def username(self):
-        """ Returns: The username to use for authentication. """
+        """
+        Returns: The username to use for authentication.
+        """
         return self._username
 
     @property
     def password(self):
-        """ Returns: The password to use for authentication. """
+        """
+        Returns: The password to use for authentication.
+        """
         return self._password
 
 
 class FtpRemoteFile(RemoteFile):
 
-    """ Class representing a remote file for the FTP provider. """
+    """
+    Class representing a remote file for the FTP provider.
+    """
 
     # The FTP client:
     _client: ftplib.FTP
@@ -102,8 +110,10 @@ class FtpRemoteFile(RemoteFile):
 
 class FtpProvider(RemoteProvider):
 
-    """ The `FtpProvider` is a `RemoteProvider` associated to a FTP
-    server. """
+    """
+    The `FtpProvider` is a `RemoteProvider` associated to a FTP
+    server.
+    """
 
     # The FTP client:
     _client_alive: bool = False
@@ -197,9 +207,11 @@ class FtpProvider(RemoteProvider):
 
 class FtpSingleFileProvider(RemoteSingleFileProvider, FtpProvider):
 
-    """ The `FtpProvider` is a `RemoteProvider` associated to a FTP server.
+    """
+    The `FtpProvider` is a `RemoteProvider` associated to a FTP server.
 
-    This provider currently does not supported encrypted connection. """
+    This provider currently does not supported encrypted connection.
+    """
 
     def __init__(
         self,

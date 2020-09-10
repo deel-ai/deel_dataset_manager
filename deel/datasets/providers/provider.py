@@ -9,17 +9,20 @@ from .exceptions import VersionNotFoundError
 
 class Provider(abc.ABC):
 
-    """ The `Provider` class is an abstract interface for classes
+    """
+    The `Provider` class is an abstract interface for classes
     that provides access to dataset storages.
 
     The list of methods that should be overriden by all child classes
     are indicated with the `abc.abstractmethod` decorator. If a class
     requires specific clean-up, the `__enter__` and `__exit__` special
-    functions can be overriden. """
+    functions can be overriden.
+    """
 
     @abc.abstractmethod
     def list_datasets(self) -> typing.List[str]:
-        """ List the available datasets for this provider.
+        """
+        List the available datasets for this provider.
 
         Returns:
             The list of datasets available for this provider.
@@ -28,7 +31,8 @@ class Provider(abc.ABC):
 
     @abc.abstractmethod
     def list_versions(self, dataset: str) -> typing.List[str]:
-        """ List the available versions of the given dataset for this
+        """
+        List the available versions of the given dataset for this
         provider.
 
         Returns:
@@ -47,7 +51,8 @@ class Provider(abc.ABC):
         pass
 
     def get_version(self, version: str, versions: typing.List[str]) -> str:
-        """ Retrieve the version from the list of `versions` that best match
+        """
+        Retrieve the version from the list of `versions` that best match
         the given one.
 
         Args:
@@ -109,7 +114,8 @@ class Provider(abc.ABC):
         force_update: bool = False,
         returns_version: bool = False,
     ) -> typing.Union[pathlib.Path, typing.Tuple[pathlib.Path, str]]:
-        """ Retrieve the root folder for the given dataset.
+        """
+        Retrieve the root folder for the given dataset.
 
         Args:
             name: Name of the dataset to retrieve the folder for.

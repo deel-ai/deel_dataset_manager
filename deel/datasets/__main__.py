@@ -10,7 +10,8 @@ from .providers.remote_provider import RemoteProvider
 
 
 def list_datasets(args: argparse.Namespace):
-    """ List the datasets as specified by `args`.
+    """
+    List the datasets as specified by `args`.
 
     Args:
         args: Arguments from the command line.
@@ -49,7 +50,8 @@ def list_datasets(args: argparse.Namespace):
 
 
 def download_datasets(args: argparse.Namespace):
-    """ Download the dataset specified by `args`.
+    """
+    Download the dataset specified by `args`.
 
     Args:
         args: Arguments from the command line.
@@ -82,7 +84,8 @@ def download_datasets(args: argparse.Namespace):
 
 
 def remove_datasets(args: argparse.Namespace):
-    """ Remove the dataset specified by `args` (locally).
+    """
+    Remove the dataset specified by `args` (locally).
 
     Args:
         args: Arguments from the command line.
@@ -185,7 +188,10 @@ del_parser.add_argument(
     " (if omitted, remove all versions)",
 )
 del_parser.add_argument(
-    "-a", "--all", action="store_true", help="remove all local datasets",
+    "-a",
+    "--all",
+    action="store_true",
+    help="remove all local datasets",
 )
 del_parser.set_defaults(func=remove_datasets)
 

@@ -18,17 +18,21 @@ from .remote_provider import RemoteFile, RemoteProvider
 
 class WebDavAuthenticator(abc.ABC):
 
-    """ Base class for WebDAV authenticators.
+    """
+    Base class for WebDAV authenticators.
 
-    Authenticator classes are used for dispatching and storing eventual parameters. """
+    Authenticator classes are used for dispatching and storing eventual parameters.
+    """
 
     pass
 
 
 class WebDavSimpleAuthenticator(WebDavAuthenticator):
 
-    """ Authenticator for a simple HTTP authentication with a username and a
-    password. """
+    """
+    Authenticator for a simple HTTP authentication with a username and a
+    password.
+    """
 
     # Username and password:
     _username: str
@@ -45,18 +49,24 @@ class WebDavSimpleAuthenticator(WebDavAuthenticator):
 
     @property
     def username(self):
-        """ Returns: The username to use for authentication. """
+        """
+        Returns: The username to use for authentication.
+        """
         return self._username
 
     @property
     def password(self):
-        """ Returns: The password to use for authentication. """
+        """
+        Returns: The password to use for authentication.
+        """
         return self._password
 
 
 class WebDavRemoteFile(RemoteFile):
 
-    """ Class representing a remote file for the WebDAV provider. """
+    """
+    Class representing a remote file for the WebDAV provider.
+    """
 
     # The WebDAV client:
     _client: Client
@@ -124,8 +134,10 @@ class WebDavRemoteFile(RemoteFile):
 
 class WebDavProvider(RemoteProvider):
 
-    """ The `WebDavProvider` is a `RemoteProvider` associated to a WebDAV
-    server. """
+    """
+    The `WebDavProvider` is a `RemoteProvider` associated to a WebDAV
+    server.
+    """
 
     # Version regex (to filter folders):
     VERSION_REGEX: typing.Pattern = re.compile("[0-9]+[.][0-9]+[.][0-9]+")
