@@ -16,7 +16,8 @@ def make_provider(
     provider_options: typing.Dict[str, typing.Any] = {},
 ) -> Provider:
 
-    """ Create a new provider using the given arguments.
+    """
+    Create a new provider using the given arguments.
 
     Args:
         provider_type: Type of the provider.

@@ -5,8 +5,10 @@ import typing
 
 class DatasetNotFoundError(Exception):
 
-    """ Exception thrown by providers when the requested dataset
-    is not found. """
+    """
+    Exception thrown by providers when the requested dataset
+    is not found.
+    """
 
     def __init__(self, name: str):
         """
@@ -18,8 +20,10 @@ class DatasetNotFoundError(Exception):
 
 class VersionNotFoundError(Exception):
 
-    """ Exception thrown by providers when the requested version
-    is not found. """
+    """
+    Exception thrown by providers when the requested version
+    is not found.
+    """
 
     def __init__(self, version: typing.Optional[str] = None):
         """
@@ -31,10 +35,12 @@ class VersionNotFoundError(Exception):
 
 class DatasetVersionNotFoundError(DatasetNotFoundError, VersionNotFoundError):
 
-    """ Exception thrown by providers when the requested dataset
+    """
+    Exception thrown by providers when the requested dataset
     version is not found.
 
-    This exception is meant to be more specific than DatasetNotFoundError. """
+    This exception is meant to be more specific than DatasetNotFoundError.
+    """
 
     def __init__(self, name: str, version: str):
         """

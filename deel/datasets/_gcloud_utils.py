@@ -12,7 +12,8 @@ _GCLOUD_DRIVE_PATH = Path("/dev/disk/by-id/google-deel-datasets")
 
 
 def find_gcloud_mount_path() -> typing.Optional[Path]:
-    """ Try to find the GCloud datasets mount path.
+    """
+    -Try to find the GCloud datasets mount path.
 
     Returns:
         The mount path for the deel-datasets GCloud drive on the
