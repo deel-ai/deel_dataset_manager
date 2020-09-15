@@ -4,7 +4,12 @@ image: themattrix/tox
 stages:
   - test
 
-test:
+linting:
   stage: test
   script:
-    - tox
+    - tox -e py36-lint
+
+pytest:
+  stage: test
+  script:
+    - tox -e py36,py37,py38
