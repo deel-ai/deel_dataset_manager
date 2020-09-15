@@ -3,8 +3,11 @@
 import pathlib
 import pytest
 import typing
+import os
+import ftplib
 
 from deel.datasets.providers import make_provider, Provider
+
 from deel.datasets.providers.exceptions import (
     DatasetNotFoundError,
     VersionNotFoundError,
@@ -77,18 +80,27 @@ def test_get_version():
         provider.get_version("3.*", ["1.0.2", "1.4.5", "2.3.5"])
 
 
-def test_factory():
+def test_factory(ftpserver, tmpdir):
     """
     Test the provider factory.
     """
 
-    path = pathlib.Path("/data/datasetes")
-
+    # path = pathlib.Path("/data/datasetes")
+    path = pathlib.Path(
+        os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "data/",
+        )
+    )
     # Local provider:
     provider = make_provider("local", path)
 
     assert isinstance(provider, LocalProvider)
     assert provider._root_folder == path
+
+    assert provider.list_datasets() == ["dataset2", "dataset1"]
+    assert provider.list_versions("dataset1") == ["0.0.1", "0.1.0", "1.0.0"]
+    assert provider.list_versions("dataset2") == ["1.0.0", "1.0.1"]
 
     # WebDAV provider without authentication:
     provider = make_provider("webdav", path, {"url": "https://webdav"})
@@ -125,39 +137,71 @@ def test_factory():
     with pytest.raises(ValueError):
         make_provider("aws", path)
 
-    # Ftp provider without authentication:
-    print("Ftp provider without authentication ...")
-    provider = make_provider(
-        "ftp", path, {"url": "ftp://ftp.softronics.ch/mvtec_anomaly_detection/"}
-    )
-    assert isinstance(provider, FtpProvider)
-    assert provider._root_folder == path
-    assert provider._remote_url == "ftp://ftp.softronics.ch/mvtec_anomaly_detection/"
-    # assert provider.authenticator is None
-
     # Ftp provider with authentication:
-    print("Ftp provider with authentication ...")
+    # First put on the ftp server two files for test
+    # using default login/ passwd
+    ftpserver.reset_tmp_dirs()
+    login_dict = ftpserver.get_login_data()
+    ftp = ftplib.FTP()
+    ftp.connect(login_dict["host"], login_dict["port"])
+    ftp.login(login_dict["user"], login_dict["passwd"])
+    ftp.cwd("/")
+    ftpserver.put_files(
+        {
+            "src": os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                "data/dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+            ),
+            "dest": "dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+        },
+        style="rel_path",
+        anon=False,
+    )
+    ftpserver.put_files(
+        {
+            "src": os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                "data/dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+            ),
+            "dest": "dataset1/0.0.2/ftp_provider_test_data.tar.xz",
+        },
+        style="rel_path",
+        anon=False,
+    )
+    ftpserver.put_files(
+        {
+            "src": os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                "data/dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+            ),
+            "dest": "dataset2/0.0.2/ftp_provider_test_data.tar.xz",
+        },
+        style="rel_path",
+        anon=False,
+    )
+    ftp.quit()
+
+    ftplib.FTP_PORT = login_dict["port"]
     provider = make_provider(
         "ftp",
         path,
         {
-            "url": "ftp://ftp.softronics.ch/mvtec_anomaly_detection/",
-            "auth": {"method": "simple", "username": "guest", "password": "GU.205dldo"},
+            "url": "ftp://localhost/",
+            "auth": {
+                "method": "simple",
+                "username": "fakeusername",
+                "password": "qweqwe",
+            },
+            "port": login_dict["port"],
         },
     )
     assert isinstance(provider, FtpProvider)
     assert provider._root_folder == path
-    assert provider._remote_url == "ftp://ftp.softronics.ch/mvtec_anomaly_detection/"
-    print("List of datasets {}".format(len(provider.list_datasets())))
-    # assert len(provider.list_datasets()) > 1
-    if len(provider.list_versions(dataset="mvtec_anomaly_detection.tar.xz")) > 0:
-        assert (
-            provider.list_versions(dataset="mvtec_anomaly_detection.tar.xz")[0]
-            == "mvtec_anomaly_detection/mvtec_anomaly_detection.tar.xz"
-        )
+    assert provider.list_datasets() == ["dataset1", "dataset2"]
+    assert provider.list_versions("dataset1") == ["0.0.1", "0.0.2"]
+    assert provider.list_versions("dataset2") == ["0.0.2"]
 
     # Ftp provider with bad authentication method:
-    print("Ftp provider with bad authentication method ...")
     with pytest.raises(ValueError):
         make_provider(
             "ftp",

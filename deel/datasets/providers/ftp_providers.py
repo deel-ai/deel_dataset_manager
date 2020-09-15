@@ -143,7 +143,6 @@ class FtpProvider(RemoteProvider):
             kwargs.update(
                 {"user": authenticator.username, "passwd": authenticator.password}
             )
-
         # Remove the ftp(s):// prefix:
         if remote_url.find("://") != -1:
             remote_url = remote_url[remote_url.find("://") + 3 :]
@@ -153,7 +152,9 @@ class FtpProvider(RemoteProvider):
         remote_url = parts[0]
 
         try:
-            self._client = ftplib.FTP(remote_url, **kwargs)
+            self._client = ftplib.FTP()
+            self._client.connect(remote_url, ftplib.FTP_PORT)
+            self._client.login(**kwargs)
             self._remote_path = Path(*parts[1:])
 
             # Switch to binary mode:
