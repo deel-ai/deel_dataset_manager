@@ -92,12 +92,13 @@ def test_factory(ftpserver, tmpdir):
             "data/",
         )
     )
+    print("Local path {}".format(path))
     # Local provider:
     provider = make_provider("local", path)
 
     assert isinstance(provider, LocalProvider)
     assert provider._root_folder == path
-
+    print("provider.list_datasets {}".format(provider.list_datasets()))
     assert provider.list_datasets() == ["dataset2", "dataset1"]
     assert provider.list_versions("dataset1") == ["0.0.1", "0.1.0", "1.0.0"]
     assert provider.list_versions("dataset2") == ["1.0.0", "1.0.1"]
