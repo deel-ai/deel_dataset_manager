@@ -42,6 +42,7 @@ setup(
         "h5py",
         "pyyaml",
         "psutil",
+        "pytest_localftpserver",
     ],
     extras_require={"dev": dev_requires},
 )
