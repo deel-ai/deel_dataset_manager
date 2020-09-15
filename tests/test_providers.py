@@ -99,19 +99,10 @@ def test_factory(ftpserver, tmpdir):
     assert isinstance(provider, LocalProvider)
     assert provider._root_folder == path
 
-    datasets = provider.list_datasets()
-    assert len(datasets) == 2
-    assert "dataset1" in datasets
-    assert "dataset2" in datasets
-    versions = provider.list_versions("dataset1")
-    assert len(versions) == 3
-    assert "0.0.1" in versions
-    assert "0.1.0" in versions
-    assert "1.0.0" in versions
-    versions = provider.list_versions("dataset2")
-    assert "1.0.0" in versions
-    assert "1.0.1" in versions
-    
+    assert set(provider.list_datasets()) == set(["dataset1", "dataset2"])
+    assert set(provider.list_versions("dataset1")) == set(["0.0.1", "0.1.0", "1.0.0"])
+    assert set(provider.list_versions("dataset2")) == set(["1.0.0", "1.0.1"])
+
     # WebDAV provider without authentication:
     provider = make_provider("webdav", path, {"url": "https://webdav"})
     assert isinstance(provider, WebDavProvider)
@@ -160,9 +151,9 @@ def test_factory(ftpserver, tmpdir):
         {
             "src": os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
-                "data/dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+                "data/dataset1/0.0.1/provider_test_data.tar.xz",
             ),
-            "dest": "dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+            "dest": "dataset1/0.0.1/provider_test_data.tar.xz",
         },
         style="rel_path",
         anon=False,
@@ -171,9 +162,9 @@ def test_factory(ftpserver, tmpdir):
         {
             "src": os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
-                "data/dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+                "data/dataset1/0.0.1/provider_test_data.tar.xz",
             ),
-            "dest": "dataset1/0.0.2/ftp_provider_test_data.tar.xz",
+            "dest": "dataset1/0.0.2/provider_test_data.tar.xz",
         },
         style="rel_path",
         anon=False,
@@ -182,9 +173,9 @@ def test_factory(ftpserver, tmpdir):
         {
             "src": os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
-                "data/dataset1/0.0.1/ftp_provider_test_data.tar.xz",
+                "data/dataset1/0.0.1/provider_test_data.tar.xz",
             ),
-            "dest": "dataset2/0.0.2/ftp_provider_test_data.tar.xz",
+            "dest": "dataset2/0.0.2/provider_test_data.tar.xz",
         },
         style="rel_path",
         anon=False,
