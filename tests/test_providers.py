@@ -7,7 +7,7 @@ import os
 import ftplib
 
 from deel.datasets.providers import make_provider, Provider
-
+from deel.datasets.providers.http_providers import HttpSingleFileProvider
 from deel.datasets.providers.exceptions import (
     DatasetNotFoundError,
     VersionNotFoundError,
@@ -21,6 +21,14 @@ from deel.datasets.providers.webdav_provider import (
 
 from deel.datasets.providers.ftp_providers import (
     FtpProvider,
+)
+
+
+LOCAL_PATH = pathlib.Path(
+    os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "data/",
+    )
 )
 
 
@@ -80,47 +88,55 @@ def test_get_version():
         provider.get_version("3.*", ["1.0.2", "1.4.5", "2.3.5"])
 
 
-def test_factory(ftpserver, tmpdir):
+def test_local_provider():
     """
-    Test the provider factory.
+    Test the local provider factory.
     """
-
-    # path = pathlib.Path("/data/datasetes")
-    path = pathlib.Path(
-        os.path.join(
-            os.path.dirname(os.path.abspath(__file__)),
-            "data/",
-        )
-    )
 
     # Local provider:
-    provider = make_provider("local", path)
+    provider = make_provider("local", LOCAL_PATH)
 
     assert isinstance(provider, LocalProvider)
-    assert provider._root_folder == path
+    assert provider._root_folder == LOCAL_PATH
+
+    assert set(provider.list_datasets()) == set(["dataset1", "dataset2"])
+    assert set(provider.list_versions("dataset1")) == set(["0.0.1", "0.1.0", "1.0.0"])
+    assert set(provider.list_versions("dataset2")) == set(["1.0.0", "1.0.1"])
+
+
+def test_webdav_provider():
+    """
+    Test the webdav provider factory. TBC
+    """
+
+    # Local provider:
+    provider = make_provider("local", LOCAL_PATH)
+
+    assert isinstance(provider, LocalProvider)
+    assert provider._root_folder == LOCAL_PATH
 
     assert set(provider.list_datasets()) == set(["dataset1", "dataset2"])
     assert set(provider.list_versions("dataset1")) == set(["0.0.1", "0.1.0", "1.0.0"])
     assert set(provider.list_versions("dataset2")) == set(["1.0.0", "1.0.1"])
 
     # WebDAV provider without authentication:
-    provider = make_provider("webdav", path, {"url": "https://webdav"})
+    provider = make_provider("webdav", LOCAL_PATH, {"url": "https://webdav"})
     assert isinstance(provider, WebDavProvider)
-    assert provider._root_folder == path
+    assert provider._root_folder == LOCAL_PATH
     assert provider._remote_url == "https://webdav"
     assert provider._authenticator is None
 
     # WebDAV provider with authentication:
     provider = make_provider(
         "webdav",
-        path,
+        LOCAL_PATH,
         {
             "url": "https://webdav",
             "auth": {"method": "simple", "username": "user", "password": "pass"},
         },
     )
     assert isinstance(provider, WebDavProvider)
-    assert provider._root_folder == path
+    assert provider._root_folder == LOCAL_PATH
     assert provider._remote_url == "https://webdav"
     assert isinstance(provider._authenticator, WebDavSimpleAuthenticator)
     assert provider._authenticator.username == "user"
@@ -130,13 +146,15 @@ def test_factory(ftpserver, tmpdir):
     with pytest.raises(ValueError):
         make_provider(
             "webdav",
-            path,
+            LOCAL_PATH,
             {"url": "https://webdav", "auth": {"method": "token", "token": "abcdef"}},
         )
 
-    # Incorrect provider type:
-    with pytest.raises(ValueError):
-        make_provider("aws", path)
+
+def test_ftp_provider(ftpserver, tmpdir):
+    """
+    Test the ftp provider factory.
+    """
 
     # Ftp provider with authentication:
     # First put on the ftp server two files for test
@@ -185,7 +203,7 @@ def test_factory(ftpserver, tmpdir):
     ftplib.FTP_PORT = login_dict["port"]
     provider = make_provider(
         "ftp",
-        path,
+        LOCAL_PATH,
         {
             "url": "ftp://localhost/",
             "auth": {
@@ -197,7 +215,7 @@ def test_factory(ftpserver, tmpdir):
         },
     )
     assert isinstance(provider, FtpProvider)
-    assert provider._root_folder == path
+    assert provider._root_folder == LOCAL_PATH
     assert provider.list_datasets() == ["dataset1", "dataset2"]
     assert provider.list_versions("dataset1") == ["0.0.1", "0.0.2"]
     assert provider.list_versions("dataset2") == ["0.0.2"]
@@ -206,9 +224,22 @@ def test_factory(ftpserver, tmpdir):
     with pytest.raises(ValueError):
         make_provider(
             "ftp",
-            path,
+            LOCAL_PATH,
             {
                 "url": "ftp://ftp.softronics.ch/",
                 "auth": {"method": "token", "token": "abcdef"},
             },
         )
+
+
+def test_http_provider(httpserver):
+    """
+    Test the http provider factory.
+    """
+
+    single_http_provider = HttpSingleFileProvider(
+        LOCAL_PATH, "http://madm.dfki.de/files/sentinel/EuroSAT.zip", "eurosat"
+    )
+
+    assert len(single_http_provider.list_datasets()) > 0
+    assert len(single_http_provider.list_versions("eurosat")) > 0
