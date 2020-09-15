@@ -92,17 +92,26 @@ def test_factory(ftpserver, tmpdir):
             "data/",
         )
     )
-    print("Local path {}".format(path))
+
     # Local provider:
     provider = make_provider("local", path)
 
     assert isinstance(provider, LocalProvider)
     assert provider._root_folder == path
-    print("provider.list_datasets {}".format(provider.list_datasets()))
-    assert provider.list_datasets() == ["dataset2", "dataset1"]
-    assert provider.list_versions("dataset1") == ["0.0.1", "0.1.0", "1.0.0"]
-    assert provider.list_versions("dataset2") == ["1.0.0", "1.0.1"]
 
+    datasets = provider.list_datasets()
+    assert len(datasets) == 2
+    assert "dataset1" in datasets
+    assert "dataset2" in datasets
+    versions = provider.list_versions("dataset1")
+    assert len(versions) == 3
+    assert "0.0.1" in versions
+    assert "0.1.0" in versions
+    assert "1.0.0" in versions
+    versions = provider.list_versions("dataset2")
+    assert "1.0.0" in versions
+    assert "1.0.1" in versions
+    
     # WebDAV provider without authentication:
     provider = make_provider("webdav", path, {"url": "https://webdav"})
     assert isinstance(provider, WebDavProvider)
