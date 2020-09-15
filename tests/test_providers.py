@@ -232,7 +232,7 @@ def test_ftp_provider(ftpserver, tmpdir):
         )
 
 
-def test_http_provider(httpserver):
+def test_http_provider():
     """
     Test the http provider factory.
     """
