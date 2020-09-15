@@ -65,11 +65,6 @@ def load(
             dataset = k
             break
 
-    # Create the dataset class name:
-    # dataset_class_name = (
-    #     "".join(part.capitalize() for part in dataset.split(".")) + "Dataset"
-    # )
-
     dataset_object = None
     for entry_point in pkg_resources.iter_entry_points("plugins.deel.dataset"):
         if entry_point.name == dataset:
