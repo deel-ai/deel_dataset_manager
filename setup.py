@@ -43,7 +43,6 @@ setup(
         "pyyaml",
         "psutil",
         "pytest_localftpserver",
-        "Pillow",
     ],
     extras_require={"dev": dev_requires},
 )
