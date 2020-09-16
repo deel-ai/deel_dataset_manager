@@ -43,7 +43,7 @@ setup(
         "pyyaml",
         "psutil",
         "pytest_localftpserver",
-        "PIL",
+        "PIL==1.1.7",
     ],
     extras_require={"dev": dev_requires},
 )
