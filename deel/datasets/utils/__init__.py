@@ -6,6 +6,7 @@ import logging
 
 from typing import List, Tuple, Optional, Union, Dict, Callable, Set
 
+import PIL
 from PIL import Image
 
 log = logging.getLogger("deel.dataset.manager")
