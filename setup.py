@@ -44,6 +44,7 @@ setup(
         "psutil",
         "pytest_localftpserver",
         "pillow",
+        "torch",
     ],
     extras_require={"dev": dev_requires},
 )
