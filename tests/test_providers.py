@@ -99,7 +99,7 @@ def test_local_provider():
     assert isinstance(provider, LocalProvider)
     assert provider._root_folder == LOCAL_PATH
 
-    assert set(provider.list_datasets()) == set(["dataset1", "dataset2"])
+    assert set(provider.list_datasets()) == set(["dataset1", "dataset2", "dataset3"])
     assert set(provider.list_versions("dataset1")) == set(["0.0.1", "0.1.0", "1.0.0"])
     assert set(provider.list_versions("dataset2")) == set(["1.0.0", "1.0.1"])
 
@@ -115,7 +115,7 @@ def test_webdav_provider():
     assert isinstance(provider, LocalProvider)
     assert provider._root_folder == LOCAL_PATH
 
-    assert set(provider.list_datasets()) == set(["dataset1", "dataset2"])
+    assert set(provider.list_datasets()) == set(["dataset1", "dataset2", "dataset3"])
     assert set(provider.list_versions("dataset1")) == set(["0.0.1", "0.1.0", "1.0.0"])
     assert set(provider.list_versions("dataset2")) == set(["1.0.0", "1.0.1"])
 
