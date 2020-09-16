@@ -45,6 +45,7 @@ setup(
         "pytest_localftpserver",
         "pillow",
         "torch",
+        "torchvision",
     ],
     extras_require={"dev": dev_requires},
 )
