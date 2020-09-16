@@ -7,7 +7,6 @@ import typing
 from deel.datasets.utils import (
     load_pytorch_image_dataset,
     load_numpy_image_dataset,
-    load_tensorflow_image_dataset,
     load_hierarchical_python_image_dataset,
 )
 
