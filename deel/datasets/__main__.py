@@ -154,8 +154,8 @@ def remove_datasets(args: argparse.Namespace):
         args: Arguments from the command line.
     """
 
-    # This must be a local provider:
-    provider: LocalProvider = get_default_settings_for_local().make_provider()  # type: ignore
+    # This must be a local provider: # type: ignore
+    provider: LocalProvider = get_default_settings_for_local().make_provider()
 
     if isinstance(provider, RemoteProvider):
         provider = provider.local_provider()
