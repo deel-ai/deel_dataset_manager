@@ -100,22 +100,22 @@ def list_datasets(args: argparse.Namespace):
     for name, settings in settings_list.items():
         try:
             print(
-                "======================================================================================="
+                "======================================================================"
             )
             print(
-                "                            Datasets list of the provider {}                   ".format(
+                "              Datasets list of the provider {}                ".format(
                     name
                 )
             )
             print(
-                "======================================================================================="
+                "======================================================================"
             )
             provider = settings.make_provider()
             _list_dataset_for_provider(provider)
 
         except DatasetVersionNotFoundError as e:
             raise e
-        except DatasetNotFoundError as e:
+        except DatasetNotFoundError:
             pass
 
 
