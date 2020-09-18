@@ -223,7 +223,6 @@ providers:
     assert settings_list["provider_1"]._base == Path.home().joinpath(
         ".deel", "datasets"
     )
-
     assert settings_list["provider_2"]._base == Path(
         os.path.join(Path.home(), ".deel/datasets")
     )
