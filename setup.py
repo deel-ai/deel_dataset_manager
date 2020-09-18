@@ -43,7 +43,5 @@ setup(
         "pyyaml",
         "psutil",
     ],
-    extras_require={
-        "dev": dev_requires,
-    },
+    extras_require={"dev": dev_requires},
 )
