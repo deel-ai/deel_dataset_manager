@@ -133,10 +133,18 @@ providers:
             method: "simple"
             username: "provider_3_user"
             password: "provider_3_pass"
+
+    provider_4:
+        type: webdav
+        folder: datasets
+        auth:
+            method: "simple"
+            username: "provider_4_user"
+            password: "provider_4_pass"
 """
     settings_list = read_settings(io.StringIO(yaml))
 
-    assert len(settings_list) == 3
+    assert len(settings_list) == 4
     assert settings_list["provider_1"]._version == 2
     assert settings_list["provider_1"]._provider_type == "webdav"
     assert settings_list["provider_1"]._provider_options == {
@@ -167,6 +175,18 @@ providers:
             "username": "provider_3_user",
             "password": "provider_3_pass",
         }
+    }
+    assert settings_list["provider_4"]._base == Path("/data/datasets")
+
+    assert settings_list["provider_4"]._version == 2
+    assert settings_list["provider_4"]._provider_type == "webdav"
+    assert settings_list["provider_4"]._provider_options == {
+        "auth": {
+            "method": "simple",
+            "username": "provider_4_user",
+            "password": "provider_4_pass",
+        },
+        "folder": "datasets",
     }
     assert settings_list["provider_3"]._base == Path("/data/datasets")
 
