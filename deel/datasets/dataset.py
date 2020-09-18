@@ -83,7 +83,7 @@ class Dataset(object):
         self._info[name] = name
 
         if settings is None:
-            self._settings = get_default_settings()
+            self._settings = get_default_settings()["default"]
         else:
             self._settings = settings
 

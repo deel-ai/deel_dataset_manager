@@ -7,7 +7,7 @@ from . import load as load_dataset
 from .settings import (
     read_settings,
     get_default_settings,
-    get_default_settings_for_local,
+    get_settings_for_local,
 )
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
@@ -155,7 +155,7 @@ def remove_datasets(args: argparse.Namespace):
     """
 
     # This must be a local provider: # type: ignore
-    provider: LocalProvider = get_default_settings_for_local().make_provider()
+    provider: LocalProvider = get_settings_for_local().make_provider()  # type: ignore
 
     if isinstance(provider, RemoteProvider):
         provider = provider.local_provider()
