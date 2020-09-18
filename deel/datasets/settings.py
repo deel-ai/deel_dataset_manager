@@ -74,6 +74,7 @@ class Settings(object):
         Returns:
             A new `Provider` created from these settings.
         """
+        # print("make_provider Settings {}".format(self))
         return make_provider(self._provider_type, self._base, self._provider_options)
 
     @property
@@ -132,29 +133,20 @@ class ParseSettingsError(Exception):
     pass
 
 
-def read_settings(stream: TextIO) -> Settings:
+def read_one_settings(data: Dict[str, Any], version: int) -> Settings:
     """
-    Load `Settings` from the given YAML stream.
+    Load `Settings` from the given dictionnary (YAML stream).
 
     Args:
-        stream: File-like object containing the configuration.
+        data: YAML file settings element dictionnary.
 
     Returns:
-        A `Settings` object constructed from the given YAML stream.
+        A `Settings` object constructed from the given data.
 
     Raises:
         yaml.YAMLError: If the given stream does not contain valid YAML.
         ParseSettingsError: If the given YAML is not valid for settings.
     """
-
-    # We let the error propagate to distinguish between error in
-    # parsing YAML and error in constructing settings:
-    data = yaml.safe_load(stream)
-
-    # Retrieve the version:
-    if "version" not in data:
-        raise ParseSettingsError("Missing version.")
-    version = int(data["version"])
 
     # Retrieve the provider:
     if "provider" not in data:
@@ -175,6 +167,51 @@ def read_settings(stream: TextIO) -> Settings:
         path = _get_default_path(provider_type)
 
     return Settings(version, provider_type, provider_options, path)
+
+
+def read_settings(stream: TextIO) -> Dict[str, Settings]:
+    """
+    Load `Settings` from the given YAML stream.
+
+    Args:
+        stream: File-like object containing the configuration.
+
+    Returns:
+        A `Settings` object constructed from the given YAML stream.
+
+    Raises:
+        yaml.YAMLError: If the given stream does not contain valid YAML.
+        ParseSettingsError: If the given YAML is not valid for settings.
+    """
+
+    settings_list: Dict[str, Settings] = {}
+    # We let the error propagate to distinguish between error in
+    # parsing YAML and error in constructing settings:
+    data = yaml.safe_load(stream)
+
+    # Retrieve the version:
+    if "version" not in data:
+        raise ParseSettingsError("Missing version.")
+    version = int(data["version"])
+
+    if version == 1:
+        # Retrieve the provider:
+        settings_list.update({"default": read_one_settings(data, version)})
+    else:
+        # Retrieve the provider:
+        if "providers" not in data:
+            raise ParseSettingsError("Missing providers list.")
+
+        if isinstance(data["providers"], dict):
+
+            for prov, conf in data["providers"].items():
+                d = {"provider": conf}
+                if "path" in data:
+                    d.update({"path": data["path"]})
+                settings_list.update({prov: read_one_settings(d, version)})
+        else:
+            raise ParseSettingsError("Providers not a dictionary")
+    return settings_list
 
 
 def write_settings(settings: Settings, stream: TextIO, **kwargs):
@@ -206,7 +243,7 @@ def write_settings(settings: Settings, stream: TextIO, **kwargs):
     yaml.dump(data, stream, **kwargs)
 
 
-def get_default_settings() -> Settings:
+def get_default_settings() -> Dict[str, Settings]:
     """
     Retrieve the default settings for the current machine.
 
@@ -234,7 +271,16 @@ def get_default_settings() -> Settings:
     return settings
 
 
+def get_default_settings_for_local() -> Settings:
+    return Settings(
+        version=1,
+        provider_type="local",
+        provider_options={},
+        path=_get_default_path("local"),
+    )
+
+
 if __name__ == "__main__":
     settings = get_default_settings()
     print(settings)
-    print(settings.make_provider())
+    print(settings["default"].make_provider())

@@ -4,27 +4,57 @@ import argparse
 import sys
 
 from . import load as load_dataset
-from .settings import read_settings, get_default_settings
+from .settings import (
+    read_settings,
+    get_default_settings,
+    get_default_settings_for_local,
+)
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
+from .providers.exceptions import DatasetNotFoundError, DatasetVersionNotFoundError
 
 
-def list_datasets(args: argparse.Namespace):
+def _store_dataset(args: argparse.Namespace, settings, conf_name):
     """
-    List the datasets as specified by `args`.
-
+    Download dataset and store it.
     Args:
         args: Arguments from the command line.
+        settings : settings from config
+    """
+    for dataset in args.datasets:
+        print("Fetching {}... ".format(dataset))
+
+        # Split name:version:
+        parts = dataset.split(":")
+        if len(parts) == 1:
+            parts += ["latest"]
+        name, version = parts
+
+        # Download the dataset:
+        path = load_dataset(
+            name,
+            mode="path",
+            version=version,
+            settings=settings,
+            force_update=args.force,
+        )
+
+        print(
+            "Dataset {} loaded from {} and stored at '{}'.".format(
+                dataset, conf_name, path
+            )
+        )
+
+
+def _list_dataset_for_provider(provider):
+    """
+    List all datasets available on provider.
+
+    Args:
+        provider: provider object
     """
 
-    if args.config is None:
-        settings = get_default_settings()
-    else:
-        settings = read_settings(args.config)
-
-    provider = settings.make_provider()
     location = ""
-
     if isinstance(provider, RemoteProvider):
         if args.local:
             provider = provider.local_provider()
@@ -49,6 +79,48 @@ def list_datasets(args: argparse.Namespace):
         )
 
 
+def list_datasets(args: argparse.Namespace):
+    """
+    List the datasets as specified by `args`.
+
+    Args:
+        args: Arguments from the command line.
+    """
+
+    if args.config is None:
+        settings_list = get_default_settings()
+    else:
+        settings_list = read_settings(args.config)
+
+    # If provider is specified use it,
+    # if not list all datasets from all providers in configuration file.
+    if args.prov_conf in settings_list:
+        settings_list = {args.prov_conf: settings_list[args.prov_conf]}
+
+    for name, settings in settings_list.items():
+        print("=============> settings {}".format(settings))
+        try:
+            print(
+                "======================================================================================="
+            )
+            print(
+                "                            Datasets list of the provider {}                   ".format(
+                    name
+                )
+            )
+            print(
+                "======================================================================================="
+            )
+            provider = settings.make_provider()
+            print("=============> provider {}".format(provider))
+            _list_dataset_for_provider(provider)
+
+        except DatasetVersionNotFoundError as e:
+            raise e
+        except DatasetNotFoundError as e:
+            pass
+
+
 def download_datasets(args: argparse.Namespace):
     """
     Download the dataset specified by `args`.
@@ -58,29 +130,22 @@ def download_datasets(args: argparse.Namespace):
     """
 
     if args.config is None:
-        settings = get_default_settings()
+        settings_list = get_default_settings()
     else:
-        settings = read_settings(args.config)
+        settings_list = read_settings(args.config)
 
-    for dataset in args.datasets:
-        print("Fetching {}... ".format(dataset))
+    # If provider is specified use it,
+    # if not list all datasets from all providers in configuration file.
+    if args.prov_conf in settings_list:
+        settings_list = {args.prov_conf: settings_list[args.prov_conf]}
 
-        # Split name:version:
-        parts = dataset.split(":")
-        if len(parts) == 1:
-            parts += ["latest"]
-        name, version = parts
-
-        # Download the dataset:
-        path = load_dataset(
-            name,
-            mode="path",
-            version=version,
-            settings=settings,
-            force_update=args.force,
-        )
-
-        print("Dataset {} stored at '{}'.".format(dataset, path))
+    for name, settings in settings_list.items():
+        try:
+            _store_dataset(args, settings, name)
+            break
+        except DatasetNotFoundError:
+            print("Dataset not in {}".format(name))
+            pass
 
 
 def remove_datasets(args: argparse.Namespace):
@@ -91,13 +156,8 @@ def remove_datasets(args: argparse.Namespace):
         args: Arguments from the command line.
     """
 
-    if args.config is None:
-        settings = get_default_settings()
-    else:
-        settings = read_settings(args.config)
-
     # This must be a local provider:
-    provider: LocalProvider = settings.make_provider()  # type: ignore
+    provider: LocalProvider = get_default_settings_for_local().make_provider()  # type: ignore
 
     if isinstance(provider, RemoteProvider):
         provider = provider.local_provider()
@@ -160,6 +220,13 @@ subparsers.required = True
 
 list_parser = subparsers.add_parser("list", help="list datasets")
 list_parser.add_argument(
+    "prov_conf",
+    type=str,
+    nargs="?",
+    default="default",
+    help="provider in configuration to use",
+)
+list_parser.add_argument(
     "-l",
     "--local",
     action="store_true",
@@ -173,6 +240,15 @@ download_parser.add_argument(
     type=str,
     nargs="+",
     help="datasets to download, format name:version with :version being optional",
+)
+download_parser.add_argument(
+    "-p",
+    "--provider",
+    dest="prov_conf",
+    type=str,
+    nargs="?",
+    default="default",
+    help="provider in configuration to use",
 )
 download_parser.add_argument(
     "-f", "--force", action="store_true", help="force download"

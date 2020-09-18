@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import io
+import os
 import pytest
 
 from pathlib import Path
@@ -24,7 +25,7 @@ provider:
     type: local
 
 """
-    settings = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "local"
     assert settings._provider_options == {}
@@ -38,7 +39,7 @@ provider:
     type: webdav
 
 """
-    settings = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "webdav"
     assert settings._provider_options == {}
@@ -54,7 +55,7 @@ provider:
         username: "user"
         password: "pass"
 """
-    settings = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "webdav"
     assert settings._provider_options == {
@@ -76,7 +77,7 @@ def test_gcloud_settings():
     yaml = """version: 1
 
 provider: gcloud"""
-    settings = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
     assert settings._base == Path("/mnt/deel-datasets")
@@ -86,7 +87,7 @@ provider: gcloud"""
 
 provider: gcloud
 path: /vol/deel-datasets"""
-    settings = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
     assert settings._base == Path("/vol/deel-datasets")
@@ -98,8 +99,111 @@ path: /vol/deel-datasets"""
     yaml = """version: 1
 
 provider: gcloud"""
-    settings = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
     assert settings._base == Path.home().joinpath(".deel", "datasets")
     assert settings._provider_options == {}
+
+
+# Test configuration version 2 : multiple providers
+def test_configuration_version_2():
+    # configuration with 3 providers and path
+    yaml = """version: 2
+
+path: /data/datasets
+providers:
+    provider_1:
+        type: webdav
+        auth:
+            method: "simple"
+            username: "provider_1_user"
+            password: "provider_1_pass"
+
+    provider_2:
+        type: ftp
+        auth:
+            method: "simple"
+            username: "provider_2_user"
+            password: "provider_2_pass"
+
+    provider_3:
+        type: http
+        auth:
+            method: "simple"
+            username: "provider_3_user"
+            password: "provider_3_pass"
+"""
+    settings_list = read_settings(io.StringIO(yaml))
+
+    assert len(settings_list) == 3
+    assert settings_list["provider_1"]._version == 2
+    assert settings_list["provider_1"]._provider_type == "webdav"
+    assert settings_list["provider_1"]._provider_options == {
+        "auth": {
+            "method": "simple",
+            "username": "provider_1_user",
+            "password": "provider_1_pass",
+        }
+    }
+    assert settings_list["provider_1"]._base == Path("/data/datasets")
+
+    assert settings_list["provider_2"]._version == 2
+    assert settings_list["provider_2"]._provider_type == "ftp"
+    assert settings_list["provider_2"]._provider_options == {
+        "auth": {
+            "method": "simple",
+            "username": "provider_2_user",
+            "password": "provider_2_pass",
+        }
+    }
+    assert settings_list["provider_2"]._base == Path("/data/datasets")
+
+    assert settings_list["provider_3"]._version == 2
+    assert settings_list["provider_3"]._provider_type == "http"
+    assert settings_list["provider_3"]._provider_options == {
+        "auth": {
+            "method": "simple",
+            "username": "provider_3_user",
+            "password": "provider_3_pass",
+        }
+    }
+    assert settings_list["provider_3"]._base == Path("/data/datasets")
+
+    #  configuration with 3 providers and no path
+    yaml = """version: 2
+
+providers:
+    provider_1:
+        type: webdav
+        auth:
+            method: "simple"
+            username: "provider_1_user"
+            password: "provider_1_pass"
+
+    provider_2:
+        type: ftp
+        auth:
+            method: "simple"
+            username: "provider_2_user"
+            password: "provider_2_pass"
+"""
+    settings_list = read_settings(io.StringIO(yaml))
+
+    assert len(settings_list) == 2
+    assert settings_list["provider_1"]._version == 2
+    assert settings_list["provider_1"]._provider_type == "webdav"
+    assert settings_list["provider_1"]._provider_options == {
+        "auth": {
+            "method": "simple",
+            "username": "provider_1_user",
+            "password": "provider_1_pass",
+        }
+    }
+    assert settings_list["provider_1"]._base == Path.home().joinpath(
+        ".deel", "datasets"
+    )
+
+    assert settings_list["provider_2"]._base == Path(
+        os.path.join(Path.home(), ".deel/datasets")
+    )
