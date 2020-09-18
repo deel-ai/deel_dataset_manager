@@ -271,7 +271,7 @@ def get_default_settings() -> Dict[str, Settings]:
     return settings
 
 
-def get_default_settings_for_local() -> Settings:
+def get_settings_for_local() -> Settings:
     return Settings(
         version=1,
         provider_type="local",
