@@ -98,7 +98,6 @@ def list_datasets(args: argparse.Namespace):
         settings_list = {args.prov_conf: settings_list[args.prov_conf]}
 
     for name, settings in settings_list.items():
-        print("=============> settings {}".format(settings))
         try:
             print(
                 "======================================================================================="
@@ -112,7 +111,6 @@ def list_datasets(args: argparse.Namespace):
                 "======================================================================================="
             )
             provider = settings.make_provider()
-            print("=============> provider {}".format(provider))
             _list_dataset_for_provider(provider)
 
         except DatasetVersionNotFoundError as e:
