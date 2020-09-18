@@ -11,20 +11,6 @@ from .providers.exceptions import DatasetNotFoundError  # noqa
 from .settings import Settings  # noqa
 
 
-# List of aliases module: [alias1, alias2, alias3, ...]. The name
-# of the module is always an alias.
-_aliases: Dict[str, List[str]] = {
-    "blink": ["blink"],
-    "landcover": ["landcover"],
-    "landcover.resolution": ["landcover-resolution"],
-    "airbus.helicopter": ["helicopter", "vibration", "airbus-helicopter"],
-    "elecboards.components": ["components", "elecboards-components"],
-    "acas": ["acas.xu", "acas-xu"],
-    "bde": ["braking-distance-estimation", "braking.distance.estimation"],
-    "mvtec.ad": ["mvtec.anomaly.detecction", "mvtec_ad"],
-}
-
-
 def load(
     dataset: str,
     mode: Optional[str] = None,
@@ -55,15 +41,6 @@ def load(
     Raises:
         ValueError: If the `dataset` does not exist.
     """
-
-    # Replace - with .:
-    dataset = dataset.replace("-", ".")
-
-    # Check if this is an alias:
-    for k, v in _aliases.items():
-        if dataset in v:
-            dataset = k
-            break
 
     dataset_object = None
     for entry_point in pkg_resources.iter_entry_points("plugins.deel.dataset"):

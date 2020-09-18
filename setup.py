@@ -42,10 +42,8 @@ setup(
         "h5py",
         "pyyaml",
         "psutil",
-        "pytest_localftpserver",
-        "pillow",
-        "torch",
-        "torchvision",
     ],
-    extras_require={"dev": dev_requires},
+    extras_require={
+        "dev": dev_requires,
+    },
 )

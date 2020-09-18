@@ -80,7 +80,10 @@ def make_provider(
         )
 
     elif provider_type == "ftp":
-        from .ftp_providers import FtpProvider, FtpSimpleAuthenticator
+        from .ftp_providers import (
+            FtpProvider,
+            FtpSimpleAuthenticator,
+        )
 
         # If authentication is required:
         ftp_authenticator: typing.Optional[FtpSimpleAuthenticator] = None
