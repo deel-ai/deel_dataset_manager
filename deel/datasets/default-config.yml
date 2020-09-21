@@ -3,35 +3,35 @@ version: 2
 
 # Provider for the datasets:
 providers:
-    gcloud:
-        type: gcloud
-        disk: deel-datasets
+  gcloud:
+    type: gcloud
+    disk: deel-datasets
 
-    local:
-        type: local
-        source: /data/dataset/
+  local:
+    type: local
+    source: /data/dataset/
 
-    mvtec:
-        type: ftp
-        url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
-        auth:
-            method: "simple"
-            username: "guest"
-            password: "GU.205dldo"
+  mvtec:
+    type: ftp
+    url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
+    auth:
+      method: "simple"
+      username: "guest"
+      password: "GU.205dldo"
 
-    deel:
-        type: webdav
-        url: https://datasets.deel.ai
-        auth:
-            method: "simple"
-            username: "deel-datasets"
-            password: "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"
+  default:
+    type: webdav
+    url: https://datasets.deel.ai
+    auth:
+      method: "simple"
+      username: "deel-datasets"
+      password: "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"
 
-    share:
-        type: webdav
-        url: https://share.deel.ai/remote.php/webdav
-        folder: Datasets
-        auth:
-            method: "simple"
-            username: "${deel-user}"
-            password: "${deel-password}"
+  share:
+    type: webdav
+    url: https://share.deel.ai/remote.php/webdav
+    folder: datasets
+    auth:
+      method: "simple"
+      username: "justin.plakoo"
+      password: "q8Ja586,+bY8"
