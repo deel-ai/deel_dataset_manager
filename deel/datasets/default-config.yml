@@ -19,7 +19,7 @@ providers:
       username: "guest"
       password: "GU.205dldo"
 
-  default:
+  deel:
     type: webdav
     url: https://datasets.deel.ai
     auth:
