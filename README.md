@@ -48,7 +48,7 @@ A provider configuration is defined by :
 - **name**: which can be use in command line to specify the provider to use.
 - **type**: which can be local, gcloud, ftp or webdav. 
 - **auth**: which contains the **type**, the **username** and the **password** 
-    in the case where an authentication is needed.
+    if an authentication is needed.
 
 For **gcloud** provider, the property **disk** allows to define source location.
 
