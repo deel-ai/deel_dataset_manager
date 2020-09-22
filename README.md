@@ -89,7 +89,9 @@ Two key words are mandatory to specify the use of this version:
 - providers: (value = list of providers )
 
 `providers` is the root node of the provider configurations list. 
-Each child node of `providers` node define a provider configuration. 
+Each child node of `providers` node define a provider configuration. The name 
+of child node is the name of the configuration. It will be used in command line 
+to specify the provider.
 
 Below is an example of version 2 provider configuration for DEEL core team members:
 
@@ -141,11 +143,14 @@ See below for other configuration options.
 
 ### Uninstalling
 
-To uninstall the package, simply run `pip uninstall`:
+#### DEEL dataset manager package
+
+To uninstall the deel dataset manager package , simply run `pip uninstall`:
 
 ```
 pip uninstall deel-datasets
 ```
+
 
 
 ## Basic usage
