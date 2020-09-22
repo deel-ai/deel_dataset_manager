@@ -8,10 +8,10 @@ from pathlib import Path
 from .settings import logger
 
 # Link to the GCloud drive:
-_GCLOUD_DRIVE_PATH = Path("/dev/disk/by-id/google-deel-datasets")
+_GCLOUD_DRIVE_BASE_PATH = Path("/dev/disk/by-id/")
 
 
-def find_gcloud_mount_path() -> typing.Optional[Path]:
+def find_gcloud_mount_path(disk: str = "google-deel-datasets") -> typing.Optional[Path]:
     """
     -Try to find the GCloud datasets mount path.
 
@@ -19,7 +19,7 @@ def find_gcloud_mount_path() -> typing.Optional[Path]:
         The mount path for the deel-datasets GCloud drive on the
         current machine, or `None` if the path was not found.
     """
-
+    _GCLOUD_DRIVE_PATH = _GCLOUD_DRIVE_BASE_PATH.joinpath(disk)
     if not _GCLOUD_DRIVE_PATH.exists():
         logger.warning("Disk {} not available.".format(_GCLOUD_DRIVE_PATH))
         return None

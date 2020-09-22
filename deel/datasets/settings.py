@@ -100,7 +100,9 @@ class Settings(object):
         )
 
 
-def _get_default_path(provider_type: str) -> Path:
+def _get_default_path(
+    provider_type: str, provider_options: Dict[str, Any] = {}
+) -> Path:
     """
     Retrieve the default dataset root path for the given provider type.
 
@@ -118,7 +120,11 @@ def _get_default_path(provider_type: str) -> Path:
     if provider_type == "gcloud":
         from ._gcloud_utils import find_gcloud_mount_path
 
-        gcloud_path = find_gcloud_mount_path()
+        disk = "google-deel-datasets"
+        if "disk" in provider_options:
+            disk = "google-{}".format(provider_options["disk"])
+
+        gcloud_path = find_gcloud_mount_path(disk)
         if gcloud_path is not None:
             path = gcloud_path
 
@@ -164,7 +170,7 @@ def read_one_settings(data: Dict[str, Any], version: int) -> Settings:
     if "path" in data:
         path = Path(data["path"])
     else:
-        path = _get_default_path(provider_type)
+        path = _get_default_path(provider_type, provider_options)
 
     return Settings(version, provider_type, provider_options, path)
 
