@@ -70,9 +70,9 @@ def test_gcloud_settings():
 
     # We need to override find_gcloud_mount_path() for testing
     # purpose
-    import deel.datasets._gcloud_utils as _gcloud_utils
+    # import deel.datasets._gcloud_utils as _gcloud_utils
 
-    _gcloud_utils.find_gcloud_mount_path = lambda: Path("/mnt/deel-datasets")
+    # _gcloud_utils.find_gcloud_mount_path = lambda: Path("/mnt/deel-datasets")
 
     yaml = """version: 1
 
@@ -94,7 +94,7 @@ path: /vol/deel-datasets"""
     assert settings._provider_options == {}
 
     # Return None so default path is used:
-    _gcloud_utils.find_gcloud_mount_path = lambda: None
+    # _gcloud_utils.find_gcloud_mount_path = lambda: None
 
     yaml = """version: 1
 
