@@ -43,11 +43,11 @@ Two key words are mandatory to specify the use of this version:
 - version: (value 1)
 - provider:
 
-A provider configuration is defined by following properties:
+A provider configuration is defined by :
 
-- a **name**: which can be use in command line to specify the provider to use.
-- a **type**: which can be local, gcloud, ftp or webdav. 
-- **auth** which contains the **type**, the **username** and the **password** 
+- **name**: which can be use in command line to specify the provider to use.
+- **type**: which can be local, gcloud, ftp or webdav. 
+- **auth**: which contains the **type**, the **username** and the **password** 
     in the case where an authentication is needed.
 
 For **gcloud** provider, the property **disk** allows to define source location.
