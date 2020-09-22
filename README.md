@@ -55,8 +55,8 @@ For **gcloud** provider, the property **disk** allows to define source location.
 For a **webdav** type provider, the property **folder** allows to define the 
 sub-folder (containing the dataset) in the home directory define the url.
 
-An optionnal property can be defined: **path**. It is local destination 
-of dowloaded datasets. The default value is `/home/${username}/.deel/datasets`.
+An optionnal property can be defined: **path**. It is the local destination 
+of dowloaded datasets. Its default value is: `/home/${username}/.deel/datasets`.
 
 Below is a basic authentication for DEEL core team members (replace `${username}` by
 your OS username (you can also store datasets somewhere else),
