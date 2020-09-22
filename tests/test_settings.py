@@ -72,7 +72,8 @@ def test_gcloud_settings():
     # purpose
     import deel.datasets._gcloud_utils as _gcloud_utils
 
-    _gcloud_utils.find_gcloud_mount_path = lambda disk: Path("/mnt/deel-datasets")
+    path = Path("/mnt/deel-datasets")
+    _gcloud_utils.find_gcloud_mount_path = lambda: path  # type: ignore
 
     yaml = """version: 1
 
@@ -94,7 +95,7 @@ path: /vol/deel-datasets"""
     assert settings._provider_options == {}
 
     # Return None so default path is used:
-    _gcloud_utils.find_gcloud_mount_path = lambda disk: None
+    _gcloud_utils.find_gcloud_mount_path = lambda: None  # type: ignore
 
     yaml = """version: 1
 
