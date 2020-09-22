@@ -31,6 +31,17 @@ The configuration file should be at `$HOME/.deel/config.yml`:
 - The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
   location of the configuration file if you do not want to use the default one.
 
+There exits two versions of configuration file.
+
+#### version 1
+
+The first version of configuration file allows to define only one provider 
+configuration. 
+
+Two key words are mandatory to specify the use of this version:
+- version: 1
+- provider:
+
 Below is a basic authentication for DEEL core team members (replace `${username}` by
 your OS username (you can also store datasets somewhere else),
 and `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
@@ -52,6 +63,80 @@ provider:
 
 path: /home/${username}/.deel/datasets
 ```
+#### version 2
+
+The version 2 of the configuration file allows to define a list of prividers.
+
+Two key words are mandatory to specify the use of this version:
+- version: 2
+- providers:
+
+`providers` is the root of the providers list. Each node of `providers` define
+a provider configuration. 
+
+A provider configuration is defined by following properties:
+
+- a **name**: which can be use in command line to specify the provider to use.
+- a **type**: which can be local, gcloud, ftp or webdav. 
+- **auth** in case where an authentication is needed. It define the 
+            **type**, the **username** and the **password**.
+
+For `gcloud` provider the property **disk** allows to define source location.
+
+For the **webdav** type provider, the property **folder** allows to define the 
+sub-folder containing dataset in the home directory difine the url.
+
+The current version of deel dataset manager allows to take into account the 
+following provider types:
+
+- gcloud
+- local
+- ftp
+- webdav
+
+Below is a basic authentication for DEEL core team members:
+
+```
+# Version of the configuration (currently 2):
+version: 2
+
+# Provider for the datasets:
+providers:
+  gcloud:
+    type: gcloud
+    disk: deel-datasets
+
+  local:
+    type: local
+    source: /data/dataset/
+
+  mvtec:
+    type: ftp
+    url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
+    auth:
+      method: "simple"
+      username: "guest"
+      password: "GU.205dldo"
+
+  deel:
+    type: webdav
+    url: https://datasets.deel.ai
+    auth:
+      method: "simple"
+      username: "deel-datasets"
+      password: "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"
+
+  share:
+    type: webdav
+    url: https://share.deel.ai/remote.php/webdav
+    folder: datasets
+    auth:
+        method: "simple"
+        username: "${deel-user}"
+        password: "${deel-password}"
+```
+
+
 
 See below for other configuration options.
 
