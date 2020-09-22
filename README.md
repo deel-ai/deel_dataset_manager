@@ -31,7 +31,8 @@ The configuration file should be at `$HOME/.deel/config.yml`:
 - The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
   location of the configuration file if you do not want to use the default one.
 
-There exits two versions of configuration file.
+The configuration file is a **YAML** file.
+There exits two versions of provider configuration file.
 
 #### version 1
 
@@ -39,8 +40,23 @@ The first version of configuration file allows to define only one provider
 configuration. 
 
 Two key words are mandatory to specify the use of this version:
-- version: 1
+- version: (value 1)
 - provider:
+
+A provider configuration is defined by following properties:
+
+- a **name**: which can be use in command line to specify the provider to use.
+- a **type**: which can be local, gcloud, ftp or webdav. 
+- **auth** which contains the **type**, the **username** and the **password** 
+    in the case where an authentication is needed.
+
+For **gcloud** provider, the property **disk** allows to define source location.
+
+For a **webdav** type provider, the property **folder** allows to define the 
+sub-folder (containing the dataset) in the home directory define the url.
+
+An optionnal property can be defined: **path**. It is local destination 
+of dowloaded datasets. The default value is `/home/${username}/.deel/datasets`.
 
 Below is a basic authentication for DEEL core team members (replace `${username}` by
 your OS username (you can also store datasets somewhere else),
@@ -65,38 +81,19 @@ path: /home/${username}/.deel/datasets
 ```
 #### version 2
 
-The version 2 of the configuration file allows to define a list of prividers.
+The second version of the providers configuration file allows to define a list 
+of providers.
 
 Two key words are mandatory to specify the use of this version:
-- version: 2
-- providers:
+- version: (value 2)
+- providers: (value = list of providers )
 
-`providers` is the root of the providers list. Each node of `providers` define
-a provider configuration. 
+`providers` is the root node of the provider configurations list. 
+Each child node of `providers` node define a provider configuration. 
 
-A provider configuration is defined by following properties:
+Below is an example of version 2 provider configuration for DEEL core team members:
 
-- a **name**: which can be use in command line to specify the provider to use.
-- a **type**: which can be local, gcloud, ftp or webdav. 
-- **auth** in case where an authentication is needed. It define the 
-            **type**, the **username** and the **password**.
-
-For `gcloud` provider the property **disk** allows to define source location.
-
-For the **webdav** type provider, the property **folder** allows to define the 
-sub-folder containing dataset in the home directory difine the url.
-
-The current version of deel dataset manager allows to take into account the 
-following provider types:
-
-- gcloud
-- local
-- ftp
-- webdav
-
-Below is a basic authentication for DEEL core team members:
-
-```
+```yaml
 # Version of the configuration (currently 2):
 version: 2
 
@@ -134,6 +131,8 @@ providers:
         method: "simple"
         username: "${deel-user}"
         password: "${deel-password}"
+
+path: /home/${username}/.deel/datasets
 ```
 
 
