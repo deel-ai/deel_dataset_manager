@@ -19,6 +19,38 @@ manually:
 pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 ```
 
+#### Plugins installation
+
+To download a dataset, a specific plugin must be implemented to provide the modes 
+and the loading methods.
+
+Some plugins are available on *forge.deel.ai* project and be installed.
+
+##### MVTEC deel dataset plugin :
+
+This dataset package must be installed using pip tool.**
+
+If you have set-up SSH keys properly for https://forge.deel.ai, you can use the SSH version:
+
+pip install git+ssh://git@forge.deel.ai:22012/DevOps/datasets/mvtec_dataset.git
+
+Otherwize the HTTPS version should work but you will have to enter your credentials manually:
+
+pip install git+https://forge.deel.ai/DevOps/datasets/mvtec_dataset.git
+
+##### EUROSAT deel dataset plugin
+
+This dataset package must be installed using pip tool.
+
+If you have set-up SSH keys properly for https://forge.deel.ai, you can use the SSH version:
+
+pip install git+ssh://git@forge.deel.ai:22012/DevOps/datasets/eurosat_dataset.git
+
+Otherwize the HTTPS version should work but you will have to enter your credentials manually:
+
+pip install git+https://forge.deel.ai/DevOps/datasets/eurosat_dataset.git
+
+
 ### Configuration
 
 The configuration file specifies how the datasets should be downloaded, or
@@ -142,8 +174,6 @@ path: /home/${username}/.deel/datasets
 See below for other configuration options.
 
 ### Uninstalling
-
-#### DEEL dataset manager package
 
 To uninstall the deel dataset manager package , simply run `pip uninstall`:
 
