@@ -45,9 +45,14 @@ def load(
     dataset_object = None
     for entry_point in pkg_resources.iter_entry_points("plugins.deel.dataset"):
         if entry_point.name == dataset:
-            dataset_class = entry_point.load()
-            dataset_object = dataset_class(version, settings)
-            break
+            try:
+                dataset_class = entry_point.load()
+                dataset_object = dataset_class(version, settings)
+                break
+            except DatasetNotFoundError as e:
+                logger.info("Dataset not in {}".format(dataset))
+                raise e
+
     if dataset_object is None:
         # Default mode is then path:
         if mode is None:

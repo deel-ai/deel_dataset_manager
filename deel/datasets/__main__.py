@@ -93,7 +93,7 @@ def list_datasets(args: argparse.Namespace):
         settings_list = read_settings(args.config)
 
     # If provider is specified use it,
-    # if not list all datasets from all providers in configuration file.
+    # if not, list all datasets from all providers in configuration file.
     if args.prov_conf in settings_list:
         settings_list = {args.prov_conf: settings_list[args.prov_conf]}
 
