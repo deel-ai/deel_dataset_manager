@@ -19,7 +19,7 @@ manually:
 pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 ```
 
-### Configuration
+## Configuration
 
 The configuration file specifies how the datasets should be downloaded, or
 if the datasets do no have to be downloaded (e.g. on Google Cloud).
@@ -34,7 +34,7 @@ The configuration file should be at `$HOME/.deel/config.yml`:
 The configuration file is a **YAML** file.
 There exits two versions of provider configuration file.
 
-#### Configuration version 1
+### Configuration version 1
 
 The first version of configuration file allows to define only one provider 
 configuration. 
@@ -79,7 +79,7 @@ provider:
 
 path: /home/${username}/.deel/datasets
 ```
-#### Configuration version 2
+### Configuration version 2
 
 The second version of the providers configuration file allows to define a list 
 of providers.
@@ -92,6 +92,41 @@ Two key words are mandatory to specify the use of this version:
 Each child node of `providers` node define a provider configuration. The name 
 of child node is the name of the configuration. It will be used in command line 
 to specify the provider.
+
+Currently available providers are `webdav`, `ftp`, `local` and `gcloud`.
+The `webdav` provider is the default-one and will fetch datasets from a WebDAV server
+and needs at least the `url` configuration parameter (`auth` is not mandatory but required
+for the `https://datasets.deel.ai` server).
+The `ftp` provider is similar to the `webdav` provider except that it will fetch datasets
+from a FTP server instead of a WebDAV one and needs at least the `url` configuration parameter.
+The `local` provider does not require any extra configuration and will simply
+fetch data from the specified `path`.
+
+When using the `webdav` or `ftp` provider, the `path` parameter indicates where the datasets
+should be stored locally.
+
+The `gcloud` provider is similar to the `local` provider, except that it will try to
+locate the dataset storage location automatically based on the currently mounted drives.
+The `disk` property in configuration allows to define the the location path on drive.
+
+#### Accessing the `deel-datasets` on a Google Cloud virtual machine
+
+You first need to attach the disk to your machine using the Google Cloud console, then run
+the following command that add a line to `/etc/fstab` to ease the mount of the drive (this
+assumes you are using `bash` or a compliant shell):
+
+```
+echo UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-deel-datasets` /mnt/deel-datasets ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
+```
+
+You can then mount the drive:
+
+```
+sudo mount /mnt/deel-datasets
+```
+
+**Note:** You only need to do this manually the first time. The disk will be automatically
+mounted on the next restarts of the virtual machine.
 
 Below is an example of version 2 provider configuration for DEEL core team members:
 
@@ -117,7 +152,7 @@ providers:
       username: "guest"
       password: "GU.205dldo"
 
-  default:
+  deel:
     type: webdav
     url: https://share.deel.ai/remote.php/webdav
     folder: datasets
@@ -129,9 +164,10 @@ providers:
 path: /home/${username}/.deel/datasets
 ```
 In case of use of the version 2 of configuration, you can name `default` the 
-provider to use by default. 
+provider to use by default. If the default provider is not defined and not set 
+as an argument in command use, all of defined providers are checked.
 
-### Uninstalling
+## Uninstalling
 
 To uninstall the deel dataset manager package , simply run `pip uninstall`:
 
@@ -382,39 +418,6 @@ The following files contain examples for the `blink` and `landcover` dataset:
 - [examples/landcover/tensorflow_example.py](examples/landcover/tensorflow_example.py)
 - [examples/landcover/load_example.py](examples/landcover/load_example.py)
 
-## Configuration:
-
-### GCloud configuration
-
-If you are using a Google Cloud virtual machine, you can avoid downloading the datasets
-by mounting and using the `deel-datasets` gcloud drive (see below).
-This can be done by using the following (very simple) configuration (still at
-`$HOME/.deel/config.yml`):
-
-```yaml
-version: 1
-
-provider: gcloud
-```
-
-#### Accessing the `deel-datasets` on a Google Cloud virtual machine
-
-You first need to attach the disk to your machine using the Google Cloud console, then run
-the following command that add a line to `/etc/fstab` to ease the mount of the drive (this
-assumes you are using `bash` or a compliant shell):
-
-```
-echo UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-deel-datasets` /mnt/deel-datasets ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
-```
-
-You can then mount the drive:
-
-```
-sudo mount /mnt/deel-datasets
-```
-
-**Note:** You only need to do this manually the first time. The disk will be automatically
-mounted on the next restarts of the virtual machine.
 
 ## Command line utilities
 
