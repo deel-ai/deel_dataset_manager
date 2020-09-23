@@ -90,7 +90,7 @@ git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/landcover_dataset.git`
 
-### Dell dataset implementation
+### Dell dataset plugin implementation
 
 A deel dataset plugin is an extension of the Dataset class defined in the DEEL dataset manager project.
 It allows to access to specific datasets files using the load method and a defined modes.
