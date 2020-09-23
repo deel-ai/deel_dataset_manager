@@ -100,37 +100,6 @@ class Settings(object):
         )
 
 
-def _get_default_path(
-    provider_type: str, provider_options: Dict[str, Any] = {}
-) -> Path:
-    """
-    Retrieve the default dataset root path for the given provider type.
-
-    Args:
-        provider_type: The type of provider to retrieve the path for.
-
-    Returns:
-        The default path for the given provider.
-    """
-
-    # Default path is $HOME/.deel/datasets
-    path = DEFAULT_DATASETS_PATH
-
-    # For GCloud, we try to find the mount point:
-    if provider_type == "gcloud":
-        from ._gcloud_utils import find_gcloud_mount_path
-
-        disk = "google-deel-datasets"
-        if "disk" in provider_options:
-            disk = "google-{}".format(provider_options["disk"])
-
-        gcloud_path = find_gcloud_mount_path(disk)
-        if gcloud_path is not None:
-            path = gcloud_path
-
-    return path
-
-
 class ParseSettingsError(Exception):
     """
     Exception raised if an issue occurs while parsing the settings.
@@ -170,7 +139,7 @@ def read_one_settings(data: Dict[str, Any], version: int) -> Settings:
     if "path" in data:
         path = Path(data["path"])
     else:
-        path = _get_default_path(provider_type, provider_options)
+        path = DEFAULT_DATASETS_PATH
 
     return Settings(version, provider_type, provider_options, path)
 
@@ -288,7 +257,7 @@ def get_settings_for_local() -> Settings:
         version=1,
         provider_type="local",
         provider_options={},
-        path=_get_default_path("local"),
+        path=DEFAULT_DATASETS_PATH,
     )
 
 

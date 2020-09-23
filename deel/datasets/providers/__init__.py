@@ -5,6 +5,7 @@ import pathlib
 import typing
 
 from .provider import Provider
+from .exceptions import InvalidConfigurationError
 
 
 logger = logging.getLogger(__name__)
@@ -41,7 +42,10 @@ def make_provider(
     elif provider_type == "gcloud":
         from .gcloud_provider import GCloudProvider
 
-        return GCloudProvider(root_path)
+        if "disk" not in provider_options:
+            raise InvalidConfigurationError("No disk specified for gcloud provider.")
+
+        return GCloudProvider(disk="google-" + provider_options["disk"])
 
     elif provider_type == "webdav":
         from .webdav_provider import (

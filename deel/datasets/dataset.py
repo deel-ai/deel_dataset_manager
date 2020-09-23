@@ -87,7 +87,6 @@ class Dataset(object):
                 self._settings = get_default_settings()["default"]
             else:
                 self._settings = get_dataset_settings(name)
-                print("Settings is not define. {} is used!".format(self._settings))
         else:
             self._settings = settings
 
