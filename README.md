@@ -19,7 +19,119 @@ manually:
 pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 ```
 
-#### Plugins installation
+### Configuration
+
+The configuration file specifies how the datasets should be downloaded, or
+if the datasets do no have to be downloaded (e.g. on Google Cloud).
+
+The configuration file should be at `$HOME/.deel/config.yml`:
+
+- On Windows system it is `C:\Users\$USERNAME\.deel\config.yml` unless you
+  have set the `HOME` environment variable.
+- The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
+  location of the configuration file if you do not want to use the default one.
+
+The configuration file is a **YAML** file.
+There exits two versions of provider configuration file.
+
+#### version 1
+
+The first version of configuration file allows to define only one provider 
+configuration. 
+
+Two key words are mandatory to specify the use of this version:
+- version: (value 1)
+- provider:
+
+A provider configuration is defined by :
+
+- **name**: which can be use in command line to specify the provider to use.
+- **type**: which can be local, gcloud, ftp or webdav. 
+- **auth**: which contains the **type**, the **username** and the **password** 
+    if an authentication is needed.
+
+For **gcloud** provider, the property **disk** allows to define source location.
+
+For a **webdav** type provider, the property **folder** allows to define the 
+sub-folder (containing the dataset) in the home directory define the url.
+
+An optionnal property can be defined: **path**. It is the local destination 
+of dowloaded datasets. Its default value is: `/home/${username}/.deel/datasets`.
+
+Below is a basic authentication for DEEL core team members (replace `${username}` by
+your OS username (you can also store datasets somewhere else),
+and `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
+
+```yaml
+# Version of the configuration (currently 1):
+version: 1
+
+provider:
+    type: webdav
+
+    url: https://share.deel.ai/remote.php/webdav
+    folder: Datasets
+
+    auth:
+        method: "simple"
+        username: "${deel-user}"
+        password: "${deel-password}"
+
+path: /home/${username}/.deel/datasets
+```
+#### version 2
+
+The second version of the providers configuration file allows to define a list 
+of providers.
+
+Two key words are mandatory to specify the use of this version:
+- version: (value 2)
+- providers: (value = list of providers )
+
+`providers` is the root node of the provider configurations list. 
+Each child node of `providers` node define a provider configuration. The name 
+of child node is the name of the configuration. It will be used in command line 
+to specify the provider.
+
+Below is an example of version 2 provider configuration for DEEL core team members:
+
+```yaml
+# Version of the configuration (currently 2):
+version: 2
+
+# Provider for the datasets:
+providers:
+  gcloud:
+    type: gcloud
+    disk: deel-datasets
+
+  local:
+    type: local
+    source: /data/dataset/
+
+  mvtec:
+    type: ftp
+    url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
+    auth:
+      method: "simple"
+      username: "guest"
+      password: "GU.205dldo"
+
+  share:
+    type: webdav
+    url: https://share.deel.ai/remote.php/webdav
+    folder: datasets
+    auth:
+        method: "simple"
+        username: "${deel-user}"
+        password: "${deel-password}"
+
+path: /home/${username}/.deel/datasets
+```
+
+# Dell dataset plugin
+
+## Plugins installation
 
 To download a dataset, a specific plugin must be implemented to provide the modes 
 and the loading methods.
@@ -36,61 +148,61 @@ Otherwize the HTTPS version should work but you will have to enter your credenti
 
 `pip install git+https://<git-repo-url>`
 
-##### ACAS deel dataset plugin
+### ACAS deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/acas_dataset.git`
 
-##### AIRBUS deel dataset plugin
+### AIRBUS deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/airbus_dataset.git`
 
-##### BDE deel dataset plugin
+### BDE deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/bde_dataset.git`
 
-##### BLINK deel dataset plugin
+### BLINK deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/blink_dataset.git`
 
-##### DUCKIE deel dataset plugin
+### DUCKIE deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/duckie_dataset.git`
 
-##### ELECBOARD deel dataset plugin
+### ELECBOARD deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/elecboard_dataset.git`
 
-##### EUROSAT deel dataset plugin
+### EUROSAT deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/eurosat_dataset.git`
 
-##### MVTEC deel dataset plugin :
+### MVTEC deel dataset plugin :
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/mvtec_dataset.git`
 
-##### LANDCOVER deel dataset plugin
+### LANDCOVER deel dataset plugin
 
 git-repo-url:
 
 `git@forge.deel.ai:22012/DevOps/datasets/landcover_dataset.git`
 
-### Dell dataset plugin implementation
+## Dell dataset plugin implementation
 
 A deel dataset plugin is an extension of the Dataset class defined in the DEEL dataset manager project.
 It allows to access to specific datasets files using the load method and a defined modes.
@@ -214,124 +326,6 @@ entry_points={
 
 A deel dataset plugin python package should be built and distributed using `Setuptools`.
 
-
-### Configuration
-
-The configuration file specifies how the datasets should be downloaded, or
-if the datasets do no have to be downloaded (e.g. on Google Cloud).
-
-The configuration file should be at `$HOME/.deel/config.yml`:
-
-- On Windows system it is `C:\Users\$USERNAME\.deel\config.yml` unless you
-  have set the `HOME` environment variable.
-- The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
-  location of the configuration file if you do not want to use the default one.
-
-The configuration file is a **YAML** file.
-There exits two versions of provider configuration file.
-
-#### version 1
-
-The first version of configuration file allows to define only one provider 
-configuration. 
-
-Two key words are mandatory to specify the use of this version:
-- version: (value 1)
-- provider:
-
-A provider configuration is defined by :
-
-- **name**: which can be use in command line to specify the provider to use.
-- **type**: which can be local, gcloud, ftp or webdav. 
-- **auth**: which contains the **type**, the **username** and the **password** 
-    if an authentication is needed.
-
-For **gcloud** provider, the property **disk** allows to define source location.
-
-For a **webdav** type provider, the property **folder** allows to define the 
-sub-folder (containing the dataset) in the home directory define the url.
-
-An optionnal property can be defined: **path**. It is the local destination 
-of dowloaded datasets. Its default value is: `/home/${username}/.deel/datasets`.
-
-Below is a basic authentication for DEEL core team members (replace `${username}` by
-your OS username (you can also store datasets somewhere else),
-and `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
-
-```yaml
-# Version of the configuration (currently 1):
-version: 1
-
-provider:
-    type: webdav
-
-    url: https://share.deel.ai/remote.php/webdav
-    folder: Datasets
-
-    auth:
-        method: "simple"
-        username: "${deel-user}"
-        password: "${deel-password}"
-
-path: /home/${username}/.deel/datasets
-```
-#### version 2
-
-The second version of the providers configuration file allows to define a list 
-of providers.
-
-Two key words are mandatory to specify the use of this version:
-- version: (value 2)
-- providers: (value = list of providers )
-
-`providers` is the root node of the provider configurations list. 
-Each child node of `providers` node define a provider configuration. The name 
-of child node is the name of the configuration. It will be used in command line 
-to specify the provider.
-
-Below is an example of version 2 provider configuration for DEEL core team members:
-
-```yaml
-# Version of the configuration (currently 2):
-version: 2
-
-# Provider for the datasets:
-providers:
-  gcloud:
-    type: gcloud
-    disk: deel-datasets
-
-  local:
-    type: local
-    source: /data/dataset/
-
-  mvtec:
-    type: ftp
-    url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
-    auth:
-      method: "simple"
-      username: "guest"
-      password: "GU.205dldo"
-
-  deel:
-    type: webdav
-    url: https://datasets.deel.ai
-    auth:
-      method: "simple"
-      username: "deel-datasets"
-      password: "e]{qE/Pc65z'Nt?zLe-cK!_y?6f6"
-
-  share:
-    type: webdav
-    url: https://share.deel.ai/remote.php/webdav
-    folder: datasets
-    auth:
-        method: "simple"
-        username: "${deel-user}"
-        password: "${deel-password}"
-
-path: /home/${username}/.deel/datasets
-```
 
 
 
