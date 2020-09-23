@@ -116,7 +116,8 @@ the following command that add a line to `/etc/fstab` to ease the mount of the d
 assumes you are using `bash` or a compliant shell):
 
 ```
-echo UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-deel-datasets` /mnt/deel-datasets ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
+echo UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-deel-datasets` 
+/mnt/deel-datasets ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
 ```
 
 You can then mount the drive:
@@ -262,7 +263,9 @@ from deel.datasets.settings import Settings
 
 The plugin can override the default mode attribut (default value: `path` ):
 
-`_default_mode: str = "my_mode"` 
+`_default_mode: str = "mymode"` 
+
+Imperatively `load_mymode` method must be defined in the plugin class.
 
 The plugin can override the `_single_file` attribut: `True` if dataset consists of 
 a single file and `False` if not (False is the default value)
