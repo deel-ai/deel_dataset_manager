@@ -34,7 +34,7 @@ The configuration file should be at `$HOME/.deel/config.yml`:
 The configuration file is a **YAML** file.
 There exits two versions of provider configuration file.
 
-#### version 1
+#### Configuration version 1
 
 The first version of configuration file allows to define only one provider 
 configuration. 
@@ -79,7 +79,7 @@ provider:
 
 path: /home/${username}/.deel/datasets
 ```
-#### version 2
+#### Configuration version 2
 
 The second version of the providers configuration file allows to define a list 
 of providers.
