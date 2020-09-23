@@ -129,6 +129,14 @@ providers:
 path: /home/${username}/.deel/datasets
 ```
 
+### Uninstalling
+
+To uninstall the deel dataset manager package , simply run `pip uninstall`:
+
+```
+pip uninstall deel-datasets
+```
+
 # Dell dataset plugin
 
 ## Plugins installation
@@ -136,7 +144,7 @@ path: /home/${username}/.deel/datasets
 To download a dataset, a specific plugin must be implemented to provide the modes 
 and the loading methods.
 
-Some plugins are available on *forge.deel.ai* project and be installed.
+Some plugins are available on *forge.deel.ai* project and can be installed.
 
 **All of the dell dataset plugin must be installed using pip tool.**
 
@@ -205,7 +213,7 @@ git-repo-url:
 ## Dell dataset plugin implementation
 
 A deel dataset plugin is an extension of the Dataset class defined in the DEEL dataset manager project.
-It allows to access to specific datasets files using the load method and a defined modes.
+It allows to access to specific datasets files using the load method of defined modes.
 
 The plugin class imports:
 
@@ -214,9 +222,9 @@ from deel.datasets.dataset import Dataset
 from deel.datasets.settings import Settings
 ```
 
-The plugin can override the default mode (or not)
+The plugin can override the default mode attribut (or not and take default value: `path` ):
 
-`_default_mode: str = "my_mode"`
+`_default_mode: str = "my_mode"` 
 
 The plugin can override the _single_file attribut: True if dataset consists of 
 a single file and False if not (False is the default value)
@@ -227,9 +235,13 @@ implement `load_pytoch` method.
 
 `def load_pytoch(self, path: pathlib.Path):`
 
-Below is a simple implementation of a dataset :
+Below is a simple implementation of a deel dataset plugin. It defines three modes:
 
-```puthon
+- numpy,
+- csv,
+- pytorch.
+
+```python
 # -*- encoding: utf-8 -*-
 
 import h5py
@@ -303,7 +315,7 @@ class ExampleDataset(Dataset):
 ```
 
 The plugin package must define a **setup.py** file including a 
-*deel dataset plugin entry point*.
+***deel dataset plugin entry point***.
 
 The entry point provides to the plugin to be discovered and used by DEEL dataset
 manager project. The name of the DEEL dataset manager entry point is unique: 
@@ -326,20 +338,7 @@ entry_points={
 
 A deel dataset plugin python package should be built and distributed using `Setuptools`.
 
-
-
-
-See below for other configuration options.
-
-### Uninstalling
-
-To uninstall the deel dataset manager package , simply run `pip uninstall`:
-
-```
-pip uninstall deel-datasets
-```
-
-
+# Examples of usage
 
 ## Basic usage
 
@@ -423,7 +422,7 @@ sudo mount /mnt/deel-datasets
 **Note:** You only need to do this manually the first time. The disk will be automatically
 mounted on the next restarts of the virtual machine.
 
-### Command line utilities
+## Command line utilities
 
 The `deel-datasets` package comes with some command line utilities that can be accessed using:
 
@@ -470,7 +469,7 @@ Dataset blink:3.0.0 stored at '/opt/datasets/blink/3.0.0'.
   possible). If `:VERSION` is omitted, the whole dataset corresponding to `NAME` is
   deleted. If the `--all` option is used, all datasets are removed from the local storage.
 
-### Providers
+## Providers
 
 Currently available providers are `webdav`, `ftp`, `local` and `gcloud`.
 The `webdav` provider is the default-one and will fetch datasets from a WebDAV server
