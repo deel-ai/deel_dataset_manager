@@ -26,29 +26,193 @@ and the loading methods.
 
 Some plugins are available on *forge.deel.ai* project and be installed.
 
-##### MVTEC deel dataset plugin :
-
-This dataset package must be installed using pip tool.**
+**All of the dell dataset plugin must be installed using pip tool.**
 
 If you have set-up SSH keys properly for https://forge.deel.ai, you can use the SSH version:
 
-pip install git+ssh://git@forge.deel.ai:22012/DevOps/datasets/mvtec_dataset.git
+`pip install git+ssh://<git-repo-url>`
 
 Otherwize the HTTPS version should work but you will have to enter your credentials manually:
 
-pip install git+https://forge.deel.ai/DevOps/datasets/mvtec_dataset.git
+`pip install git+https://<git-repo-url>`
+
+##### ACAS deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/acas_dataset.git`
+
+##### AIRBUS deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/airbus_dataset.git`
+
+##### BDE deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/bde_dataset.git`
+
+##### BLINK deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/blink_dataset.git`
+
+##### DUCKIE deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/duckie_dataset.git`
+
+##### ELECBOARD deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/elecboard_dataset.git`
 
 ##### EUROSAT deel dataset plugin
 
-This dataset package must be installed using pip tool.
+git-repo-url:
 
-If you have set-up SSH keys properly for https://forge.deel.ai, you can use the SSH version:
+`git@forge.deel.ai:22012/DevOps/datasets/eurosat_dataset.git`
 
-pip install git+ssh://git@forge.deel.ai:22012/DevOps/datasets/eurosat_dataset.git
+##### MVTEC deel dataset plugin :
 
-Otherwize the HTTPS version should work but you will have to enter your credentials manually:
+git-repo-url:
 
-pip install git+https://forge.deel.ai/DevOps/datasets/eurosat_dataset.git
+`git@forge.deel.ai:22012/DevOps/datasets/mvtec_dataset.git`
+
+##### LANDCOVER deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/landcover_dataset.git`
+
+### Dell dataset implementation
+
+A deel dataset plugin is an extension of the Dataset class defined in the DEEL dataset manager project.
+It allows to access to specific datasets files using the load method and a defined modes.
+
+The plugin class imports:
+
+```
+from deel.datasets.dataset import Dataset
+from deel.datasets.settings import Settings
+```
+
+The plugin can override the default mode (or not)
+
+`_default_mode: str = "my_mode"`
+
+The plugin can override the _single_file attribut: True if dataset consists of 
+a single file and False if not (False is the default value)
+
+The plugin class can add extra modes by providing `load_MODE` method.
+For example, to load a dataset using pytoch mode, the plugin class must 
+implement `load_pytoch` method.
+
+`def load_pytoch(self, path: pathlib.Path):`
+
+Below is a simple implementation of a dataset :
+
+```puthon
+# -*- encoding: utf-8 -*-
+
+import h5py
+import pathlib
+import typing
+
+from deel.datasets.dataset import Dataset
+from deel.datasets.settings import Settings
+
+
+class ExampleDataset(Dataset):
+
+    # Default mode:
+    _default_mode: str = "numpy"
+
+    # Dataset consists of a single ".h5" file:
+    _single_file: bool = True
+
+    # Available keys:
+    h5_keys: typing.List[str] = ["patches", "labels"]
+
+    def __init__(
+        self, version: str = "latest", settings: typing.Optional[Settings] = None
+    ):
+        """
+        Args:
+            version: Version of the dataset.
+            settings: The settings to use for this dataset, or `None` to use the
+            default settings.
+        """
+        super().__init__("data_name", version, settings)
+
+    def load_numpy(self, path: pathlib.Path):
+        """
+        .....
+        """
+        ....
+        data = ....
+        ....
+        return data
+    
+    def _load_csv(self, path: pathlib.Path):
+        """
+        .....
+        """
+        
+        import pandas as pd
+
+        return pd.read_csv(path, sep=";", index_col=0)
+    
+    def load_pytorch(
+        self,
+        path: pathlib.Path,
+        nstack: int = 4,
+        transform: typing.Callable = None,
+    ):
+        """
+        Load method for the `pytorch` mode.
+
+        Args:
+            nstack: Number of images to stack for each sample.
+            transform: Transform to apply to the image.
+
+        Returns:
+            A pytorch Dataset object representing the dataset.
+        """
+        from .torch import SourceDataSet
+
+        return SourceDataSet(self.load_path(path), nstack, transform)
+
+```
+
+The plugin package must define a **setup.py** file including a 
+*deel dataset plugin entry point*.
+
+The entry point provides to the plugin to be discovered and used by DEEL dataset
+manager project. The name of the DEEL dataset manager entry point is unique: 
+`plugins.deel.dataset`.
+It is possible to define many aliases of the same plugin by adding for each 
+alias an entry `alias = package:plugin class` in entry points list. 
+In the above example, two aliases are defined for `mvtec.ad` plugin : `mvtec.anomaly.detecction` and `mvtec_ad`.
+
+```
+entry_points={
+    "plugins.deel.dataset": [
+        "mvtec.ad = mvtec.ad:MvtecAdDataset",
+        "mvtec.anomaly.detecction = mvtec.ad:MvtecAdDataset",
+        "mvtec_ad = mvtec.ad:MvtecAdDataset",
+        "data_name = <package to plugin class>:plugin_class_name",
+        "alias_data_name = <package to plugin class>:plugin_class_name",
+    ]
+}.
+```
+
+A deel dataset plugin python package should be built and distributed using `Setuptools`.
 
 
 ### Configuration
