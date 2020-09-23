@@ -117,7 +117,7 @@ providers:
       username: "guest"
       password: "GU.205dldo"
 
-  share:
+  default:
     type: webdav
     url: https://share.deel.ai/remote.php/webdav
     folder: datasets
@@ -128,6 +128,8 @@ providers:
 
 path: /home/${username}/.deel/datasets
 ```
+In case of use of the version 2 of configuration, you can name `default` the 
+provider to use by default. 
 
 ### Uninstalling
 
@@ -222,12 +224,12 @@ from deel.datasets.dataset import Dataset
 from deel.datasets.settings import Settings
 ```
 
-The plugin can override the default mode attribut (or not and take default value: `path` ):
+The plugin can override the default mode attribut (default value: `path` ):
 
 `_default_mode: str = "my_mode"` 
 
-The plugin can override the _single_file attribut: True if dataset consists of 
-a single file and False if not (False is the default value)
+The plugin can override the `_single_file` attribut: `True` if dataset consists of 
+a single file and `False` if not (False is the default value)
 
 The plugin class can add extra modes by providing `load_MODE` method.
 For example, to load a dataset using pytoch mode, the plugin class must 
@@ -260,9 +262,8 @@ class ExampleDataset(Dataset):
     # Dataset consists of a single ".h5" file:
     _single_file: bool = True
 
-    # Available keys:
-    h5_keys: typing.List[str] = ["patches", "labels"]
-
+    ....
+    
     def __init__(
         self, version: str = "latest", settings: typing.Optional[Settings] = None
     ):
@@ -285,7 +286,7 @@ class ExampleDataset(Dataset):
     
     def _load_csv(self, path: pathlib.Path):
         """
-        .....
+        ...
         """
         
         import pandas as pd
@@ -299,14 +300,7 @@ class ExampleDataset(Dataset):
         transform: typing.Callable = None,
     ):
         """
-        Load method for the `pytorch` mode.
-
-        Args:
-            nstack: Number of images to stack for each sample.
-            transform: Transform to apply to the image.
-
-        Returns:
-            A pytorch Dataset object representing the dataset.
+        ...
         """
         from .torch import SourceDataSet
 
