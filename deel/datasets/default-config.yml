@@ -33,5 +33,5 @@ providers:
     folder: datasets
     auth:
       method: "simple"
-      username: "justin.plakoo"
-      password: "q8Ja586,+bY8"
+      username: "${deel-user}"
+      password: "${deel-password}"
