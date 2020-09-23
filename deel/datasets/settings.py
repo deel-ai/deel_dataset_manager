@@ -204,7 +204,7 @@ def read_settings(stream: TextIO) -> Dict[str, Settings]:
         # Retrieve the provider:
         settings_list.update({"default": read_one_settings(data, version)})
     else:
-        # Retrieve the provider:
+        # Retrieve the providers:
         if "providers" not in data:
             raise ParseSettingsError("Missing providers list.")
 
@@ -278,12 +278,33 @@ def get_default_settings() -> Dict[str, Settings]:
 
 
 def get_settings_for_local() -> Settings:
+    """
+    Retrieve the local default settings.
+
+    Returns:
+        The settings for local.
+    """
     return Settings(
         version=1,
         provider_type="local",
         provider_options={},
         path=_get_default_path("local"),
     )
+
+
+def get_dataset_settings(dataset: str) -> Settings:
+    """
+    Retrieve the right settings for the current dataset.
+
+    Returns:
+        The settings for the current dataset.
+    """
+    settings_list = get_default_settings()
+    for settings in settings_list.values():
+        provider = settings.make_provider()
+        if dataset in provider.list_datasets():
+            return settings
+    return next(iter(settings_list.values()))
 
 
 if __name__ == "__main__":
