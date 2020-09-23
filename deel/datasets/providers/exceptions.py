@@ -3,6 +3,14 @@
 import typing
 
 
+class InvalidConfigurationError(Exception):
+    """
+    Exception raised if the provider configuration is invalid.
+    """
+
+    pass
+
+
 class DatasetNotFoundError(Exception):
 
     """

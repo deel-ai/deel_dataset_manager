@@ -70,41 +70,69 @@ def test_gcloud_settings():
 
     # We need to override find_gcloud_mount_path() for testing
     # purpose
-    import deel.datasets._gcloud_utils as _gcloud_utils
+    from deel.datasets.providers.gcloud_provider import GCloudProvider
+    from deel.datasets.providers.exceptions import InvalidConfigurationError
 
-    path = Path("/mnt/deel-datasets")
-    _gcloud_utils.find_gcloud_mount_path = lambda disk: path  # type: ignore
+    GCloudProvider._find_gcloud_mount_path = lambda s, d: "/mnt/{}".format(d)
 
     yaml = """version: 1
 
-provider: gcloud"""
+provider:
+    type: gcloud
+    disk: deel-datasets"""
     settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
-    assert settings._base == Path("/mnt/deel-datasets")
-    assert settings._provider_options == {}
+    assert settings._provider_options == {"disk": "deel-datasets"}
+
+    provider = settings.make_provider()
+    assert isinstance(provider, GCloudProvider)
+    assert provider.root_folder == Path("/mnt/google-deel-datasets")
 
     yaml = """version: 1
 
-provider: gcloud
+provider:
+    type: gcloud
+    disk: deel-datasets
 path: /vol/deel-datasets"""
     settings = read_settings(io.StringIO(yaml))["default"]
     assert settings._version == 1
     assert settings._provider_type == "gcloud"
     assert settings._base == Path("/vol/deel-datasets")
-    assert settings._provider_options == {}
+    assert settings._provider_options == {"disk": "deel-datasets"}
 
-    # Return None so default path is used:
-    _gcloud_utils.find_gcloud_mount_path = lambda disk: None  # type: ignore
+    provider = settings.make_provider()
+    assert isinstance(provider, GCloudProvider)
+    assert provider.root_folder == Path("/mnt/google-deel-datasets")
 
     yaml = """version: 1
 
-provider: gcloud"""
-    settings = read_settings(io.StringIO(yaml))["default"]
-    assert settings._version == 1
-    assert settings._provider_type == "gcloud"
-    assert settings._base == Path.home().joinpath(".deel", "datasets")
-    assert settings._provider_options == {}
+provider:
+    type: gcloud"""
+    try:
+        settings = read_settings(io.StringIO(yaml))["default"]
+        provider = settings.make_provider()
+        assert False, "Should raise InvalidConfigurationError."
+    except InvalidConfigurationError:
+        pass
+
+    # Return None so default path is used:
+    def mount_path_raise(s, d):
+        raise InvalidConfigurationError()
+
+    GCloudProvider._find_gcloud_mount_path = mount_path_raise
+    yaml = """version: 1
+
+provider:
+    type: gcloud
+    disk: deel-datasets
+path: /vol/deel-datasets"""
+    try:
+        settings = read_settings(io.StringIO(yaml))["default"]
+        provider = settings.make_provider()
+        assert False, "Should raise InvalidConfigurationError."
+    except InvalidConfigurationError:
+        pass
 
 
 # Test configuration version 2 : multiple providers
