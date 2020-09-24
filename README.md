@@ -19,7 +19,7 @@ manually:
 pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 ```
 
-### Configuration
+## Configuration
 
 The configuration file specifies how the datasets should be downloaded, or
 if the datasets do no have to be downloaded (e.g. on Google Cloud).
@@ -31,9 +31,30 @@ The configuration file should be at `$HOME/.deel/config.yml`:
 - The `DEEL_CONFIGURATION_FILE` environment variable can be used to specify the
   location of the configuration file if you do not want to use the default one.
 
-Below is a basic authentication for DEEL core team members (replace `${username}` by
-your OS username (you can also store datasets somewhere else),
-and `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
+The configuration file is a **YAML** file.
+There exits two versions of provider configuration file.
+
+### Configuration version 1
+
+The first version of configuration file allows to define only one provider 
+configuration. 
+
+Two key words are mandatory to specify the use of this version:
+- version: (value 1)
+- provider:
+
+A provider configuration is defined by :
+
+- **name**: which can be use in command line to specify the provider to use.
+- **type**: which can be local, gcloud, ftp or webdav. 
+- **auth**: not mandatory but can be required. It contains the **type**, the **username** and the **password**.
+
+An optionnal property can be defined: **path**. It is the local destination 
+of dowloaded datasets. Its default value is: `/home/${username}/.deel/datasets`.
+
+Below is a basic authentication for DEEL core team members.
+
+Replace `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
 
 ```yaml
 # Version of the configuration (currently 1):
@@ -52,17 +73,307 @@ provider:
 
 path: /home/${username}/.deel/datasets
 ```
+### Configuration version 2
 
-See below for other configuration options.
+The second version of the providers configuration file allows to define a list 
+of providers.
 
-### Uninstalling
+Two key words are mandatory to specify the use of this version:
+- version: (value 2)
+- providers: (value = list of providers )
 
-To uninstall the package, simply run `pip uninstall`:
+`providers` is the root node of the provider configurations list. 
+Each child node of `providers` node define a provider configuration. The name 
+of child node is the name of the configuration. It may be used in command line 
+to specify the provider (option -p for `download`).
+
+Currently available providers are `webdav`, `ftp`, `local` and `gcloud`.
+
+- The `webdav` provider is the default-one and will fetch datasets from a WebDAV server
+and needs at least the `url` configuration parameter (`auth` is not mandatory but required
+for the `https://datasets.deel.ai` server). 
+
+- For a webdav type provider, the property `folder` in configuration allows to define the
+path to the folder containing the dataset.
+
+- The `ftp` provider is similar to the `webdav` provider except that it will fetch datasets
+from a FTP server instead of a WebDAV one and needs at least the `url` configuration parameter.
+
+- The `local` provider does not require any extra configuration and will simply
+fetch data from the specified `path`.
+
+When using the `webdav` or `ftp` provider, the `path` parameter indicates where the datasets
+should be stored locally.
+
+- The `gcloud` provider is similar to the `local` provider, except that it will try to
+locate the dataset storage location automatically based on the currently mounted drives.
+The `disk` property in configuration allows to define the the location path on drive.
+
+#### Accessing the `deel-datasets` on a Google Cloud virtual machine
+
+You first need to attach the disk to your machine using the Google Cloud console, then run
+the following command that add a line to `/etc/fstab` to ease the mount of the drive (this
+assumes you are using `bash` or a compliant shell):
+
+```
+echo UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-deel-datasets` 
+/mnt/deel-datasets ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
+```
+
+You can then mount the drive:
+
+```
+sudo mount /mnt/deel-datasets
+```
+
+**Note:** You only need to do this manually the first time. The disk will be automatically
+mounted on the next restarts of the virtual machine.
+
+#### Version 2 configuration example
+
+Below is an example of version 2 provider configuration for DEEL core team members:
+
+```yaml
+# Version of the configuration (currently 2):
+version: 2
+
+# Provider for the datasets:
+providers:
+  gcloud:
+    type: gcloud
+    disk: deel-datasets
+
+  local:
+    type: local
+    source: /data/dataset/
+
+  mvtec:
+    type: ftp
+    url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
+    auth:
+      method: "simple"
+      username: "guest"
+      password: "GU.205dldo"
+
+  deel:
+    type: webdav
+    url: https://share.deel.ai/remote.php/webdav
+    folder: datasets
+    auth:
+        method: "simple"
+        username: "${deel-user}"
+        password: "${deel-password}"
+
+path: /home/${username}/.deel/datasets
+```
+In case of use of the version 2 of configuration, you can name `default` the 
+provider to use by default. If the default provider is not defined and not set 
+as an argument in command use, all of defined providers are checked.
+
+## Uninstalling
+
+To uninstall the deel dataset manager package , simply run `pip uninstall`:
 
 ```
 pip uninstall deel-datasets
 ```
 
+# Dell dataset plugin
+
+## Plugins installation
+
+To download a dataset, a specific plugin must be implemented to provide the modes 
+and the loading methods.
+
+Some plugins are available on *forge.deel.ai* project and can be installed.
+
+**All of the dell dataset plugin must be installed using pip tool.**
+
+If you have set-up SSH keys properly for https://forge.deel.ai, you can use the SSH version:
+
+`pip install git+ssh://<git-repo-url>`
+
+Otherwize the HTTPS version should work but you will have to enter your credentials manually:
+
+`pip install git+https://<git-repo-url>`
+
+### ACAS deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/acas_dataset.git`
+
+### AIRBUS deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/airbus_dataset.git`
+
+### BDE deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/bde_dataset.git`
+
+### BLINK deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/blink_dataset.git`
+
+### DUCKIE deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/duckie_dataset.git`
+
+### ELECBOARD deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/elecboard_dataset.git`
+
+### EUROSAT deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/eurosat_dataset.git`
+
+### MVTEC deel dataset plugin :
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/mvtec_dataset.git`
+
+### LANDCOVER deel dataset plugin
+
+git-repo-url:
+
+`git@forge.deel.ai:22012/DevOps/datasets/landcover_dataset.git`
+
+## Dell dataset plugin implementation
+
+A deel dataset plugin is an extension of the Dataset class defined in the DEEL dataset manager project.
+It allows to access to specific datasets files using the load method of defined modes.
+
+The plugin class imports:
+
+```
+from deel.datasets.dataset import Dataset
+from deel.datasets.settings import Settings
+```
+
+The plugin can override the default mode attribut (default value: `path` ):
+
+`_default_mode: str = "mymode"` 
+
+Imperatively `load_mymode` method must be defined in the plugin class.
+
+The plugin can override the `_single_file` attribut: `True` if dataset consists of 
+a single file and `False` if not (False is the default value)
+
+The plugin class can add extra modes by providing `load_MODE` method.
+For example, to load a dataset using pytoch mode, the plugin class must 
+implement `load_pytoch` method.
+
+`def load_pytoch(self, path: pathlib.Path):`
+
+Below is a simple implementation of a deel dataset plugin. It defines three modes:
+
+- numpy,
+- csv,
+- pytorch.
+
+```python
+# -*- encoding: utf-8 -*-
+
+import h5py
+import pathlib
+import typing
+
+from deel.datasets.dataset import Dataset
+from deel.datasets.settings import Settings
+
+
+class ExampleDataset(Dataset):
+
+    # Default mode:
+    _default_mode: str = "numpy"
+
+    # Dataset consists of a single ".h5" file:
+    _single_file: bool = True
+
+    ....
+    
+    def __init__(
+        self, version: str = "latest", settings: typing.Optional[Settings] = None
+    ):
+        """
+        Args:
+            version: Version of the dataset.
+            settings: The settings to use for this dataset, or `None` to use the
+            default settings.
+        """
+        super().__init__("data_name", version, settings)
+
+    def load_numpy(self, path: pathlib.Path):
+        """
+        .....
+        """
+        ....
+        data = ....
+        ....
+        return data
+    
+    def _load_csv(self, path: pathlib.Path):
+        """
+        ...
+        """
+        
+        import pandas as pd
+
+        return pd.read_csv(path, sep=";", index_col=0)
+    
+    def load_pytorch(
+        self,
+        path: pathlib.Path,
+        nstack: int = 4,
+        transform: typing.Callable = None,
+    ):
+        """
+        ...
+        """
+        from .torch import SourceDataSet
+
+        return SourceDataSet(self.load_path(path), nstack, transform)
+
+```
+
+The plugin package must define a **setup.py** file including a 
+***deel dataset plugin entry point***.
+
+The entry point provides to the plugin to be discovered and used by DEEL dataset
+manager project. The name of the DEEL dataset manager entry point is unique: 
+`plugins.deel.dataset`.
+It is possible to define many aliases of the same plugin by adding for each 
+alias an entry `alias = package:plugin class` in entry points list. 
+In the above example, two aliases are defined for `mvtec.ad` plugin : `mvtec.anomaly.detecction` and `mvtec_ad`.
+
+```
+entry_points={
+    "plugins.deel.dataset": [
+        "mvtec.ad = mvtec.ad:MvtecAdDataset",
+        "mvtec.anomaly.detecction = mvtec.ad:MvtecAdDataset",
+        "mvtec_ad = mvtec.ad:MvtecAdDataset",
+        "data_name = <package to plugin class>:plugin_class_name",
+        "alias_data_name = <package to plugin class>:plugin_class_name",
+    ]
+}.
+```
+
+A deel dataset plugin python package should be built and distributed using `Setuptools`.
+
+# Examples of usage
 
 ## Basic usage
 
@@ -112,41 +423,8 @@ The following files contain examples for the `blink` and `landcover` dataset:
 - [examples/landcover/tensorflow_example.py](examples/landcover/tensorflow_example.py)
 - [examples/landcover/load_example.py](examples/landcover/load_example.py)
 
-## Configuration:
 
-### GCloud configuration
-
-If you are using a Google Cloud virtual machine, you can avoid downloading the datasets
-by mounting and using the `deel-datasets` gcloud drive (see below).
-This can be done by using the following (very simple) configuration (still at
-`$HOME/.deel/config.yml`):
-
-```yaml
-version: 1
-
-provider: gcloud
-```
-
-#### Accessing the `deel-datasets` on a Google Cloud virtual machine
-
-You first need to attach the disk to your machine using the Google Cloud console, then run
-the following command that add a line to `/etc/fstab` to ease the mount of the drive (this
-assumes you are using `bash` or a compliant shell):
-
-```
-echo UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-deel-datasets` /mnt/deel-datasets ext4 discard,defaults,nofail 0 2 | sudo tee -a /etc/fstab
-```
-
-You can then mount the drive:
-
-```
-sudo mount /mnt/deel-datasets
-```
-
-**Note:** You only need to do this manually the first time. The disk will be automatically
-mounted on the next restarts of the virtual machine.
-
-### Command line utilities
+## Command line utilities
 
 The `deel-datasets` package comes with some command line utilities that can be accessed using:
 
@@ -193,7 +471,7 @@ Dataset blink:3.0.0 stored at '/opt/datasets/blink/3.0.0'.
   possible). If `:VERSION` is omitted, the whole dataset corresponding to `NAME` is
   deleted. If the `--all` option is used, all datasets are removed from the local storage.
 
-### Providers
+## Providers
 
 Currently available providers are `webdav`, `ftp`, `local` and `gcloud`.
 The `webdav` provider is the default-one and will fetch datasets from a WebDAV server

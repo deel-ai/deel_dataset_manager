@@ -5,6 +5,7 @@ import pathlib
 import typing
 
 from .provider import Provider
+from .exceptions import InvalidConfigurationError
 
 
 logger = logging.getLogger(__name__)
@@ -16,7 +17,8 @@ def make_provider(
     provider_options: typing.Dict[str, typing.Any] = {},
 ) -> Provider:
 
-    """ Create a new provider using the given arguments.
+    """
+    Create a new provider using the given arguments.
 
     Args:
         provider_type: Type of the provider.
@@ -40,7 +42,10 @@ def make_provider(
     elif provider_type == "gcloud":
         from .gcloud_provider import GCloudProvider
 
-        return GCloudProvider(root_path)
+        if "disk" not in provider_options:
+            raise InvalidConfigurationError("No disk specified for gcloud provider.")
+
+        return GCloudProvider(disk="google-" + provider_options["disk"])
 
     elif provider_type == "webdav":
         from .webdav_provider import (
@@ -79,7 +84,10 @@ def make_provider(
         )
 
     elif provider_type == "ftp":
-        from .ftp_providers import FtpProvider, FtpSimpleAuthenticator
+        from .ftp_providers import (
+            FtpProvider,
+            FtpSimpleAuthenticator,
+        )
 
         # If authentication is required:
         ftp_authenticator: typing.Optional[FtpSimpleAuthenticator] = None

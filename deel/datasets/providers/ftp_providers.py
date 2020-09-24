@@ -14,8 +14,10 @@ from .remote_provider import RemoteFile, RemoteProvider, RemoteSingleFileProvide
 
 class FtpSimpleAuthenticator:
 
-    """ Authenticator for a simple FTP authentication with a
-    username and a password. """
+    """
+    Authenticator for a simple FTP authentication with a
+    username and a password.
+    """
 
     # Username and password:
     _username: str
@@ -32,18 +34,24 @@ class FtpSimpleAuthenticator:
 
     @property
     def username(self):
-        """ Returns: The username to use for authentication. """
+        """
+        Returns: The username to use for authentication.
+        """
         return self._username
 
     @property
     def password(self):
-        """ Returns: The password to use for authentication. """
+        """
+        Returns: The password to use for authentication.
+        """
         return self._password
 
 
 class FtpRemoteFile(RemoteFile):
 
-    """ Class representing a remote file for the FTP provider. """
+    """
+    Class representing a remote file for the FTP provider.
+    """
 
     # The FTP client:
     _client: ftplib.FTP
@@ -102,8 +110,10 @@ class FtpRemoteFile(RemoteFile):
 
 class FtpProvider(RemoteProvider):
 
-    """ The `FtpProvider` is a `RemoteProvider` associated to a FTP
-    server. """
+    """
+    The `FtpProvider` is a `RemoteProvider` associated to a FTP
+    server.
+    """
 
     # The FTP client:
     _client_alive: bool = False
@@ -122,7 +132,7 @@ class FtpProvider(RemoteProvider):
         """
         Args:
             root_folder: Root folder to look-up datasets.
-            remote_url: Remote URL of the WebDAV server.
+            remote_url: Remote URL of the Ftp server.
             authenticator: Authenticator to use.
             **kwargs: Extra arguments for the `FTP` constructor.
         """
@@ -133,7 +143,6 @@ class FtpProvider(RemoteProvider):
             kwargs.update(
                 {"user": authenticator.username, "passwd": authenticator.password}
             )
-
         # Remove the ftp(s):// prefix:
         if remote_url.find("://") != -1:
             remote_url = remote_url[remote_url.find("://") + 3 :]
@@ -143,7 +152,9 @@ class FtpProvider(RemoteProvider):
         remote_url = parts[0]
 
         try:
-            self._client = ftplib.FTP(remote_url, **kwargs)
+            self._client = ftplib.FTP()
+            self._client.connect(remote_url, ftplib.FTP_PORT)
+            self._client.login(**kwargs)
             self._remote_path = Path(*parts[1:])
 
             # Switch to binary mode:
@@ -197,9 +208,11 @@ class FtpProvider(RemoteProvider):
 
 class FtpSingleFileProvider(RemoteSingleFileProvider, FtpProvider):
 
-    """ The `FtpProvider` is a `RemoteProvider` associated to a FTP server.
+    """
+    The `FtpProvider` is a `RemoteProvider` associated to a FTP server.
 
-    This provider currently does not supported encrypted connection. """
+    This provider currently does not supported encrypted connection.
+    """
 
     def __init__(
         self,

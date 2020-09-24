@@ -22,11 +22,14 @@ from .local_provider import LocalProvider
 
 class FileModifier(abc.ABC):
 
-    """ Abstract class representing a modifier to apply to the file
-    downloaded by the WebDAV provider. """
+    """
+    Abstract class representing a modifier to apply to the file
+    downloaded by the WebDAV provider.
+    """
 
     def accept(self, file: pathlib.Path) -> bool:
-        """ Check if the given file can be modified by this modifier.
+        """
+        Check if the given file can be modified by this modifier.
 
         Args:
             file: The file to check.
@@ -36,7 +39,8 @@ class FileModifier(abc.ABC):
         pass
 
     def apply(self, file: pathlib.Path):
-        """ Apply this modifier to the given file.
+        """
+        Apply this modifier to the given file.
 
         Args:
             file: The file to apply the modifier to.
@@ -49,7 +53,9 @@ class FileModifier(abc.ABC):
 
 class ZipExtractor(FileModifier):
 
-    """ Modifier that unzip files and delete them afterwards. """
+    """
+    Modifier that unzip files and delete them afterwards.
+    """
 
     def accept(self, file: pathlib.Path) -> bool:
         return file.suffix == ".zip"
@@ -63,11 +69,13 @@ class ZipExtractor(FileModifier):
 
 class TarZExtractor(FileModifier):
 
-    """ Modifier that extract files from tar archives, with or
+    """
+    Modifier that extract files from tar archives, with or
     without comrpession and delete them afterwards.
 
     See the `tarfile` library for the list of supported compression
-    methods. """
+    methods.
+    """
 
     def accept(self, file: pathlib.Path) -> bool:
         # We accept .tgz, .tar and .tar.gz
@@ -84,8 +92,10 @@ class TarZExtractor(FileModifier):
 
 class GzExtractor(FileModifier):
 
-    """ Modifier that extract files from gz archives and delete
-    them afterwards. """
+    """
+    Modifier that extract files from gz archives and delete
+    them afterwards.
+    """
 
     # Size of the buffer to use for extraction:
     _buffer_size = 4096
@@ -116,11 +126,14 @@ class GzExtractor(FileModifier):
 
 class RemoteFile(object):
 
-    """ Abstraction representing a remote file. """
+    """
+    Abstraction representing a remote file.
+    """
 
     @abc.abstractmethod
     def download(self, local_file: pathlib.Path):
-        """ Download this file from the remote storage to the local path.
+        """
+        Download this file from the remote storage to the local path.
 
         Args:
             local_file: Local path where the file should be downloaded.
@@ -139,12 +152,14 @@ class RemoteFile(object):
 
 class RemoteProvider(LocalProvider):
 
-    """ The `RemoteProvider` extends `LocalProvider` by fetching datasets
+    """
+    The `RemoteProvider` extends `LocalProvider` by fetching datasets
     from a remote server if they are not found on the local storage.
 
     If a dataset is not found locally (or a force download is required), the
     provider will first downloads all the files corresponding to the given dataset,
-    and then extract all archived files (.zip, .gz, .tgz) in the local folder. """
+    and then extract all archived files (.zip, .gz, .tgz) in the local folder.
+    """
 
     # Remote server URL:
     _remote_url: str
@@ -167,11 +182,14 @@ class RemoteProvider(LocalProvider):
 
     @property
     def remote_url(self) -> str:
-        """ Returns: The remote URL from where the datasets are fetched. """
+        """
+        Returns: The remote URL from where the datasets are fetched.
+        """
         return self._remote_url
 
     def local_provider(self) -> LocalProvider:
-        """ Create and returns a `LocalProvider` corresponding to the local
+        """
+        Create and returns a `LocalProvider` corresponding to the local
         storage for this provider.
 
         Returns:
@@ -182,7 +200,8 @@ class RemoteProvider(LocalProvider):
 
     @abc.abstractmethod
     def _is_available(self) -> bool:
-        """ Check if the remote server is available.
+        """
+        Check if the remote server is available.
 
         Returns:
             `True` if the remote server is available, `False` otherwize.
@@ -191,7 +210,8 @@ class RemoteProvider(LocalProvider):
 
     @abc.abstractmethod
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
-        """ List the remote files for the given dataset version.
+        """
+        List the remote files for the given dataset version.
 
         Args:
             name: Name of the dataset.
@@ -204,7 +224,8 @@ class RemoteProvider(LocalProvider):
         pass
 
     def _get_remote_version(self, name: str, version: str = "latest") -> str:
-        """ Retrieve the remote version corresponding to the given dataset.
+        """
+        Retrieve the remote version corresponding to the given dataset.
 
         Args:
             name: Name of the dataset.
@@ -310,13 +331,15 @@ class RemoteProvider(LocalProvider):
 
 class RemoteSingleFileProvider(RemoteProvider):
 
-    """ The `RemoteSingleFileProvider` extends `RemoteProvider` and should be used
+    """
+    The `RemoteSingleFileProvider` extends `RemoteProvider` and should be used
     to fetch files from custom web servers (HTTP, FTP) that only provide a single
     file. The only methods that should be implemented are `_is_available` and
     `_list_remote_files`.`
 
     The goal of this class is mainly to be used to allow the creation of datasets
-    from publicly available files. """
+    from publicly available files.
+    """
 
     # Name and version of the dataset corresponding to the remote file:
     _name: str
