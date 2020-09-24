@@ -47,20 +47,14 @@ A provider configuration is defined by :
 
 - **name**: which can be use in command line to specify the provider to use.
 - **type**: which can be local, gcloud, ftp or webdav. 
-- **auth**: which contains the **type**, the **username** and the **password** 
-    if an authentication is needed.
-
-For **gcloud** provider, the property **disk** allows to define source location.
-
-For a **webdav** type provider, the property **folder** allows to define the 
-sub-folder (containing the dataset) in the home directory define the url.
+- **auth**: not mandatory but can be required. It contains the **type**, the **username** and the **password**.
 
 An optionnal property can be defined: **path**. It is the local destination 
 of dowloaded datasets. Its default value is: `/home/${username}/.deel/datasets`.
 
-Below is a basic authentication for DEEL core team members (replace `${username}` by
-your OS username (you can also store datasets somewhere else),
-and `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
+Below is a basic authentication for DEEL core team members.
+
+Replace `${deel-user}` and `${deel-password}` by your credentials for the DEEL tools):
 
 ```yaml
 # Version of the configuration (currently 1):
@@ -90,22 +84,28 @@ Two key words are mandatory to specify the use of this version:
 
 `providers` is the root node of the provider configurations list. 
 Each child node of `providers` node define a provider configuration. The name 
-of child node is the name of the configuration. It will be used in command line 
-to specify the provider.
+of child node is the name of the configuration. It may be used in command line 
+to specify the provider (option -p for `download`).
 
 Currently available providers are `webdav`, `ftp`, `local` and `gcloud`.
-The `webdav` provider is the default-one and will fetch datasets from a WebDAV server
+
+- The `webdav` provider is the default-one and will fetch datasets from a WebDAV server
 and needs at least the `url` configuration parameter (`auth` is not mandatory but required
-for the `https://datasets.deel.ai` server).
-The `ftp` provider is similar to the `webdav` provider except that it will fetch datasets
+for the `https://datasets.deel.ai` server). 
+
+- For a webdav type provider, the property `folder` in configuration allows to define the
+path to the folder containing the dataset.
+
+- The `ftp` provider is similar to the `webdav` provider except that it will fetch datasets
 from a FTP server instead of a WebDAV one and needs at least the `url` configuration parameter.
-The `local` provider does not require any extra configuration and will simply
+
+- The `local` provider does not require any extra configuration and will simply
 fetch data from the specified `path`.
 
 When using the `webdav` or `ftp` provider, the `path` parameter indicates where the datasets
 should be stored locally.
 
-The `gcloud` provider is similar to the `local` provider, except that it will try to
+- The `gcloud` provider is similar to the `local` provider, except that it will try to
 locate the dataset storage location automatically based on the currently mounted drives.
 The `disk` property in configuration allows to define the the location path on drive.
 
@@ -128,6 +128,8 @@ sudo mount /mnt/deel-datasets
 
 **Note:** You only need to do this manually the first time. The disk will be automatically
 mounted on the next restarts of the virtual machine.
+
+#### Version 2 configuration example
 
 Below is an example of version 2 provider configuration for DEEL core team members:
 
