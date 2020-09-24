@@ -37,6 +37,9 @@ def make_provider(
     if provider_type == "local":
         from .local_provider import LocalProvider
 
+        if "source" in provider_options:
+            root_path = provider_options["source"]
+
         return LocalProvider(root_path)
 
     elif provider_type == "gcloud":
