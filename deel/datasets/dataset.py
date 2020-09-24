@@ -91,7 +91,8 @@ class Dataset(object):
             self._settings = settings
 
     def _get_provider(self) -> Provider:
-        """Create and returns a provider for this dataset.
+        """
+        Create and returns a provider for this dataset.
 
         By default, this uses creates the provider using `self._settings`.
         This method should only be overriden if the dataset requires a
@@ -106,7 +107,8 @@ class Dataset(object):
     def _make_class_info(
         self, idx_to_class: typing.Dict[int, str]
     ) -> typing.Dict[str, typing.Any]:
-        """Utility function that can be used to convert a mapping
+        """
+        Utility function that can be used to convert a mapping
         from class labels to class names into a valid information
         dictionary that can be returned by a `load_` method.
 
@@ -130,12 +132,15 @@ class Dataset(object):
 
     @property
     def version(self) -> str:
-        """ Returns: The requested version of the dataset. """
+        """
+        Returns: The requested version of the dataset.
+        """
         return self._version
 
     @property
     def available_modes(self) -> typing.List[str]:
-        """Retrieve the list of available modes for this dataset.
+        """
+        Retrieve the list of available modes for this dataset.
 
         Returns:
             The list of available modes for this dataset.
@@ -151,7 +156,8 @@ class Dataset(object):
 
     @property
     def default_mode(self) -> str:
-        """Retrieve the default mode for this dataset.
+        """
+        Retrieve the default mode for this dataset.
 
         Returns:
             The default mode for this dataset.
@@ -159,7 +165,8 @@ class Dataset(object):
         return self._default_mode
 
     def load_path(self, path: pathlib.Path) -> pathlib.Path:
-        """Load method for path mode.
+        """
+        Load method for path mode.
 
         Args:
             path: Path of the dataset.
@@ -176,7 +183,8 @@ class Dataset(object):
         with_info: bool = False,
         **kargs
     ) -> typing.Any:
-        """Load this dataset as specified by `mode`.
+        """
+        Load this dataset as specified by `mode`.
 
         This method checks that the given `mode` is valid, retrieve the dataset
         files using a `Provider` and then dispatches the actual loading of the

@@ -183,7 +183,8 @@ def load_numpy_image_dataset(
     aggregate_fn: Callable[[str], Optional[str]] = lambda x: x,
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
 ):
-    """Creates a numpy image dataset from the given folder and
+    """
+    Creates a numpy image dataset from the given folder and
     parameters.
 
     The image dataset are 4-dimensional (N, H, W, C) numpy array where (H, W)
@@ -273,7 +274,8 @@ def load_hierarchical_pytorch_image_dataset(
     unique_labels: bool = False,
     transform: Optional[Callable[[Image.Image], Image.Image]] = None,
 ):
-    """Creates a pytorch image dataset from the given folder and
+    """
+    Creates a pytorch image dataset from the given folder and
     parameters.
 
     Args:
@@ -337,7 +339,8 @@ def load_pytorch_image_dataset(
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
     transform: Optional[Callable[[Image.Image], Image.Image]] = None,
 ):
-    """Creates a pytorch image dataset from the given folder and
+    """
+    Creates a pytorch image dataset from the given folder and
     parameters.
 
     Args:
@@ -425,7 +428,8 @@ def load_tensorflow_image_dataset(
     aggregate_fn: Callable[[str], Optional[str]] = lambda x: x,
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
 ):
-    """Creates a tensorflow image dataset from the given folder and
+    """
+    Creates a tensorflow image dataset from the given folder and
     parameters.
 
     Args:
