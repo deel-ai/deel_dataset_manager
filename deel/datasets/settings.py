@@ -26,13 +26,15 @@ DEFAULT_DATASETS_PATH = Path.home().joinpath(".deel", "datasets")
 
 class Settings(object):
 
-    """ The `Settings` class is a read-only class that contains
+    """
+    The `Settings` class is a read-only class that contains
     settings for the `deel.datasets` package.
 
     Settings are stored in a YAML format. The default location
     for the settings file is `$HOME/.deel/config.yml`. The
     `DEEL_DATASETS_CONF` environment variable can be used to
-    specify the default location of the file. """
+    specify the default location of the file.
+    """
 
     # Version of the settings:
     _version: int
@@ -66,20 +68,25 @@ class Settings(object):
         self._base = path
 
     def make_provider(self) -> Provider:
-        """ Creates and returns the provider corresponding to these settings.
+        """
+        Creates and returns the provider corresponding to these settings.
 
         Returns:
             A new `Provider` created from these settings.
         """
+        # print("make_provider Settings {}".format(self))
         return make_provider(self._provider_type, self._base, self._provider_options)
 
     @property
     def local_storage(self) -> Path:
-        """ Returns: The path to the local storage for the datasets. """
+        """
+        Returns: The path to the local storage for the datasets.
+        """
         return self._base
 
     def __repr__(self) -> str:
-        """ Output a basic representation of these settings.
+        """
+        Output a basic representation of these settings.
 
         Returns:
             A basic representation of these settings.
@@ -93,58 +100,28 @@ class Settings(object):
         )
 
 
-def _get_default_path(provider_type: str) -> Path:
-    """ Retrieve the default dataset root path for the given provider type.
-
-    Args:
-        provider_type: The type of provider to retrieve the path for.
-
-    Returns:
-        The default path for the given provider.
-    """
-
-    # Default path is $HOME/.deel/datasets
-    path = DEFAULT_DATASETS_PATH
-
-    # For GCloud, we try to find the mount point:
-    if provider_type == "gcloud":
-        from ._gcloud_utils import find_gcloud_mount_path
-
-        gcloud_path = find_gcloud_mount_path()
-        if gcloud_path is not None:
-            path = gcloud_path
-
-    return path
-
-
 class ParseSettingsError(Exception):
-    """ Exception raised if an issue occurs while parsing the settings. """
+    """
+    Exception raised if an issue occurs while parsing the settings.
+    """
 
     pass
 
 
-def read_settings(stream: TextIO) -> Settings:
-    """ Load `Settings` from the given YAML stream.
+def read_one_settings(data: Dict[str, Any], version: int) -> Settings:
+    """
+    Load `Settings` from the given dictionnary (YAML stream).
 
     Args:
-        stream: File-like object containing the configuration.
+        data: YAML file settings element dictionnary.
 
     Returns:
-        A `Settings` object constructed from the given YAML stream.
+        A `Settings` object constructed from the given data.
 
     Raises:
         yaml.YAMLError: If the given stream does not contain valid YAML.
         ParseSettingsError: If the given YAML is not valid for settings.
     """
-
-    # We let the error propagate to distinguish between error in
-    # parsing YAML and error in constructing settings:
-    data = yaml.safe_load(stream)
-
-    # Retrieve the version:
-    if "version" not in data:
-        raise ParseSettingsError("Missing version.")
-    version = int(data["version"])
 
     # Retrieve the provider:
     if "provider" not in data:
@@ -162,13 +139,59 @@ def read_settings(stream: TextIO) -> Settings:
     if "path" in data:
         path = Path(data["path"])
     else:
-        path = _get_default_path(provider_type)
+        path = DEFAULT_DATASETS_PATH
 
     return Settings(version, provider_type, provider_options, path)
 
 
+def read_settings(stream: TextIO) -> Dict[str, Settings]:
+    """
+    Load `Settings` from the given YAML stream.
+
+    Args:
+        stream: File-like object containing the configuration.
+
+    Returns:
+        A `Settings` object constructed from the given YAML stream.
+
+    Raises:
+        yaml.YAMLError: If the given stream does not contain valid YAML.
+        ParseSettingsError: If the given YAML is not valid for settings.
+    """
+
+    settings_list: Dict[str, Settings] = {}
+    # We let the error propagate to distinguish between error in
+    # parsing YAML and error in constructing settings:
+    data = yaml.safe_load(stream)
+
+    # Retrieve the version:
+    if "version" not in data:
+        raise ParseSettingsError("Missing version.")
+    version = int(data["version"])
+
+    if version == 1:
+        # Retrieve the provider:
+        settings_list.update({"default": read_one_settings(data, version)})
+    else:
+        # Retrieve the providers:
+        if "providers" not in data:
+            raise ParseSettingsError("Missing providers list.")
+
+        if isinstance(data["providers"], dict):
+
+            for prov, conf in data["providers"].items():
+                d = {"provider": conf}
+                if "path" in data:
+                    d.update({"path": data["path"]})
+                settings_list.update({prov: read_one_settings(d, version)})
+        else:
+            raise ParseSettingsError("Providers not a dictionary")
+    return settings_list
+
+
 def write_settings(settings: Settings, stream: TextIO, **kwargs):
-    """ Write the given `Settings` to the given stream as YAML.
+    """
+    Write the given `Settings` to the given stream as YAML.
 
     Args:
         settings: Settings to write.
@@ -195,8 +218,9 @@ def write_settings(settings: Settings, stream: TextIO, **kwargs):
     yaml.dump(data, stream, **kwargs)
 
 
-def get_default_settings() -> Settings:
-    """ Retrieve the default settings for the current machine.
+def get_default_settings() -> Dict[str, Settings]:
+    """
+    Retrieve the default settings for the current machine.
 
     Returns:
         The default settings for the current machine.
@@ -222,7 +246,37 @@ def get_default_settings() -> Settings:
     return settings
 
 
+def get_settings_for_local() -> Settings:
+    """
+    Retrieve the local default settings.
+
+    Returns:
+        The settings for local.
+    """
+    return Settings(
+        version=1,
+        provider_type="local",
+        provider_options={},
+        path=DEFAULT_DATASETS_PATH,
+    )
+
+
+def get_dataset_settings(dataset: str) -> Settings:
+    """
+    Retrieve the right settings for the current dataset.
+
+    Returns:
+        The settings for the current dataset.
+    """
+    settings_list = get_default_settings()
+    for settings in settings_list.values():
+        provider = settings.make_provider()
+        if dataset in provider.list_datasets():
+            return settings
+    return next(iter(settings_list.values()))
+
+
 if __name__ == "__main__":
     settings = get_default_settings()
     print(settings)
-    print(settings.make_provider())
+    print(settings["default"].make_provider())

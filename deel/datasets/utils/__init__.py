@@ -16,7 +16,8 @@ def load_hierarchical_python_image_dataset(
     dispatch_fn: Callable[[pathlib.Path], Optional[Tuple[List[str], str]]],
     unique_labels: bool = False,
 ):
-    """ Walk the given folder applying the given function to
+    """
+    Walk the given folder applying the given function to
     find to which dataset and class each file should be associated
     to.
 
@@ -111,7 +112,8 @@ def load_python_image_dataset(
     aggregate_fn: Callable[[str], Optional[str]] = lambda x: x,
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
 ) -> Tuple[List[pathlib.Path], List[int], Dict[int, str]]:
-    """ Load a python "dataset" from the given folder. This methods
+    """
+    Load a python "dataset" from the given folder. This methods
     returns a list of paths, labels, and class names from the given folder.
 
     Args:
@@ -181,7 +183,8 @@ def load_numpy_image_dataset(
     aggregate_fn: Callable[[str], Optional[str]] = lambda x: x,
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
 ):
-    """ Creates a numpy image dataset from the given folder and
+    """
+    Creates a numpy image dataset from the given folder and
     parameters.
 
     The image dataset are 4-dimensional (N, H, W, C) numpy array where (H, W)
@@ -271,7 +274,8 @@ def load_hierarchical_pytorch_image_dataset(
     unique_labels: bool = False,
     transform: Optional[Callable[[Image.Image], Image.Image]] = None,
 ):
-    """ Creates a pytorch image dataset from the given folder and
+    """
+    Creates a pytorch image dataset from the given folder and
     parameters.
 
     Args:
@@ -335,7 +339,8 @@ def load_pytorch_image_dataset(
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
     transform: Optional[Callable[[Image.Image], Image.Image]] = None,
 ):
-    """ Creates a pytorch image dataset from the given folder and
+    """
+    Creates a pytorch image dataset from the given folder and
     parameters.
 
     Args:
@@ -396,7 +401,10 @@ def load_pytorch_image_dataset(
     if isinstance(train_split, float):
         i1 = int(train_split * len(dataset))
         return (
-            (Subset(dataset, range(i1)), Subset(dataset, range(i1, len(dataset))),),
+            (
+                Subset(dataset, range(i1)),
+                Subset(dataset, range(i1, len(dataset))),
+            ),
             idx_to_class,
         )
     else:
@@ -420,7 +428,8 @@ def load_tensorflow_image_dataset(
     aggregate_fn: Callable[[str], Optional[str]] = lambda x: x,
     filter_fn: Callable[[str, pathlib.Path], bool] = lambda *args: True,
 ):
-    """ Creates a tensorflow image dataset from the given folder and
+    """
+    Creates a tensorflow image dataset from the given folder and
     parameters.
 
     Args:

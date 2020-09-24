@@ -14,8 +14,10 @@ from .remote_provider import RemoteFile, RemoteSingleFileProvider
 
 class HttpSimpleAuthenticator:
 
-    """ Authenticator for a simple HTTP authentication with a
-    username and a password. """
+    """
+    Authenticator for a simple HTTP authentication with a
+    username and a password.
+    """
 
     # Username and password:
     _username: str
@@ -32,18 +34,24 @@ class HttpSimpleAuthenticator:
 
     @property
     def username(self):
-        """ Returns: The username to use for authentication. """
+        """
+        Returns: The username to use for authentication.
+        """
         return self._username
 
     @property
     def password(self):
-        """ Returns: The password to use for authentication. """
+        """
+        Returns: The password to use for authentication.
+        """
         return self._password
 
 
 class HttpRemoteFile(RemoteFile):
 
-    """ Class representing a remote file for the WebDAV provider. """
+    """
+    Class representing a remote file for the WebDAV provider.
+    """
 
     # The remote URL of the file::
     _remote_url: str
@@ -97,8 +105,10 @@ class HttpRemoteFile(RemoteFile):
 
 class HttpSingleFileProvider(RemoteSingleFileProvider):
 
-    """ This provider is a `RemoteProvider` that can only serve a single
-    file over the HTTP protocol. """
+    """
+    This provider is a `RemoteProvider` that can only serve a single
+    file over the HTTP protocol.
+    """
 
     # The remote URL, including credentials:
     _full_url: str

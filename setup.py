@@ -14,7 +14,7 @@ setup(
     # Name of the package:
     name="deel-datasets",
     # Version of the package:
-    version="0.0.5",
+    version="0.0.6",
     # Find the package automatically (include everything):
     packages=find_namespace_packages(include=["deel.*"]),
     package_data={"deel.datasets": ["default-config.yml"]},
@@ -36,6 +36,12 @@ setup(
     # License:
     license="WTFPL",
     # Requirements:
-    install_requires=["webdavclient3==0.13", "tqdm", "h5py", "pyyaml", "psutil",],
+    install_requires=[
+        "webdavclient3==0.13",
+        "tqdm",
+        "h5py",
+        "pyyaml",
+        "psutil",
+    ],
     extras_require={"dev": dev_requires},
 )

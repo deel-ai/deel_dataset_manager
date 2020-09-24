@@ -1,28 +1,14 @@
 # -*- encoding: utf-8 -*-
-
-import importlib
+import pkg_resources
 import logging
 
-from typing import Any, Dict, List, Optional
+
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
 from .providers.exceptions import DatasetNotFoundError  # noqa
 from .settings import Settings  # noqa
-
-
-# List of aliases module: [alias1, alias2, alias3, ...]. The name
-# of the module is always an alias.
-_aliases: Dict[str, List[str]] = {
-    "blink": ["blink"],
-    "landcover": ["landcover"],
-    "landcover.resolution": ["landcover.resolution", "landcover-resolution"],
-    "airbus.helicopter": ["helicopter", "vibration", "airbus-helicopter"],
-    "elecboards.components": ["components", "elecboards-components"],
-    "acas": ["acas.xu", "acas-xu"],
-    "bde": ["braking-distance-estimation"],
-    "mvtec.ad": ["mvtec.anomaly.detecction", "mvtec_ad"],
-}
 
 
 def load(
@@ -35,7 +21,7 @@ def load(
     **kwargs
 ) -> Any:
 
-    """ Load the given dataset using the given arguments.
+    """Load the given dataset using the given arguments.
 
     Args:
         dataset: Dataset to load.
@@ -56,29 +42,14 @@ def load(
         ValueError: If the `dataset` does not exist.
     """
 
-    # Replace - with .:
-    dataset = dataset.replace("-", ".")
-
-    # Check if this is an alias:
-    for k, v in _aliases.items():
-        if dataset in v:
-            dataset = k
+    dataset_object = None
+    for entry_point in pkg_resources.iter_entry_points("plugins.deel.dataset"):
+        if entry_point.name == dataset:
+            dataset_class = entry_point.load()
+            dataset_object = dataset_class(version, settings)
             break
 
-    # Create the dataset class name:
-    dataset_class_name = (
-        "".join(part.capitalize() for part in dataset.split(".")) + "Dataset"
-    )
-
-    # Find the module and the class:
-    try:
-        module = importlib.import_module("." + dataset, __name__)
-        dataset_class = getattr(module, dataset_class_name)
-
-        # Instantiate the class:
-        dataset_object = dataset_class(version, settings)
-    except (ImportError, AttributeError):
-
+    if dataset_object is None:
         # Default mode is then path:
         if mode is None:
             mode = "path"
