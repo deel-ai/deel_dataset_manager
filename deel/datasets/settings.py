@@ -225,16 +225,14 @@ def get_default_settings() -> Dict[str, Settings]:
     Returns:
         The default settings for the current machine.
     """
-    
+
     file_location: Path = DEFAULT_FILE_LOCATION
 
     if not file_location.exists():
         logger.warning(
-            (
-                "[Deprecated] Missing deel.datasets user settings file. "
-                "Create a configuration file at {} or set the {} environment "
-                "variable accordingly."
-            ).format(DEFAULT_FILE_LOCATION, ENV_DEFAULT_FILE)
+            "[Deprecated] Missing deel.datasets user settings file. "
+            "Create a configuration file at {} or set the {} environment "
+            "variable accordingly.".format(DEFAULT_FILE_LOCATION, ENV_DEFAULT_FILE)
         )
         return {"default": get_settings_for_local()}
 
