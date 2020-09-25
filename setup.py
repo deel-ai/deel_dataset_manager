@@ -17,14 +17,12 @@ setup(
     version="0.0.6",
     # Find the package automatically (include everything):
     packages=find_namespace_packages(include=["deel.*"]),
-    package_data={"deel.datasets": ["default-config.yml"]},
     # Author information:
     author="DEEL",
     author_email="collaborateurs.du.projet.deel@irt-saintexupery.com",
     # Description of the package:
     description="Dataset loader for DEEL datasets",
     long_description=open("README.md").read(),
-    include_package_data=True,
     # URL for sources:
     url="https://forge.deel.ai/devops/deel_dataset_manager",
     classifiers=[
