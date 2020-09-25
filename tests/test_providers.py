@@ -11,6 +11,7 @@ from deel.datasets.providers.http_providers import HttpSingleFileProvider
 from deel.datasets.providers.exceptions import (
     DatasetNotFoundError,
     VersionNotFoundError,
+    InvalidConfigurationError,
 )
 
 from deel.datasets.providers.local_provider import LocalProvider
@@ -143,7 +144,7 @@ def test_webdav_provider():
     assert provider._authenticator.password == "pass"
 
     # WebDAV provider with bad authentication method:
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidConfigurationError):
         make_provider(
             "webdav",
             LOCAL_PATH,
@@ -221,7 +222,7 @@ def test_ftp_provider(ftpserver, tmpdir):
     assert provider.list_versions("dataset2") == ["0.0.2"]
 
     # Ftp provider with bad authentication method:
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidConfigurationError):
         make_provider(
             "ftp",
             LOCAL_PATH,
