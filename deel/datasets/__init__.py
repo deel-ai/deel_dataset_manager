@@ -39,15 +39,20 @@ def load(
         The dataset in the format specified by `mode`.
 
     Raises:
-        ValueError: If the `dataset` does not exist.
+        DatasetNotFoundError: If the `dataset` does not exist.
+        ImportError : if plugin loading failed
     """
 
     dataset_object = None
     for entry_point in pkg_resources.iter_entry_points("plugins.deel.dataset"):
         if entry_point.name == dataset:
-            dataset_class = entry_point.load()
-            dataset_object = dataset_class(version, settings)
-            break
+            try:
+                dataset_class = entry_point.load()
+                dataset_object = dataset_class(version, settings)
+                break
+            except ImportError as e:
+                logger.info("Dataset not in {}".format(dataset))
+                raise e
 
     if dataset_object is None:
         # Default mode is then path:
