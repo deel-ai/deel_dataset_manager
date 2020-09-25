@@ -73,7 +73,7 @@ def make_provider(
                     provider_options["auth"]["password"],
                 )
             else:
-                raise ValueError(
+                raise InvalidConfigurationError(
                     "Invalid authentication method '{}' for WebDAV provider.".format(
                         provider_options["auth"]["method"]
                     )
@@ -103,7 +103,7 @@ def make_provider(
                     provider_options["auth"]["password"],
                 )
             else:
-                raise ValueError(
+                raise InvalidConfigurationError(
                     "Invalid authentication method '{}' for FTP provider.".format(
                         provider_options["auth"]["method"]
                     )
@@ -115,4 +115,4 @@ def make_provider(
             authenticator=ftp_authenticator,
         )
 
-    raise ValueError("Invalid provider type '{}'.".format(provider_type))
+    raise InvalidConfigurationError("Invalid provider type '{}'.".format(provider_type))
