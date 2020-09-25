@@ -11,7 +11,11 @@ from .settings import (
 )
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
-from .providers.exceptions import DatasetNotFoundError, DatasetVersionNotFoundError
+from .providers.exceptions import (
+    DatasetNotFoundError,
+    DatasetVersionNotFoundError,
+    InvalidConfigurationError,
+)
 
 
 def _store_dataset(args: argparse.Namespace, settings, conf_name):
@@ -115,7 +119,7 @@ def list_datasets(args: argparse.Namespace):
 
         except DatasetVersionNotFoundError as e:
             raise e
-        except DatasetNotFoundError:
+        except (DatasetNotFoundError, InvalidConfigurationError):
             pass
 
 
@@ -141,7 +145,7 @@ def download_datasets(args: argparse.Namespace):
         try:
             _store_dataset(args, settings, name)
             break
-        except DatasetNotFoundError:
+        except (DatasetNotFoundError, InvalidConfigurationError):
             print("Dataset not in {}".format(name))
             pass
 
@@ -204,6 +208,33 @@ def remove_datasets(args: argparse.Namespace):
             provider.del_folder(name, version)
 
 
+def check_config(args: argparse.Namespace):
+    """
+    Check the available configuration file.
+
+    Args:
+        args: Arguments from the command line.
+    """
+    if args.config is None:
+        settings_list = get_default_settings()
+    else:
+        settings_list = read_settings(args.config)
+
+    # If provider is specified use it,
+    # if not list all datasets from all providers in configuration file.
+    if args.prov_conf in settings_list:
+        settings_list = {args.prov_conf: settings_list[args.prov_conf]}
+
+    for name, settings in settings_list.items():
+        print("Check configuration {}:".format(name))
+        try:
+            settings.make_provider()
+            print("Configuration {} is OK.".format(name))
+        except InvalidConfigurationError as e:
+            print("======> Error in configuration {}: {}".format(name, e))
+            pass
+
+
 parser = argparse.ArgumentParser(description="DEEL dataset manager")
 parser.add_argument(
     "-c",
@@ -215,6 +246,15 @@ parser.add_argument(
 
 subparsers = parser.add_subparsers(help="sub-command help", dest="command")
 subparsers.required = True
+
+check_parser = subparsers.add_parser("check", help="check config")
+check_parser.set_defaults(func=check_config)
+check_parser.add_argument(
+    "prov_conf",
+    type=str,
+    nargs="?",
+    help="provider in configuration to use",
+)
 
 list_parser = subparsers.add_parser("list", help="list datasets")
 list_parser.add_argument(
@@ -264,7 +304,6 @@ del_parser.add_argument(
 del_parser.add_argument(
     "-a",
     "--all",
-    action="store_true",
     help="remove all local datasets",
 )
 del_parser.set_defaults(func=remove_datasets)
