@@ -225,7 +225,7 @@ def get_default_settings() -> Dict[str, Settings]:
     Returns:
         The default settings for the current machine.
     """
-
+    
     file_location: Path = DEFAULT_FILE_LOCATION
 
     if not file_location.exists():
@@ -236,9 +236,7 @@ def get_default_settings() -> Dict[str, Settings]:
                 "variable accordingly."
             ).format(DEFAULT_FILE_LOCATION, ENV_DEFAULT_FILE)
         )
-
-        # We use the default location:
-        file_location = Path(__file__).parent.joinpath("default-config.yml")
+        return {"default": get_settings_for_local()}
 
     with open(file_location, "r") as fp:
         settings = read_settings(fp)
