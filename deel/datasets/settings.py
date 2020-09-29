@@ -8,8 +8,8 @@ from pathlib import Path
 from typing import Any, Dict, TextIO
 
 from . import logger
-from .providers import make_provider as instance_provider, Provider
-from .providers.exceptions import DatasetNotFoundError
+from .providers import make_provider as make_provider, Provider
+from .providers.exceptions import DatasetNotFoundError, InvalidConfigurationError
 
 
 # Name of the environment variable containing the path to
@@ -47,15 +47,16 @@ class SettingsProvider(object):
         self._provider_type = provider_type
         self._provider_options = provider_options
 
-    def init_provider(self, base: Path) -> Provider:
+    def create_provider(self, base: Path) -> Provider:
         """
-        Creates and returns the provider corresponding to these settings.
+        Creates and returns the provider corresponding to those configurations.
+        Args:
+            base: path root directory
 
         Returns:
             A new `Provider` created from these settings.
         """
-        print("self._provider_options  ====> {}".format(self._provider_options))
-        return instance_provider(self._provider_type, base, self._provider_options)
+        return make_provider(self._provider_type, base, self._provider_options)
 
 
 class Settings(object):
@@ -74,7 +75,7 @@ class Settings(object):
     _version: int
 
     # Options for the provider:
-    _current_provider_: str
+    _default_provider_: str
 
     # Options for the provider:
     _provider_list: Dict[str, SettingsProvider] = {}
@@ -87,7 +88,7 @@ class Settings(object):
         version: int,
         provider_list: Dict[str, SettingsProvider],
         path: Path,
-        current_provider: str,
+        default_provider: str = "",
     ):
         """
         Args:
@@ -99,43 +100,43 @@ class Settings(object):
         self._version = version
         self._provider_list = provider_list
         self._base = path
-        self._current_provider_ = current_provider
+        self._default_provider_ = default_provider
 
-    def get_best_provider(self) -> SettingsProvider:
-        print("get_best_provider not in ====> ")
+    def get_best_provider(self, dataset: str) -> SettingsProvider:
 
-        s_provider: SettingsProvider
+        s_provider: SettingsProvider = SettingsProvider("local", {})
         if "default" in self._provider_list:
-            s_provider = self._provider_list[self._current_provider_]
-        else:
-            print("Dataset not in ====> {}".format(self._provider_list))
-            for name, sp in self._provider_list.items():
-                print("Dataset not in ====> {}".format(sp._provider_options))
+            s_provider = self._provider_list["default"]
+        elif dataset:
+            for sp in self._provider_list.values():
                 try:
                     # check provider...
-                    sp.init_provider(self._base)
-                    s_provider = sp
-                    break
-                except DatasetNotFoundError:
-                    print("Dataset not in ====> {}".format(name))
+                    provider = sp.create_provider(self._base)
+                    if dataset in provider.list_datasets():
+                        s_provider = sp
+                        break
+                except (DatasetNotFoundError, InvalidConfigurationError):
                     pass
-
         return s_provider
 
-    def make_provider(self) -> Provider:
+    def make_provider(self, dataset: str = "") -> Provider:
         """
         Creates and returns the provider corresponding to these settings.
-
+        Args:
+            dataset: dataset name
         Returns:
             A new `Provider` created from these settings.
         """
-        print("make_provider Settings _current_provider_ {}".format(self._current_provider_))
-        if self._current_provider_ is not None:
-            s_provider = self._provider_list[self._current_provider_]
-        else:
-            s_provider = self.get_best_provider()
 
-        return s_provider.init_provider(self._base)
+        if (
+            self._default_provider_ is not None
+            and self._default_provider_ in self._provider_list
+        ):
+            s_provider = self._provider_list[self._default_provider_]
+        else:
+            s_provider = self.get_best_provider(dataset)
+
+        return s_provider.create_provider(self._base)
 
     @property
     def local_storage(self) -> Path:
@@ -199,13 +200,13 @@ def read_one_provider(data: Dict[str, Any], version: int) -> SettingsProvider:
     return SettingsProvider(provider_type, provider_options)
 
 
-def read_settings(stream: TextIO, provider_name: str) -> Settings:
+def read_settings(stream: TextIO, default_provider: str = "") -> Settings:
     """
     Load `Settings` from the given YAML stream.
 
     Args:
         stream: File-like object containing the configuration.
-
+        default_provider: default provider to use
     Returns:
         A `Settings` object constructed from the given YAML stream.
 
@@ -246,7 +247,12 @@ def read_settings(stream: TextIO, provider_name: str) -> Settings:
     if "path" in data:
         path = Path(data["path"])
 
-    return Settings(version, provider_list, path, provider_name)
+    return Settings(
+        version,
+        provider_list,
+        path,
+        default_provider=default_provider,
+    )
 
 
 def write_settings(settings: Settings, stream: TextIO, **kwargs):
@@ -325,7 +331,7 @@ def get_dataset_settings(dataset: str) -> Settings:
     """
     settings = get_default_settings()
     for sp in settings.get_provider_list().values():
-        provider = sp.init_provider(settings._base)
+        provider = sp.create_provider(settings._base)
         if dataset in provider.list_datasets():
             return settings
     return settings
@@ -334,4 +340,4 @@ def get_dataset_settings(dataset: str) -> Settings:
 if __name__ == "__main__":
     settings = get_default_settings()
     print(settings)
-    print(settings.get_provider_list()["default"].init_provider(settings._base))
+    print(settings.get_provider_list()["default"].create_provider(settings._base))

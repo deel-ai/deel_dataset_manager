@@ -7,7 +7,6 @@ from . import load as load_dataset
 from .settings import (
     read_settings,
     get_default_settings,
-    get_settings_for_local,
 )
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
@@ -26,7 +25,7 @@ def _store_dataset(args: argparse.Namespace, settings):
         settings : settings from config
     """
     for dataset in args.datasets:
-        print("Fetching ====> {}... ".format(dataset))
+        print("Fetching {}... ".format(dataset))
 
         # Split name:version:
         parts = dataset.split(":")
@@ -43,11 +42,7 @@ def _store_dataset(args: argparse.Namespace, settings):
             force_update=args.force,
         )
 
-        print(
-            "Dataset {} loaded from {} and stored at '{}'.".format(
-                dataset, "conf_name", path
-            )
-        )
+        print("Dataset {} loaded and stored at '{}'.".format(dataset, path))
 
 
 def _list_dataset_for_provider(provider):
@@ -115,7 +110,7 @@ def list_datasets(args: argparse.Namespace):
             print(
                 "======================================================================"
             )
-            provider = sp.make_provider(settings._base)
+            provider = sp.create_provider(settings._base)
             _list_dataset_for_provider(provider)
 
         except DatasetVersionNotFoundError as e:
@@ -160,7 +155,7 @@ def remove_datasets(args: argparse.Namespace):
     if args.config is None:
         settings = get_default_settings()
     else:
-        settings = read_settings(args.config, args.prov_conf)
+        settings = read_settings(args.config)
 
     # This must be a local provider:
     provider: LocalProvider = settings.make_provider()  # type: ignore
@@ -225,9 +220,9 @@ def check_config(args: argparse.Namespace):
         settings = read_settings(args.config, args.prov_conf)
 
     for name, sp in settings.get_provider_list().items():
-        print("Check provider configuration {}:".format(name))
+        print("Check configuration {}:".format(name))
         try:
-            sp.make_provider(settings._base)
+            sp.create_provider(settings._base)
             print("Configuration {} is OK.".format(name))
         except InvalidConfigurationError as e:
             print("======> Error in configuration {}: {}".format(name, e))

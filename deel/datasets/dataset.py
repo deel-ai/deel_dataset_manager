@@ -99,7 +99,7 @@ class Dataset(object):
         Returns:
             A provider suitable to retrieve this dataset.
         """
-        return self._settings.make_provider()
+        return self._settings.make_provider(self._name)
 
     def _make_class_info(
         self, idx_to_class: typing.Dict[int, str]

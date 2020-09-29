@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 import io
-import os
 import pytest
 
 from pathlib import Path
