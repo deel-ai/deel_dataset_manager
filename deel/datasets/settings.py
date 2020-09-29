@@ -274,11 +274,22 @@ def write_settings(settings: Settings, stream: TextIO, **kwargs):
 
     # Build the python object:
     data: collections.OrderedDict = collections.OrderedDict()
-
     data["version"] = settings._version
-    data["provider"] = collections.OrderedDict()
-    # data["provider"]["type"] = settings._provider_type
-    # data["provider"].update(settings._provider_options)
+
+    if settings._version == 1:
+        data["provider"] = collections.OrderedDict()
+        s_provider = next(iter(settings.get_provider_list().values()))
+        data["provider"]["type"] = s_provider._provider_type
+        data["provider"].update(s_provider._provider_type)
+        data["path"] = str(settings._base.absolute())
+    else:
+        data["providers"] = collections.OrderedDict()
+        for name, s_provider in settings.get_provider_list().items():
+            data["providers"][name] = collections.OrderedDict()
+            data["providers"][name]["type"] = s_provider._provider_type
+            data["providers"][name]["provider"] = collections.OrderedDict()
+            data["providers"][name]["provider"].update(s_provider._provider_options)
+
     data["path"] = str(settings._base.absolute())
 
     yaml.dump(data, stream, **kwargs)
