@@ -25,10 +25,11 @@ provider:
     type: local
 
 """
-    settings = read_settings(io.StringIO(yaml))["default"]
+    settings = read_settings(io.StringIO(yaml), "default")
+    default_provider = settings.get_provider_list()["default"]
     assert settings._version == 1
-    assert settings._provider_type == "local"
-    assert settings._provider_options == {}
+    assert default_provider._provider_type == "local"
+    assert default_provider._provider_options == {}
     assert settings._base == Path("/data/datasets")
 
     # Constructor with WebDAV provider:
@@ -39,10 +40,11 @@ provider:
     type: webdav
 
 """
-    settings = read_settings(io.StringIO(yaml))["default"]
+    settings = read_settings(io.StringIO(yaml), "default")
+    default_provider = settings.get_provider_list()["default"]
     assert settings._version == 1
-    assert settings._provider_type == "webdav"
-    assert settings._provider_options == {}
+    assert default_provider._provider_type == "webdav"
+    assert default_provider._provider_options == {}
     assert settings._base == Path("/data/datasets")
 
     yaml = """version: 1
@@ -55,10 +57,11 @@ provider:
         username: "user"
         password: "pass"
 """
-    settings = read_settings(io.StringIO(yaml))["default"]
+    settings = read_settings(io.StringIO(yaml), "default")
+    default_provider = settings.get_provider_list()["default"]
     assert settings._version == 1
-    assert settings._provider_type == "webdav"
-    assert settings._provider_options == {
+    assert default_provider._provider_type == "webdav"
+    assert default_provider._provider_options == {
         "auth": {"method": "simple", "username": "user", "password": "pass"}
     }
     assert settings._base == Path("/data/datasets")
@@ -80,10 +83,11 @@ def test_gcloud_settings():
 provider:
     type: gcloud
     disk: deel-datasets"""
-    settings = read_settings(io.StringIO(yaml))["default"]
+    settings = read_settings(io.StringIO(yaml), "default")
+    default_provider = settings.get_provider_list()["default"]
     assert settings._version == 1
-    assert settings._provider_type == "gcloud"
-    assert settings._provider_options == {"disk": "deel-datasets"}
+    assert default_provider._provider_type == "gcloud"
+    assert default_provider._provider_options == {"disk": "deel-datasets"}
 
     provider = settings.make_provider()
     assert isinstance(provider, GCloudProvider)
@@ -95,11 +99,12 @@ provider:
     type: gcloud
     disk: deel-datasets
 path: /vol/deel-datasets"""
-    settings = read_settings(io.StringIO(yaml))["default"]
+    settings = read_settings(io.StringIO(yaml), "default")
+    default_provider = settings.get_provider_list()["default"]
     assert settings._version == 1
-    assert settings._provider_type == "gcloud"
+    assert default_provider._provider_type == "gcloud"
     assert settings._base == Path("/vol/deel-datasets")
-    assert settings._provider_options == {"disk": "deel-datasets"}
+    assert default_provider._provider_options == {"disk": "deel-datasets"}
 
     provider = settings.make_provider()
     assert isinstance(provider, GCloudProvider)
@@ -110,7 +115,7 @@ path: /vol/deel-datasets"""
 provider:
     type: gcloud"""
     try:
-        settings = read_settings(io.StringIO(yaml))["default"]
+        settings = read_settings(io.StringIO(yaml), "default")
         provider = settings.make_provider()
         assert False, "Should raise InvalidConfigurationError."
     except InvalidConfigurationError:
@@ -128,7 +133,8 @@ provider:
     disk: deel-datasets
 path: /vol/deel-datasets"""
     try:
-        settings = read_settings(io.StringIO(yaml))["default"]
+        settings = read_settings(io.StringIO(yaml), "default")
+        default_provider = settings.get_provider_list()["default"]
         provider = settings.make_provider()
         assert False, "Should raise InvalidConfigurationError."
     except InvalidConfigurationError:
@@ -171,45 +177,40 @@ providers:
             username: "provider_4_user"
             password: "provider_4_pass"
 """
-    settings_list = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
+    assert settings._version == 2
+    assert settings._base == Path("/data/datasets")
+    provider_list = settings.get_provider_list()
+    assert len(provider_list) == 4
 
-    assert len(settings_list) == 4
-    assert settings_list["provider_1"]._version == 2
-    assert settings_list["provider_1"]._provider_type == "webdav"
-    assert settings_list["provider_1"]._provider_options == {
+    assert provider_list["provider_1"]._provider_type == "webdav"
+    assert provider_list["provider_1"]._provider_options == {
         "auth": {
             "method": "simple",
             "username": "provider_1_user",
             "password": "provider_1_pass",
         }
     }
-    assert settings_list["provider_1"]._base == Path("/data/datasets")
-
-    assert settings_list["provider_2"]._version == 2
-    assert settings_list["provider_2"]._provider_type == "ftp"
-    assert settings_list["provider_2"]._provider_options == {
+    assert provider_list["provider_2"]._provider_type == "ftp"
+    assert provider_list["provider_2"]._provider_options == {
         "auth": {
             "method": "simple",
             "username": "provider_2_user",
             "password": "provider_2_pass",
         }
     }
-    assert settings_list["provider_2"]._base == Path("/data/datasets")
 
-    assert settings_list["provider_3"]._version == 2
-    assert settings_list["provider_3"]._provider_type == "http"
-    assert settings_list["provider_3"]._provider_options == {
+    assert provider_list["provider_3"]._provider_type == "http"
+    assert provider_list["provider_3"]._provider_options == {
         "auth": {
             "method": "simple",
             "username": "provider_3_user",
             "password": "provider_3_pass",
         }
     }
-    assert settings_list["provider_4"]._base == Path("/data/datasets")
 
-    assert settings_list["provider_4"]._version == 2
-    assert settings_list["provider_4"]._provider_type == "webdav"
-    assert settings_list["provider_4"]._provider_options == {
+    assert provider_list["provider_4"]._provider_type == "webdav"
+    assert provider_list["provider_4"]._provider_options == {
         "auth": {
             "method": "simple",
             "username": "provider_4_user",
@@ -217,7 +218,6 @@ providers:
         },
         "folder": "datasets",
     }
-    assert settings_list["provider_3"]._base == Path("/data/datasets")
 
     #  configuration with 3 providers and no path
     yaml = """version: 2
@@ -237,21 +237,17 @@ providers:
             username: "provider_2_user"
             password: "provider_2_pass"
 """
-    settings_list = read_settings(io.StringIO(yaml))
+    settings = read_settings(io.StringIO(yaml))
+    assert settings._version == 2
+    assert settings._base == Path.home().joinpath(".deel", "datasets")
+    provider_list = settings.get_provider_list()
+    assert len(provider_list) == 2
 
-    assert len(settings_list) == 2
-    assert settings_list["provider_1"]._version == 2
-    assert settings_list["provider_1"]._provider_type == "webdav"
-    assert settings_list["provider_1"]._provider_options == {
+    assert provider_list["provider_1"]._provider_type == "webdav"
+    assert provider_list["provider_1"]._provider_options == {
         "auth": {
             "method": "simple",
             "username": "provider_1_user",
             "password": "provider_1_pass",
         }
     }
-    assert settings_list["provider_1"]._base == Path.home().joinpath(
-        ".deel", "datasets"
-    )
-    assert settings_list["provider_2"]._base == Path(
-        os.path.join(Path.home(), ".deel/datasets")
-    )

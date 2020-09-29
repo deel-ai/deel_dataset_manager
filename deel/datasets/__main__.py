@@ -18,7 +18,7 @@ from .providers.exceptions import (
 )
 
 
-def _store_dataset(args: argparse.Namespace, settings, conf_name):
+def _store_dataset(args: argparse.Namespace, settings):
     """
     Download dataset and store it.
     Args:
@@ -26,7 +26,7 @@ def _store_dataset(args: argparse.Namespace, settings, conf_name):
         settings : settings from config
     """
     for dataset in args.datasets:
-        print("Fetching {}... ".format(dataset))
+        print("Fetching ====> {}... ".format(dataset))
 
         # Split name:version:
         parts = dataset.split(":")
@@ -45,7 +45,7 @@ def _store_dataset(args: argparse.Namespace, settings, conf_name):
 
         print(
             "Dataset {} loaded from {} and stored at '{}'.".format(
-                dataset, conf_name, path
+                dataset, "conf_name", path
             )
         )
 
@@ -92,16 +92,17 @@ def list_datasets(args: argparse.Namespace):
     """
 
     if args.config is None:
-        settings_list = get_default_settings()
+        settings = get_default_settings()
     else:
-        settings_list = read_settings(args.config)
+        settings = read_settings(args.config, args.prov_conf)
 
     # If provider is specified use it,
     # if not, list all datasets from all providers in configuration file.
-    if args.prov_conf in settings_list:
-        settings_list = {args.prov_conf: settings_list[args.prov_conf]}
-
-    for name, settings in settings_list.items():
+    if args.prov_conf is None:
+        provider_list = settings.get_provider_list()
+    else:
+        provider_list = {args.prov_conf: settings.get_provider_list()[args.prov_conf]}
+    for name, sp in provider_list.items():
         try:
             print(
                 "======================================================================"
@@ -114,7 +115,7 @@ def list_datasets(args: argparse.Namespace):
             print(
                 "======================================================================"
             )
-            provider = settings.make_provider()
+            provider = sp.make_provider(settings._base)
             _list_dataset_for_provider(provider)
 
         except DatasetVersionNotFoundError as e:
@@ -132,22 +133,21 @@ def download_datasets(args: argparse.Namespace):
     """
 
     if args.config is None:
-        settings_list = get_default_settings()
+        settings = get_default_settings()
     else:
-        settings_list = read_settings(args.config)
+        settings = read_settings(args.config, args.prov_conf)
 
     # If provider is specified use it,
     # if not list all datasets from all providers in configuration file.
-    if args.prov_conf in settings_list:
-        settings_list = {args.prov_conf: settings_list[args.prov_conf]}
-
-    for name, settings in settings_list.items():
-        try:
-            _store_dataset(args, settings, name)
-            break
-        except (DatasetNotFoundError, InvalidConfigurationError):
-            print("Dataset not in {}".format(name))
-            pass
+    # if args.prov_conf in settings_list:
+    #     settings_list = {args.prov_conf: settings_list[args.prov_conf]}
+    # provider_list = settings.get_provider_list()
+    # for name, sp in provider_list.items():
+    try:
+        _store_dataset(args, settings)
+    except (DatasetNotFoundError, InvalidConfigurationError):
+        print("Dataset not in {}".format("name"))
+        pass
 
 
 def remove_datasets(args: argparse.Namespace):
@@ -157,9 +157,13 @@ def remove_datasets(args: argparse.Namespace):
     Args:
         args: Arguments from the command line.
     """
+    if args.config is None:
+        settings = get_default_settings()
+    else:
+        settings = read_settings(args.config, args.prov_conf)
 
-    # This must be a local provider: # type: ignore
-    provider: LocalProvider = get_settings_for_local().make_provider()  # type: ignore
+    # This must be a local provider:
+    provider: LocalProvider = settings.make_provider()  # type: ignore
 
     if isinstance(provider, RemoteProvider):
         provider = provider.local_provider()
@@ -216,19 +220,14 @@ def check_config(args: argparse.Namespace):
         args: Arguments from the command line.
     """
     if args.config is None:
-        settings_list = get_default_settings()
+        settings = get_default_settings()
     else:
-        settings_list = read_settings(args.config)
+        settings = read_settings(args.config, args.prov_conf)
 
-    # If provider is specified use it,
-    # if not list all datasets from all providers in configuration file.
-    if args.prov_conf in settings_list:
-        settings_list = {args.prov_conf: settings_list[args.prov_conf]}
-
-    for name, settings in settings_list.items():
-        print("Check configuration {}:".format(name))
+    for name, sp in settings.get_provider_list().items():
+        print("Check provider configuration {}:".format(name))
         try:
-            settings.make_provider()
+            sp.make_provider(settings._base)
             print("Configuration {} is OK.".format(name))
         except InvalidConfigurationError as e:
             print("======> Error in configuration {}: {}".format(name, e))
@@ -261,7 +260,6 @@ list_parser.add_argument(
     "prov_conf",
     type=str,
     nargs="?",
-    default="default",
     help="provider in configuration to use",
 )
 list_parser.add_argument(
@@ -285,7 +283,6 @@ download_parser.add_argument(
     dest="prov_conf",
     type=str,
     nargs="?",
-    default="default",
     help="provider in configuration to use",
 )
 download_parser.add_argument(

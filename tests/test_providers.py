@@ -152,7 +152,7 @@ def test_webdav_provider():
         )
 
 
-def test_ftp_provider(ftpserver, tmpdir):
+def test_ftp_provider(ftpserver):
     """
     Test the ftp provider factory.
     """

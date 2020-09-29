@@ -4,7 +4,7 @@ import pathlib
 import typing
 
 from .providers.provider import Provider
-from .settings import Settings, get_default_settings, get_dataset_settings
+from .settings import Settings, get_default_settings
 
 
 class InvalidModeError(Exception):
@@ -83,10 +83,7 @@ class Dataset(object):
         self._info[name] = name
 
         if settings is None:
-            if "default" in get_default_settings():
-                self._settings = get_default_settings()["default"]
-            else:
-                self._settings = get_dataset_settings(name)
+            self._settings = get_default_settings()
         else:
             self._settings = settings
 
