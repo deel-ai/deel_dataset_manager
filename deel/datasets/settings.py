@@ -333,21 +333,6 @@ def get_settings_for_local() -> Settings:
     )
 
 
-def get_dataset_settings(dataset: str) -> Settings:
-    """
-    Retrieve the right settings for the current dataset.
-
-    Returns:
-        The settings for the current dataset.
-    """
-    settings = get_default_settings()
-    for sp in settings.get_provider_list().values():
-        provider = sp.create_provider(settings._base)
-        if dataset in provider.list_datasets():
-            return settings
-    return settings
-
-
 if __name__ == "__main__":
     settings = get_default_settings()
     print(settings)
