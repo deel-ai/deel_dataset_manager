@@ -106,7 +106,7 @@ class Settings(object):
         """
         Searchs and returns the best settings provider. If the defauit
         provider is defined in the configuration file, it is returned.
-        If not and if the dataset is not None, searchs and returns the 
+        If not and if the dataset is not None, searchs and returns the
         first settings provider which contains this dataset.
         If not, returns the local settings provider.
         Args:
