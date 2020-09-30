@@ -103,6 +103,17 @@ class Settings(object):
         self._default_provider_ = default_provider
 
     def get_best_provider(self, dataset: str) -> SettingsProvider:
+        """
+        Search and return the best settings provider. If the defauit
+        provider is defined in the configuration file, it is returned.
+        If not and if the dataset is not None, search and return the 
+        first settings provider which contains this dataset.
+        If not, return the local settings provider.
+        Args:
+            dataset: dataset name
+        Returns:
+            The provider to use
+        """
 
         s_provider: SettingsProvider = SettingsProvider("local", {})
         if "default" in self._provider_list:
