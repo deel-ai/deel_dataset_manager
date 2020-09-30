@@ -104,11 +104,11 @@ class Settings(object):
 
     def get_best_provider(self, dataset: str) -> SettingsProvider:
         """
-        Search and return the best settings provider. If the defauit
+        Searchs and returns the best settings provider. If the defauit
         provider is defined in the configuration file, it is returned.
-        If not and if the dataset is not None, search and return the 
+        If not and if the dataset is not None, searchs and returns the 
         first settings provider which contains this dataset.
-        If not, return the local settings provider.
+        If not, returns the local settings provider.
         Args:
             dataset: dataset name
         Returns:
