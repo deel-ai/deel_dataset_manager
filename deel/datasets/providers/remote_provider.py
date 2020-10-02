@@ -80,7 +80,8 @@ class TarZExtractor(FileModifier):
     def accept(self, file: pathlib.Path) -> bool:
         # We accept .tgz, .tar and .tar.gz
         return file.suffix in [".tgz", ".tbz2", ".txz", ".tar"] or (
-            len(file.suffixes) > 1 and file.suffixes[-2] == ".tar" 
+            len(file.suffixes) > 1
+            and file.suffixes[-2] == ".tar"
             and file.suffixes[-1] in [".gz", ".bz2", ".xz"]
         )
 
