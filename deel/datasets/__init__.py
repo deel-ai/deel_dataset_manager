@@ -55,13 +55,23 @@ def load(
                 raise e
 
     if dataset_object is None:
+
+        # If the module or class is not found, and the mode is not path (or None),
+        # we throw:
+        if mode is not None and mode != "path":
+            raise DatasetNotFoundError(dataset)
+
         # Default mode is then path:
         if mode is None:
             mode = "path"
 
-        # If the module or class is not found, and the mode is not path, we throw:
-        if mode != "path":
-            raise DatasetNotFoundError(dataset)
+            # Warn user, because they might expect something else if 'mode' was not set:
+            logger.warning(
+                (
+                    "Dataset plugin for {} not found. "
+                    "Path to the local dataset will be returned."
+                ).format(dataset)
+            )
 
         from .dataset import Dataset
 
