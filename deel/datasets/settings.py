@@ -318,7 +318,7 @@ def get_default_settings() -> Settings:
 
     if not file_location.exists():
         logger.warning(
-            "[Deprecated] Missing deel.datasets user settings file. "
+            "Missing deel.datasets user settings file, using default configuration. "
             "Create a configuration file at {} or set the {} environment "
             "variable accordingly.".format(DEFAULT_FILE_LOCATION, ENV_DEFAULT_FILE)
         )
