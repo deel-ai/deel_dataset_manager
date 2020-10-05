@@ -324,6 +324,7 @@ class RemoteProvider(LocalProvider):
             for modifier in self.modifiers:
                 if modifier.accept(local_file):
                     modifier.apply(local_file)
+                    break
 
         if returns_version:
             return local_exact_path, remote_version
