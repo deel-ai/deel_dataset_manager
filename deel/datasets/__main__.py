@@ -7,6 +7,7 @@ from . import load as load_dataset
 from .settings import (
     read_settings,
     get_default_settings,
+    get_settings_for_local,
 )
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
@@ -93,10 +94,18 @@ def list_datasets(args: argparse.Namespace):
 
     # If provider is specified use it,
     # if not, list all datasets from all providers in configuration file.
-    if args.prov_conf is None:
-        provider_list = settings.get_provider_list()
+    if args.local:
+        provider_list = get_settings_for_local().get_provider_list()
     else:
-        provider_list = {args.prov_conf: settings.get_provider_list()[args.prov_conf]}
+        if args.prov_conf is None:
+            provider_list = settings.get_provider_list()
+        elif args.prov_conf in settings.get_provider_list():
+            provider_list = {
+                args.prov_conf: settings.get_provider_list()[args.prov_conf]
+            }
+        else:
+            provider_list = settings.get_provider_list()
+
     for name, sp in provider_list.items():
         try:
             print(
@@ -128,7 +137,7 @@ def download_datasets(args: argparse.Namespace):
     """
 
     if args.config is None:
-        settings = get_default_settings()
+        settings = get_default_settings(args.prov_conf)
     else:
         settings = read_settings(args.config, args.prov_conf)
 
@@ -141,7 +150,7 @@ def download_datasets(args: argparse.Namespace):
     try:
         _store_dataset(args, settings)
     except (DatasetNotFoundError, InvalidConfigurationError):
-        print("Dataset not in {}".format("name"))
+        print("Dataset not found !")
         pass
 
 

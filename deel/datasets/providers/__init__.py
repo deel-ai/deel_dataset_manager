@@ -33,13 +33,19 @@ def make_provider(
         ValueError: If the given `provider_type` is invalid or if the
         given options do not match the given provider.
     """
-    if provider_type == "local":
+
+    # Case of a local provider as a real provider:
+    # source provided by a network mounted disk for exemple
+    if provider_type == "local" and "source" in provider_options:
+        from .local_as_provider import LocalAsProvider
+
+        source_path = provider_options["source"]
+        return LocalAsProvider(root_folder=root_path, source_folder=source_path)
+
+    elif provider_type == "local":
         from .local_provider import LocalProvider
 
-        if "source" in provider_options:
-            root_path = provider_options["source"]
-
-        return LocalProvider(root_path)
+        return LocalProvider(root_folder=root_path)
 
     elif provider_type == "gcloud":
         from .gcloud_provider import GCloudProvider

@@ -23,12 +23,23 @@ class LocalProvider(Provider):
     # The root folder where datasets should be looked-up:
     _root_folder: pathlib.Path
 
-    def __init__(self, root_folder: os.PathLike):
+    # if _is_provider = True, define the source provider
+    _source_folder: typing.Optional[pathlib.Path] = None
+
+    def __init__(
+        self,
+        root_folder: os.PathLike,
+        source_folder: typing.Optional[os.PathLike] = None,
+    ):
         """
         Args:
             root_folder: Root folder to look-up datasets.
         """
-        self._root_folder = pathlib.Path(root_folder)
+
+        if root_folder is not None:
+            self._root_folder = pathlib.Path(root_folder)
+        if source_folder is not None:
+            self._source_folder = pathlib.Path(source_folder)
 
     @property
     def root_folder(self) -> pathlib.Path:
@@ -36,6 +47,20 @@ class LocalProvider(Provider):
         Returns: The local path to root folder for the datasets.
         """
         return self._root_folder
+
+    @property
+    def source_folder(self) -> typing.Optional[os.PathLike]:
+        """
+        Returns: The local path to root folder for the datasets.
+        """
+        return self._source_folder
+
+    @property
+    def as_provider(self) -> bool:
+        """
+        Returns: The local path to root folder for the datasets.
+        """
+        return self._source_folder is not None
 
     def _remove_hidden_values(self, values: typing.List[str]) -> typing.List[str]:
         """
@@ -79,9 +104,13 @@ class LocalProvider(Provider):
             otherwize, a path to the folder containing the specified version for the
             given dataset.
         """
-        folder = self._root_folder.joinpath(name)
+        if self._source_folder is not None:
+            folder = self._source_folder.joinpath(name)
+        else:
+            folder = self._root_folder.joinpath(name)
         if version is not None:
             folder = folder.joinpath(version)
+
         return folder
 
     def _list_version(self, path: pathlib.Path) -> typing.List[str]:
@@ -98,9 +127,17 @@ class LocalProvider(Provider):
         return self._remove_hidden_values([c.name for c in path.iterdir()])
 
     def list_datasets(self) -> typing.List[str]:
-        if not self._root_folder.exists():
+        if (self._source_folder is not None and not self._source_folder.exists()) or (
+            self._source_folder is not None and not self._root_folder.exists()
+        ):
             return []
-        return self._remove_hidden_values([c.name for c in self._root_folder.iterdir()])
+
+        if self._source_folder is not None:
+            folder = self._source_folder
+        else:
+            folder = self._root_folder
+
+        return self._remove_hidden_values([c.name for c in folder.iterdir()])
 
     def list_versions(self, dataset: str) -> typing.List[str]:
         path = self._make_folder(dataset)

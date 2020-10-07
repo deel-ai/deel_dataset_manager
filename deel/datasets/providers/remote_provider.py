@@ -173,13 +173,19 @@ class RemoteProvider(LocalProvider):
         GzExtractor(),
     ]
 
-    def __init__(self, root_folder: os.PathLike, remote_url: str):
+    def __init__(
+        self,
+        root_folder: os.PathLike,
+        remote_url: str,
+        source_folder: typing.Optional[os.PathLike] = None,
+    ):
         """
         Args:
             root_folder: Root folder to look-up datasets.
             remote_url: Remote URL of the WebDAV server.
+            source_folder: optionaly for local as provider case
         """
-        super().__init__(root_folder)
+        super().__init__(root_folder, source_folder)
         self._remote_url = remote_url
 
     @property
@@ -198,7 +204,7 @@ class RemoteProvider(LocalProvider):
             A `LocalProvider` that fetches datasets from the local folder this
             provider stores the datasets to.
         """
-        return LocalProvider(self.root_folder)
+        return LocalProvider(root_folder=self.root_folder)
 
     @abc.abstractmethod
     def _is_available(self) -> bool:
