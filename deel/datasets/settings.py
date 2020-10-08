@@ -240,16 +240,11 @@ def read_settings(stream: TextIO, default_provider: str = "") -> Settings:
         # Retrieve the provider:
         provider_list.update({"default": read_one_provider(data, version)})
     else:
-        # Retrieve the providers:
-        if "providers" not in data:
-            raise ParseSettingsError("Missing providers list.")
-
-        if isinstance(data["providers"], dict):
+        # Retrieve the providers if defined:
+        if "providers" in data and isinstance(data["providers"], dict):
             for prov, conf in data["providers"].items():
                 d = {"provider": conf}
                 provider_list.update({prov: read_one_provider(d, version)})
-        else:
-            raise ParseSettingsError("Providers not a dictionary")
 
     # Default path is $HOME/.deel/datasets
     path = DEFAULT_DATASETS_PATH
@@ -306,9 +301,12 @@ def write_settings(settings: Settings, stream: TextIO, **kwargs):
     yaml.dump(data, stream, **kwargs)
 
 
-def get_default_settings() -> Settings:
+def get_default_settings(default_provider: str = "") -> Settings:
     """
     Retrieve the default settings for the current machine.
+
+    Args:
+        default_provider: optional the default provider to use
 
     Returns:
         The default settings for the current machine.
@@ -325,7 +323,7 @@ def get_default_settings() -> Settings:
         return get_settings_for_local()
 
     with open(file_location, "r") as fp:
-        settings = read_settings(fp)
+        settings = read_settings(fp, default_provider)
 
     return settings
 
