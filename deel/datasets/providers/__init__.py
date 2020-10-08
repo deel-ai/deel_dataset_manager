@@ -36,16 +36,18 @@ def make_provider(
 
     # Case of a local provider as a real provider:
     # source provided by a network mounted disk for exemple
-    if provider_type == "local" and "source" in provider_options:
+    if provider_type == "local":
+        from .local_provider import LocalProvider
         from .local_as_provider import LocalAsProvider
 
-        source_path = provider_options["source"]
-        return LocalAsProvider(root_folder=root_path, source_folder=source_path)
+        if "path" not in provider_options:
+            provider_options.update({"path": root_path})
+        source_path = provider_options["path"]
 
-    elif provider_type == "local":
-        from .local_provider import LocalProvider
+        if "copy" in provider_options and provider_options["copy"] is True:
+            return LocalAsProvider(root_folder=root_path, source_folder=source_path)
 
-        return LocalProvider(root_folder=root_path)
+        return LocalProvider(root_folder=source_path)
 
     elif provider_type == "gcloud":
         from .gcloud_provider import GCloudProvider
