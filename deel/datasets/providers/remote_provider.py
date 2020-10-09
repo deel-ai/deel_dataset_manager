@@ -339,6 +339,8 @@ class RemoteProvider(LocalProvider):
             # The local file:
             local_file = local_exact_path.joinpath(remote_file.relative_path)
 
+            os.makedirs(local_file.parent, exist_ok=True)
+
             # Download the file:
             remote_file.download(local_file)
 
