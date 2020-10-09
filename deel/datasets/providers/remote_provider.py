@@ -173,19 +173,13 @@ class RemoteProvider(LocalProvider):
         GzExtractor(),
     ]
 
-    def __init__(
-        self,
-        root_folder: os.PathLike,
-        remote_url: str,
-        source_folder: typing.Optional[os.PathLike] = None,
-    ):
+    def __init__(self, root_folder: os.PathLike, remote_url: str):
         """
         Args:
             root_folder: Root folder to look-up datasets.
             remote_url: Remote URL of the WebDAV server.
-            source_folder: optionaly for local as provider case
         """
-        super().__init__(root_folder, source_folder)
+        super().__init__(root_folder)
         self._remote_url = remote_url
 
     @property
@@ -204,7 +198,7 @@ class RemoteProvider(LocalProvider):
             A `LocalProvider` that fetches datasets from the local folder this
             provider stores the datasets to.
         """
-        return LocalProvider(root_folder=self.root_folder)
+        return LocalProvider(self.root_folder)
 
     @abc.abstractmethod
     def _is_available(self) -> bool:
@@ -262,6 +256,27 @@ class RemoteProvider(LocalProvider):
         except VersionNotFoundError:
             raise DatasetVersionNotFoundError(name, version)
 
+    def _before_downloads(self, files: typing.List[RemoteFile]):
+        """
+        Initialize a tqdm for download task.
+
+        Args:
+            List of files to be downloaded
+        """
+        pass
+
+    def _after_downloads(self):
+        """
+        Close the initialized tqdm.
+        """
+        pass
+
+    def _file_downloaded(self, file: RemoteFile, local_file: pathlib.Path):
+        """
+        Increments tqdm progression.
+        """
+        pass
+
     def get_folder(
         self,
         name: str,
@@ -318,6 +333,7 @@ class RemoteProvider(LocalProvider):
         files = self._list_remote_files(name, remote_version)
 
         # Download all the files and apply the modifier:
+        self._before_downloads(files)
         for remote_file in files:
 
             # The local file:
@@ -330,7 +346,9 @@ class RemoteProvider(LocalProvider):
             for modifier in self.modifiers:
                 if modifier.accept(local_file):
                     modifier.apply(local_file)
-                    break
+
+            self._file_downloaded(remote_file, local_file)
+        self._after_downloads()
 
         if returns_version:
             return local_exact_path, remote_version

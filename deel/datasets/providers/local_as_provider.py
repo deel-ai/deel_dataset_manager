@@ -3,7 +3,12 @@
 import os
 import pathlib
 import typing
+import sys
+
+from tqdm import tqdm, trange
 from shutil import copy, copytree
+from time import sleep
+import threading
 
 from .exceptions import DatasetNotFoundError
 
@@ -60,6 +65,8 @@ class LocalAsProvider(RemoteProvider):
 
     # Local source path of dataset:
     _source_path: str
+    _pbar: tqdm
+    _waiting_thread: threading.Thread
 
     def __init__(self, root_folder: os.PathLike, source_folder: str):
         """
@@ -106,6 +113,39 @@ class LocalAsProvider(RemoteProvider):
             for fpath in directory.iterdir()
             if fpath.name.rstrip("/") != version
         ]
+
+    # A waitng progress bar
+    def waiting_bar(self):
+        self._pbar = trange(
+            100, file=sys.stdout, leave=False, unit_scale=True, desc="Copying..."
+        )
+        for i in self._pbar:
+            sleep(0.1)
+
+    def _before_downloads(self, files: typing.List[RemoteFile]):
+        """
+        Initialize a tqdm for download task.
+
+        Args:
+            List of files to be downloaded
+        """
+        self._waiting_thread = threading.Thread(target=self.waiting_bar)
+        self._waiting_thread.start()
+
+    def _after_downloads(self):
+        """
+        Close the initialized tqdm.
+        """
+        self._pbar.close()
+        self._waiting_thread.join()
+
+    def _file_downloaded(self, file: RemoteFile, local_file: pathlib.Path):
+        """
+        Increments tqdm progression.
+        """
+        # relaunch the waiting progress bar
+        self._waiting_thread = threading.Thread(target=self.waiting_bar)
+        self._waiting_thread.start()
 
     def list_datasets(self) -> typing.List[str]:
         """
