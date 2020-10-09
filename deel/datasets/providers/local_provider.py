@@ -84,7 +84,7 @@ class LocalProvider(Provider):
             folder = folder.joinpath(version)
         return folder
 
-    def _list_version(self, path: pathlib.Path) -> typing.List[str]:
+    def _list_versions(self, path: pathlib.Path) -> typing.List[str]:
         """
         List the available versions for the dataset under the
         given path.
@@ -106,7 +106,7 @@ class LocalProvider(Provider):
         path = self._make_folder(dataset)
         if not path.exists():
             raise DatasetNotFoundError(dataset)
-        return self._list_version(path)
+        return self._list_versions(path)
 
     def del_folder(self, name: str, version: str, keep_dataset: bool = False):
         """
@@ -142,7 +142,7 @@ class LocalProvider(Provider):
 
         # Find the matching version:
         try:
-            version = self.get_version(version, self._list_version(path))
+            version = self.get_version(version, self._list_versions(path))
         except VersionNotFoundError:
             raise DatasetVersionNotFoundError(name, version)
 
