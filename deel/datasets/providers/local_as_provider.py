@@ -3,12 +3,10 @@
 import os
 import pathlib
 import typing
-import sys
+import shutil
 
-from tqdm import tqdm, trange
-from shutil import copy, copytree
-from time import sleep
-import threading
+from tqdm import tqdm
+
 
 from .exceptions import DatasetNotFoundError
 
@@ -23,14 +21,34 @@ class LocalFile(RemoteFile):
     """
 
     # Path to the local provider directory:
-    _source_path: str
+    _dataset_path: pathlib.Path
 
     # Path to the file (relative to local provider directory):
-    _file_path: str
+    _file_path: pathlib.Path
 
-    def __init__(self, dataset_path: str, file_path: str):
-        self._source_path = dataset_path.rstrip("/")
-        self._file_path = file_path.strip("/")
+    # Size of the file:
+    _size: int
+
+    def __init__(self, dataset_path: os.PathLike, source_path: os.PathLike):
+        self._dataset_path = pathlib.Path(dataset_path)
+        self._file_path = pathlib.Path(source_path).relative_to(self._dataset_path)
+        self._size = self.source_path.stat().st_size
+
+    @property
+    def source_path(self) -> pathlib.Path:
+        """
+        Returns:
+            The full path to the source file.
+        """
+        return self._dataset_path.joinpath(self._file_path)
+
+    @property
+    def size(self) -> int:
+        """
+        Returns:
+            The size of the file, in bytes.
+        """
+        return self._size
 
     def download(self, local_file: pathlib.Path):
         """
@@ -39,12 +57,7 @@ class LocalFile(RemoteFile):
         Args:
             local_file: Local path where the file should be copied.
         """
-
-        source_file = pathlib.Path("{}/{}".format(self._source_path, self._file_path))
-        if source_file.is_file() is True:
-            copy(source_file, local_file)
-        else:
-            copytree(source_file, local_file)
+        shutil.copyfile(self.source_path, local_file)
 
     @property
     def relative_path(self) -> pathlib.Path:
@@ -53,7 +66,7 @@ class LocalFile(RemoteFile):
             The path of this file relative to the local provider directory
             and version it belongs.
         """
-        return pathlib.Path(self._file_path)
+        return self._file_path
 
 
 class LocalAsProvider(RemoteProvider):
@@ -64,25 +77,17 @@ class LocalAsProvider(RemoteProvider):
     """
 
     # Local source path of dataset:
-    _source_path: str
+    _source_path: pathlib.Path
     _pbar: tqdm
-    _waiting_thread: threading.Thread
 
-    def __init__(self, root_folder: os.PathLike, source_folder: str):
+    def __init__(self, root_folder: os.PathLike, source_folder: os.PathLike):
         """
         Args:
             root_folder: Root folder to look-up datasets.
             source_folder: local source directory of datasets.
         """
-        super().__init__(root_folder, source_folder)
-        self._source_path = source_folder
-
-    @property
-    def remote_url(self) -> str:
-        """
-        Returns: The local source directory of datasets.
-        """
-        return self._source_path
+        self._source_path = pathlib.Path(source_folder)
+        super().__init__(root_folder, self._source_path.absolute().as_posix())
 
     def _is_available(self) -> bool:
         """
@@ -91,7 +96,7 @@ class LocalAsProvider(RemoteProvider):
         Returns:
             `True` the local source directory exists, `False` otherwize.
         """
-        return pathlib.Path(self._source_path).exists()
+        return self._source_path.exists()
 
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
         """
@@ -106,78 +111,45 @@ class LocalAsProvider(RemoteProvider):
             using `RemoteFile.download`.
         """
         # Path to the dataset:
-        files_path = "{}{}/{}/".format(self._source_path, name, version)
-        directory = pathlib.Path(files_path)
+        dataset_path = self._source_path.joinpath(name, version)
+
         return [
-            LocalFile(files_path, fpath.name)
-            for fpath in directory.iterdir()
-            if fpath.name.rstrip("/") != version
+            LocalFile(dataset_path, fpath)
+            for fpath in dataset_path.rglob("*")
+            if not fpath.is_dir()
         ]
 
-    # A waitng progress bar
-    def waiting_bar(self):
-        self._pbar = trange(
-            100, file=sys.stdout, leave=False, unit_scale=True, desc="Copying..."
-        )
-        for i in self._pbar:
-            sleep(0.1)
-
     def _before_downloads(self, files: typing.List[RemoteFile]):
-        """
-        Initialize a tqdm for download task.
+        # Compute the total volume of data to copy and initialize
+        # a proper TQDM bar:
+        total_file_size = 0
+        for rfile in files:
+            assert isinstance(rfile, LocalFile)
+            total_file_size += rfile.size
 
-        Args:
-            List of files to be downloaded
-        """
-        self._waiting_thread = threading.Thread(target=self.waiting_bar)
-        self._waiting_thread.start()
+        self._pbar = tqdm(
+            total=total_file_size,
+            desc="Copying... ",
+            unit="bytes",
+            unit_scale=True,
+            unit_divisor=1024,
+        )
 
     def _after_downloads(self):
-        """
-        Close the initialized tqdm.
-        """
         self._pbar.close()
-        self._waiting_thread.join()
 
     def _file_downloaded(self, file: RemoteFile, local_file: pathlib.Path):
-        """
-        Increments tqdm progression.
-        """
-        # relaunch the waiting progress bar
-        self._waiting_thread = threading.Thread(target=self.waiting_bar)
-        self._waiting_thread.start()
+        assert isinstance(file, LocalFile)
+        self._pbar.update(file.size)
 
     def list_datasets(self) -> typing.List[str]:
-        """
-        List the available datasets in the local dataset source.
-
-        Returns:
-            The list of datasets available in local source.
-        """
-        source = pathlib.Path(self._source_path)
-        return self._remove_hidden_values([f.name.strip("/") for f in source.iterdir()])
+        return self._remove_hidden_values(
+            [f.name.strip("/") for f in self._source_path.iterdir()]
+        )
 
     def list_versions(self, dataset: str) -> typing.List[str]:
-        """
-        List the available versions of the given dataset in the local dataset source.
-
-        Returns:
-            The list of available versions of the given dataset in
-            the local dataset source.
-
-        Raises:
-            DatasetNotFoundError: If the given dataset does not exist.
-        """
-        # Check that the dataset exists:
-        dataset_path = "{}{}/".format(self._source_path, dataset)
-        directory = pathlib.Path(dataset_path)
+        directory = self._source_path.joinpath(dataset)
         if not directory.exists():
-            raise DatasetNotFoundError(dataset_path)
+            raise DatasetNotFoundError(dataset)
 
-        return self._remove_hidden_values(
-            [
-                f.name.strip("/")
-                for f in directory.iterdir()
-                if f.name.strip("/") != dataset
-            ]
-        )
+        return self._remove_hidden_values([f.name for f in directory.iterdir()])
