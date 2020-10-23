@@ -3,13 +3,16 @@
 import os
 import pathlib
 import typing
-import urllib.request
 import urllib.parse
+import urllib.request
 
+import numpy as np
+from mnist import MNIST
+from PIL import Image
 from tqdm import tqdm
 
 from . import logger
-from .remote_provider import RemoteFile, RemoteSingleFileProvider
+from .remote_provider import RemoteFile, RemoteProvider, RemoteSingleFileProvider
 
 
 class HttpSimpleAuthenticator:
@@ -129,7 +132,12 @@ class HttpSingleFileProvider(RemoteSingleFileProvider):
             version: Version of the dataset corresponding to the remote file.
             authenticator: Authenticator to use.
         """
-        super().__init__(root_folder, remote_url, name, version)
+        super().__init__(
+            root_folder,
+            remote_url,
+            name,
+            version,
+        )
 
         # Create the WebDAV client:
         if authenticator is not None:
@@ -151,3 +159,133 @@ class HttpSingleFileProvider(RemoteSingleFileProvider):
         return [
             HttpRemoteFile(self._full_url, pathlib.Path(self._full_url.split("/")[-1]))
         ]
+
+
+class HttpProvider(RemoteProvider):
+
+    """
+    This provider is a `RemoteProvider` that can serve a list of
+    files over the HTTP protocol.
+    """
+
+    # Each remote URL, including credentials:
+    _full_url_list: typing.List[str] = []
+
+    remote_url_list: typing.List[str]
+
+    # Name and version of the dataset corresponding to the remote file:
+    _name: str
+    _version: str
+
+    def __init__(
+        self,
+        root_folder: os.PathLike,
+        remote_url_list: typing.List[str],
+        name: str,
+        version: str = "1.0.0",
+        authenticator: typing.Optional[HttpSimpleAuthenticator] = None,
+    ):
+        """
+        Args:
+            root_folder: Root folder to look-up datasets.
+            remote_url: Remote URL of the file to serve.
+            name: Name of the dataset corresponding to the remote file.
+            version: Version of the dataset corresponding to the remote file.
+            authenticator: Authenticator to use.
+        """
+        super().__init__(root_folder, remote_url_list[0])
+
+        # Create the WebDAV client:
+        for remote_url in remote_url_list:
+            print(" ====> remote_url {}".format(remote_url))
+            if authenticator is not None:
+                remote_url = "{}:{}@{}".format(
+                    urllib.parse.quote(authenticator.username, safe=""),
+                    urllib.parse.quote(authenticator.password, safe=""),
+                    remote_url,
+                )
+            self._full_url_list.append(remote_url)
+
+        self.remote_url_list = remote_url_list
+        self._remote_version = version
+        self._name = name
+        self._version = version
+
+    def _convert_mnist_dataset(
+        self,
+        data_type: str,
+        local_file: pathlib.Path,
+        images: typing.List,
+        labels: typing.List,
+    ):
+        train_dir = local_file.joinpath(data_type)
+        os.makedirs(train_dir, exist_ok=True)
+        for i in range(0, 10):
+            os.makedirs(train_dir.joinpath(str(i)), exist_ok=True)
+
+        label_iter = iter(labels)
+        numImages = len(images)
+
+        images_iterator = iter(images)
+        with tqdm(
+            total=len(images),
+            desc="convert {} images".format(data_type),
+        ) as pbar:
+            for image in range(0, numImages):
+                im = next(images_iterator)
+                lab = next(label_iter)
+                # create a np array to save the image
+                im = np.array(im, dtype="uint8")
+                im = im.reshape(28, 28)
+                im = Image.fromarray(im)
+
+                dest = train_dir.joinpath(
+                    str(lab), "{}_{}.bmp".format(data_type, image)
+                )
+                im.save(dest, "bmp")
+                pbar.update(1)
+
+        pbar.close()
+
+    def _is_available(self) -> bool:
+        for full_url in self._full_url_list:
+            with urllib.request.urlopen(full_url) as fp:
+                if fp.code == 200:
+                    print("_is_available {}".format(full_url))
+                    pass
+                else:
+                    return False
+        print("_is_available True")
+        return True
+
+    def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
+        # Path to the dataset:
+        print(
+            "_list_remote_files {}".format(
+                pathlib.Path(self._full_url_list[0].split("/")[-1])
+            )
+        )
+        return [
+            HttpRemoteFile(full_url, pathlib.Path(full_url.split("/")[-1]))
+            for full_url in self._full_url_list
+        ]
+
+    def list_datasets(self) -> typing.List[str]:
+        return [self._name]
+
+    def list_versions(self, dataset: str) -> typing.List[str]:
+        return [self._version]
+
+    def _after_downloads(self, local_file: pathlib.Path):
+        """
+        Close the initialized tqdm.
+        """
+        mnistdata = MNIST(local_file)
+        images, labels = mnistdata.load_training()
+        self._convert_mnist_dataset("train", local_file, images, labels)
+        images, labels = mnistdata.load_testing()
+        self._convert_mnist_dataset("test", local_file, images, labels)
+        os.remove(local_file.joinpath("train-images-idx3-ubyte"))
+        os.remove(local_file.joinpath("train-labels-idx1-ubyte"))
+        os.remove(local_file.joinpath("t10k-images-idx3-ubyte"))
+        os.remove(local_file.joinpath("t10k-labels-idx1-ubyte"))

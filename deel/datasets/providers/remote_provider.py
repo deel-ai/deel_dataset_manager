@@ -265,7 +265,7 @@ class RemoteProvider(LocalProvider):
         """
         pass
 
-    def _after_downloads(self):
+    def _after_downloads(self, local_file: pathlib.Path):
         """
         Close the initialized tqdm.
         """
@@ -293,22 +293,18 @@ class RemoteProvider(LocalProvider):
             )
         except DatasetNotFoundError:
             pass
-
         try:
             remote_version = self._get_remote_version(name, version)
-
         except DatasetNotFoundError as e:
 
             # Remote version not found, and there is no local path, we throw:
             if local_path is None:
                 raise e
-
             # Otherwize we warn user that dataset might be outdated, and return
             # the local path:
             logger.warning(
                 "Remote dataset not found, using local one, version might be outdated."
             )
-
             if returns_version:
                 return local_path, local_version
             else:
@@ -350,7 +346,7 @@ class RemoteProvider(LocalProvider):
                     modifier.apply(local_file)
 
             self._file_downloaded(remote_file, local_file)
-        self._after_downloads()
+        self._after_downloads(local_exact_path)
 
         if returns_version:
             return local_exact_path, remote_version

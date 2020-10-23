@@ -186,12 +186,15 @@ class FtpProvider(RemoteProvider):
         ]
 
     def list_datasets(self) -> typing.List[str]:
-        return self._remove_hidden_values(
-            [
-                name.strip("/")
-                for name in self._client.nlst(self._remote_path.as_posix())
-            ]
-        )
+        if self._is_available():
+            return self._remove_hidden_values(
+                [
+                    name.strip("/")
+                    for name in self._client.nlst(self._remote_path.as_posix())
+                ]
+            )
+        else:
+            return []
 
     def list_versions(self, dataset: str) -> typing.List[str]:
 
