@@ -7,7 +7,7 @@ import urllib.parse
 import urllib.request
 
 import numpy as np
-from mnist import MNIST
+from mnist.loader import MNIST
 from PIL import Image
 from tqdm import tqdm
 

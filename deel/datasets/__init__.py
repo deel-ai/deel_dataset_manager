@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
-import pkg_resources
 import logging
-
-
 from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
