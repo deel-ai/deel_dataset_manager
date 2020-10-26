@@ -249,9 +249,10 @@ class HttpProvider(RemoteProvider):
 
     def unpickle(self, file: pathlib.Path):
         import pickle
-        with open(file, 'rb') as fo:
-            dict = pickle.load(fo, encoding='bytes')
-        return dict
+
+        with open(file, "rb") as fo:
+            dict = pickle.load(fo, encoding="bytes")
+            return dict
 
     def _is_available(self) -> bool:
         for full_url in self._full_url_list:
@@ -297,5 +298,3 @@ class HttpProvider(RemoteProvider):
             os.remove(local_file.joinpath("train-labels-idx1-ubyte"))
             os.remove(local_file.joinpath("t10k-images-idx3-ubyte"))
             os.remove(local_file.joinpath("t10k-labels-idx1-ubyte"))
-
-
