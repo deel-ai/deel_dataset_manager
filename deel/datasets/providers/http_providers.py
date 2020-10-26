@@ -7,7 +7,7 @@ import urllib.parse
 import urllib.request
 
 import numpy as np
-from mnist.loader import MNIST
+import mnist
 from PIL import Image
 from tqdm import tqdm
 
@@ -282,7 +282,7 @@ class HttpProvider(RemoteProvider):
         Case of MNIST dataset save images in corresponding label directory
         """
         if self._name == "ood":
-            mnistdata = MNIST(local_file)
+            mnistdata = mnist.MNIST(local_file)
             images, labels = mnistdata.load_training()
             self._convert_mnist_dataset("train", local_file, images, labels)
             images, labels = mnistdata.load_testing()
