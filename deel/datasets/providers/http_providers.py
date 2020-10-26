@@ -2,12 +2,13 @@
 
 import os
 import pathlib
+import shutil
 import typing
 import urllib.parse
 import urllib.request
 
-import numpy as np
 import mnist
+import numpy as np
 from PIL import Image
 from tqdm import tqdm
 
@@ -173,6 +174,19 @@ class HttpProvider(RemoteProvider):
 
     remote_url_list: typing.List[str]
 
+    _cifar10_labels = [
+        "airplane",
+        "automobile",
+        "bird",
+        "cat",
+        "deer",
+        "dog",
+        "frog",
+        "horse",
+        "ship",
+        "truck",
+    ]
+
     # Name and version of the dataset corresponding to the remote file:
     _name: str
     _version: str
@@ -197,7 +211,6 @@ class HttpProvider(RemoteProvider):
 
         # Create the WebDAV client:
         for remote_url in remote_url_list:
-            print(" ====> remote_url {}".format(remote_url))
             if authenticator is not None:
                 remote_url = "{}:{}@{}".format(
                     urllib.parse.quote(authenticator.username, safe=""),
@@ -220,9 +233,6 @@ class HttpProvider(RemoteProvider):
     ):
         train_dir = local_file.joinpath(data_type)
         os.makedirs(train_dir, exist_ok=True)
-        for i in range(0, 10):
-            os.makedirs(train_dir.joinpath(str(i)), exist_ok=True)
-
         label_iter = iter(labels)
         numImages = len(images)
 
@@ -240,38 +250,111 @@ class HttpProvider(RemoteProvider):
                 im = Image.fromarray(im)
 
                 dest = train_dir.joinpath(
-                    str(lab), "{}_{}.bmp".format(data_type, image)
+                    "mnist", str(lab), "{}_{}.bmp".format(data_type, image)
                 )
+                os.makedirs(dest.parent, exist_ok=True)
                 im.save(dest, "bmp")
                 pbar.update(1)
 
         pbar.close()
 
-    def unpickle(self, file: pathlib.Path):
+    def _unpickle(self, file: pathlib.Path):
         import pickle
 
         with open(file, "rb") as fo:
             dict = pickle.load(fo, encoding="bytes")
             return dict
 
+    def _convert_cifar10_dataset(
+        self,
+        data_type: str,
+        cifar10_dir: pathlib.Path,
+        images: typing.List,
+        labels: typing.List,
+    ):
+        images_iterator = iter(images)
+        numImages = len(images)
+        label_iter = iter(labels)
+
+        images_iterator = iter(images)
+        with tqdm(
+            total=numImages,
+            desc="convert CIFAR-10 {} images".format(data_type),
+        ) as pbar:
+            for image in range(0, numImages):
+                im = next(images_iterator)
+                lab = next(label_iter)
+                im = Image.fromarray(im)
+                dest = cifar10_dir.joinpath(
+                    "cifar10",
+                    data_type,
+                    self._cifar10_labels[lab],
+                    "{}_{}.bmp".format(data_type, image),
+                )
+                os.makedirs(dest.parent, exist_ok=True)
+                im.save(dest, "bmp")
+                pbar.update(1)
+
+    def _process_mnist_dataset(self, local_file: pathlib.Path):
+        mnistdata = mnist.MNIST(local_file)
+        images, labels = mnistdata.load_training()
+        self._convert_mnist_dataset("train", local_file, images, labels)
+        images, labels = mnistdata.load_testing()
+        self._convert_mnist_dataset("test", local_file, images, labels)
+        os.remove(local_file.joinpath("train-images-idx3-ubyte"))
+        os.remove(local_file.joinpath("train-labels-idx1-ubyte"))
+        os.remove(local_file.joinpath("t10k-images-idx3-ubyte"))
+        os.remove(local_file.joinpath("t10k-labels-idx1-ubyte"))
+
+    def _process_cifra10_dataset(self, local_file: pathlib.Path):
+        cifar10_dir = local_file.joinpath("cifar-10-batches-py")
+        if cifar10_dir.exists():
+            for f in cifar10_dir.glob("data_batch_*"):
+                print("=================> {}".format(f))
+                dataset = self._unpickle(f)
+                labels = dataset[b"labels"]
+                images = np.reshape(
+                    dataset[b"data"], (len(dataset[b"data"]), 3, 32, 32)
+                ).transpose(0, 2, 3, 1)
+                self._convert_cifar10_dataset("data", cifar10_dir, images, labels)
+                os.remove(f)
+            for f in cifar10_dir.glob("test_batch*"):
+                print("=================> {}".format(f))
+                dataset = self._unpickle(f)
+                labels = dataset[b"labels"]
+                images = np.reshape(
+                    dataset[b"data"], (len(dataset[b"data"]), 3, 32, 32)
+                ).transpose(0, 2, 3, 1)
+                self._convert_cifar10_dataset("test", cifar10_dir, images, labels)
+                os.remove(f)
+
+    def _process_svhn_dataset(self, local_file: pathlib.Path):
+        svhn_dir = local_file.joinpath("train")
+        if svhn_dir.exists():
+            os.mkdir(local_file.joinpath("svhn"))
+            shutil.move(str(local_file.joinpath("train")), local_file.joinpath("svhn"))
+
+        svhn_dir = local_file.joinpath("test")
+        if svhn_dir.exists():
+            os.mkdir(local_file.joinpath("svhn"))
+            shutil.move(str(local_file.joinpath("test")), local_file.joinpath("svhn"))
+
+        svhn_dir = local_file.joinpath("extra")
+        if svhn_dir.exists():
+            os.mkdir(local_file.joinpath("svhn"))
+            shutil.move(str(local_file.joinpath("extra")), local_file.joinpath("svhn"))
+
     def _is_available(self) -> bool:
         for full_url in self._full_url_list:
             with urllib.request.urlopen(full_url) as fp:
                 if fp.code == 200:
-                    print("_is_available {}".format(full_url))
                     pass
                 else:
                     return False
-        print("_is_available True")
         return True
 
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
         # Path to the dataset:
-        print(
-            "_list_remote_files {}".format(
-                pathlib.Path(self._full_url_list[0].split("/")[-1])
-            )
-        )
         return [
             HttpRemoteFile(full_url, pathlib.Path(full_url.split("/")[-1]))
             for full_url in self._full_url_list
@@ -289,12 +372,6 @@ class HttpProvider(RemoteProvider):
         Case of MNIST dataset save images in corresponding label directory
         """
         if self._name == "ood":
-            mnistdata = mnist.MNIST(local_file)
-            images, labels = mnistdata.load_training()
-            self._convert_mnist_dataset("train", local_file, images, labels)
-            images, labels = mnistdata.load_testing()
-            self._convert_mnist_dataset("test", local_file, images, labels)
-            os.remove(local_file.joinpath("train-images-idx3-ubyte"))
-            os.remove(local_file.joinpath("train-labels-idx1-ubyte"))
-            os.remove(local_file.joinpath("t10k-images-idx3-ubyte"))
-            os.remove(local_file.joinpath("t10k-labels-idx1-ubyte"))
+            self._process_mnist_dataset(local_file)
+            self._process_cifra10_dataset(local_file)
+            self._process_svhn_dataset(local_file)
