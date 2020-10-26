@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 import os
 import pathlib
 import shutil
@@ -269,7 +268,7 @@ class HttpProvider(RemoteProvider):
         self,
         data_type: str,
         cifar10_dir: pathlib.Path,
-        images: typing.List,
+        images: np.ndarray,
         labels: typing.List,
     ):
         images_iterator = iter(images)
@@ -294,6 +293,7 @@ class HttpProvider(RemoteProvider):
                 os.makedirs(dest.parent, exist_ok=True)
                 im.save(dest, "bmp")
                 pbar.update(1)
+        pbar.close()
 
     def _process_mnist_dataset(self, local_file: pathlib.Path):
         mnistdata = mnist.MNIST(local_file)
