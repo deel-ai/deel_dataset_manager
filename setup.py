@@ -8,6 +8,7 @@ dev_requires = [
     "flake8-black",
     "mypy",
     "pytest",
+    "python-mnist",
 ]
 
 setup(

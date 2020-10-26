@@ -278,14 +278,16 @@ class HttpProvider(RemoteProvider):
 
     def _after_downloads(self, local_file: pathlib.Path):
         """
-        Close the initialized tqdm.
+        Post-processing of dowloaded dataset.
+        Case of MNIST dataset save images in corresponding label directory
         """
-        mnistdata = MNIST(local_file)
-        images, labels = mnistdata.load_training()
-        self._convert_mnist_dataset("train", local_file, images, labels)
-        images, labels = mnistdata.load_testing()
-        self._convert_mnist_dataset("test", local_file, images, labels)
-        os.remove(local_file.joinpath("train-images-idx3-ubyte"))
-        os.remove(local_file.joinpath("train-labels-idx1-ubyte"))
-        os.remove(local_file.joinpath("t10k-images-idx3-ubyte"))
-        os.remove(local_file.joinpath("t10k-labels-idx1-ubyte"))
+        if self._name == "ood":
+            mnistdata = MNIST(local_file)
+            images, labels = mnistdata.load_training()
+            self._convert_mnist_dataset("train", local_file, images, labels)
+            images, labels = mnistdata.load_testing()
+            self._convert_mnist_dataset("test", local_file, images, labels)
+            os.remove(local_file.joinpath("train-images-idx3-ubyte"))
+            os.remove(local_file.joinpath("train-labels-idx1-ubyte"))
+            os.remove(local_file.joinpath("t10k-images-idx3-ubyte"))
+            os.remove(local_file.joinpath("t10k-labels-idx1-ubyte"))
