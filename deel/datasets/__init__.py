@@ -2,6 +2,8 @@
 import logging
 from typing import Any, Optional
 
+import pkg_resources
+
 logger = logging.getLogger(__name__)
 
 from .providers.exceptions import DatasetNotFoundError  # noqa
