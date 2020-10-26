@@ -8,7 +8,6 @@ dev_requires = [
     "flake8-black",
     "mypy",
     "pytest",
-    "python-mnist",
 ]
 
 setup(
@@ -41,7 +40,6 @@ setup(
         "h5py",
         "pyyaml",
         "psutil",
-        "python-mnist",
     ],
     extras_require={"dev": dev_requires},
 )
