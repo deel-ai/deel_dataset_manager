@@ -40,6 +40,7 @@ setup(
         "h5py",
         "pyyaml",
         "psutil",
+        "mnist",
     ],
     extras_require={"dev": dev_requires},
 )
