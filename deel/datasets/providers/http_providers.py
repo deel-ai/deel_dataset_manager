@@ -173,6 +173,7 @@ class HttpProvider(RemoteProvider):
 
     remote_url_list: typing.List[str]
 
+    # list of labels in CIFRA-10 dataset
     _cifar10_labels = [
         "airplane",
         "automobile",
@@ -230,6 +231,16 @@ class HttpProvider(RemoteProvider):
         images: typing.List,
         labels: typing.List,
     ):
+        """
+        This method allows to extract MNIST dataset images and save
+        them in their label directory.
+
+        Args:
+            data_type: train or test or other
+            local_file: local parent directory
+            images: list of images
+            labels: list of labels
+        """
         train_dir = local_file.joinpath(data_type)
         os.makedirs(train_dir, exist_ok=True)
         label_iter = iter(labels)
@@ -258,6 +269,9 @@ class HttpProvider(RemoteProvider):
         pbar.close()
 
     def _unpickle(self, file: pathlib.Path):
+        """
+        This method allows to extract images from CIFRA-10 raw dataset files
+        """
         import pickle
 
         with open(file, "rb") as fo:
@@ -271,6 +285,16 @@ class HttpProvider(RemoteProvider):
         images: np.ndarray,
         labels: typing.List,
     ):
+        """
+        This method allows to extract CIFRA-10 dataset images and save
+        them in their label directory:  cifar10/label/img
+
+        Args:
+            data_type: train or test or other
+            cifar10_dir: local parent directory: cifar-10-batches-py
+            images: list of images
+            labels: list of labels
+        """
         images_iterator = iter(images)
         numImages = len(images)
         label_iter = iter(labels)
@@ -296,17 +320,28 @@ class HttpProvider(RemoteProvider):
         pbar.close()
 
     def _process_mnist_dataset(self, local_file: pathlib.Path):
-        mnistdata = mnist.MNIST(local_file)
-        images, labels = mnistdata.load_training()
-        self._convert_mnist_dataset("train", local_file, images, labels)
-        images, labels = mnistdata.load_testing()
-        self._convert_mnist_dataset("test", local_file, images, labels)
-        os.remove(local_file.joinpath("train-images-idx3-ubyte"))
-        os.remove(local_file.joinpath("train-labels-idx1-ubyte"))
-        os.remove(local_file.joinpath("t10k-images-idx3-ubyte"))
-        os.remove(local_file.joinpath("t10k-labels-idx1-ubyte"))
+        """
+        This method process and save MNIST dataset
+        """
+        f1 = local_file.joinpath("train-images-idx3-ubyte")
+        f2 = local_file.joinpath("train-labels-idx1-ubyte")
+        f3 = local_file.joinpath("t10k-images-idx3-ubyte")
+        f4 = local_file.joinpath("t10k-labels-idx1-ubyte")
+        if f1.exists() and f2.exists() and f3.exists() and f4.exists():
+            mnistdata = mnist.MNIST(local_file)
+            images, labels = mnistdata.load_training()
+            self._convert_mnist_dataset("train", local_file, images, labels)
+            images, labels = mnistdata.load_testing()
+            self._convert_mnist_dataset("test", local_file, images, labels)
+            os.remove(f1)
+            os.remove(f2)
+            os.remove(f3)
+            os.remove(f4)
 
     def _process_cifra10_dataset(self, local_file: pathlib.Path):
+        """
+        This method process and save CIFAR-10 dataset
+        """
         cifar10_dir = local_file.joinpath("cifar-10-batches-py")
         if cifar10_dir.exists():
             for f in cifar10_dir.glob("data_batch_*"):
@@ -329,6 +364,9 @@ class HttpProvider(RemoteProvider):
                 os.remove(f)
 
     def _process_svhn_dataset(self, local_file: pathlib.Path):
+        """
+        This method process and save SVHN dataset
+        """
         svhn_dir = local_file.joinpath("train")
         if svhn_dir.exists():
             os.mkdir(local_file.joinpath("svhn"))
