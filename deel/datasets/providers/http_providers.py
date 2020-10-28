@@ -102,7 +102,7 @@ class HttpRemoteFile(RemoteFile):
         return self._relative_path
 
 
-class HttpProvider(RemoteProvider):
+class HttpMultiFilesProvider(RemoteProvider):
 
     """
     This provider is a `RemoteProvider` that can serve a list of
@@ -171,7 +171,7 @@ class HttpProvider(RemoteProvider):
         return [self._version]
 
 
-class HttpSingleFileProvider(HttpProvider):
+class HttpSingleFileProvider(HttpMultiFilesProvider):
 
     """
     This provider is a `RemoteProvider` that can only serve a single
