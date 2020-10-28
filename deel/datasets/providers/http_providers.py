@@ -1,18 +1,14 @@
 # -*- encoding: utf-8 -*-
 import os
 import pathlib
-import shutil
 import typing
 import urllib.parse
 import urllib.request
 
-import mnist
-import numpy as np
-from PIL import Image
 from tqdm import tqdm
 
 from . import logger
-from .remote_provider import RemoteFile, RemoteProvider, RemoteSingleFileProvider
+from .remote_provider import RemoteFile, RemoteProvider
 
 
 class HttpSimpleAuthenticator:
@@ -106,61 +102,6 @@ class HttpRemoteFile(RemoteFile):
         return self._relative_path
 
 
-class HttpSingleFileProvider(RemoteSingleFileProvider):
-
-    """
-    This provider is a `RemoteProvider` that can only serve a single
-    file over the HTTP protocol.
-    """
-
-    # The remote URL, including credentials:
-    _full_url: str
-
-    def __init__(
-        self,
-        root_folder: os.PathLike,
-        remote_url: str,
-        name: str,
-        version: str = "1.0.0",
-        authenticator: typing.Optional[HttpSimpleAuthenticator] = None,
-    ):
-        """
-        Args:
-            root_folder: Root folder to look-up datasets.
-            remote_url: Remote URL of the file to serve.
-            name: Name of the dataset corresponding to the remote file.
-            version: Version of the dataset corresponding to the remote file.
-            authenticator: Authenticator to use.
-        """
-        super().__init__(
-            root_folder,
-            remote_url,
-            name,
-            version,
-        )
-
-        # Create the WebDAV client:
-        if authenticator is not None:
-            remote_url = "{}:{}@{}".format(
-                urllib.parse.quote(authenticator.username, safe=""),
-                urllib.parse.quote(authenticator.password, safe=""),
-                remote_url,
-            )
-
-        self._remote_version = version
-        self._full_url = remote_url
-
-    def _is_available(self) -> bool:
-        with urllib.request.urlopen(self._full_url) as fp:
-            return fp.code == 200  # type: ignore
-
-    def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
-        # Path to the dataset:
-        return [
-            HttpRemoteFile(self._full_url, pathlib.Path(self._full_url.split("/")[-1]))
-        ]
-
-
 class HttpProvider(RemoteProvider):
 
     """
@@ -170,22 +111,6 @@ class HttpProvider(RemoteProvider):
 
     # Each remote URL, including credentials:
     _full_url_list: typing.List[str] = []
-
-    remote_url_list: typing.List[str]
-
-    # list of labels in CIFRA-10 dataset
-    _cifar10_labels = [
-        "airplane",
-        "automobile",
-        "bird",
-        "cat",
-        "deer",
-        "dog",
-        "frog",
-        "horse",
-        "ship",
-        "truck",
-    ]
 
     # Name and version of the dataset corresponding to the remote file:
     _name: str
@@ -219,168 +144,9 @@ class HttpProvider(RemoteProvider):
                 )
             self._full_url_list.append(remote_url)
 
-        self.remote_url_list = remote_url_list
         self._remote_version = version
         self._name = name
         self._version = version
-
-    def _convert_mnist_dataset(
-        self,
-        data_type: str,
-        local_file: pathlib.Path,
-        images: typing.List,
-        labels: typing.List,
-    ):
-        """
-        This method allows to extract MNIST dataset images and save
-        them in their label directory.
-
-        Args:
-            data_type: train or test or other
-            local_file: local parent directory
-            images: list of images
-            labels: list of labels
-        """
-        train_dir = local_file.joinpath(data_type)
-        os.makedirs(train_dir, exist_ok=True)
-        label_iter = iter(labels)
-        numImages = len(images)
-
-        images_iterator = iter(images)
-        with tqdm(
-            total=len(images),
-            desc="convert {} images".format(data_type),
-        ) as pbar:
-            for image in range(0, numImages):
-                im = next(images_iterator)
-                lab = next(label_iter)
-                # create a np array to save the image
-                im = np.array(im, dtype="uint8")
-                im = im.reshape(28, 28)
-                im = Image.fromarray(im)
-
-                dest = train_dir.joinpath(
-                    "mnist", str(lab), "{}_{}.bmp".format(data_type, image)
-                )
-                os.makedirs(dest.parent, exist_ok=True)
-                im.save(dest, "bmp")
-                pbar.update(1)
-
-        pbar.close()
-
-    def _unpickle(self, file: pathlib.Path):
-        """
-        This method allows to extract images from CIFRA-10 raw dataset files
-        """
-        import pickle
-
-        with open(file, "rb") as fo:
-            dict = pickle.load(fo, encoding="bytes")
-            return dict
-
-    def _convert_cifar10_dataset(
-        self,
-        data_type: str,
-        cifar10_dir: pathlib.Path,
-        images: np.ndarray,
-        labels: typing.List,
-    ):
-        """
-        This method allows to extract CIFRA-10 dataset images and save
-        them in their label directory:  cifar10/label/img
-
-        Args:
-            data_type: train or test or other
-            cifar10_dir: local parent directory: cifar-10-batches-py
-            images: list of images
-            labels: list of labels
-        """
-        images_iterator = iter(images)
-        numImages = len(images)
-        label_iter = iter(labels)
-
-        images_iterator = iter(images)
-        with tqdm(
-            total=numImages,
-            desc="convert CIFAR-10 {} images".format(data_type),
-        ) as pbar:
-            for image in range(0, numImages):
-                im = next(images_iterator)
-                lab = next(label_iter)
-                im = Image.fromarray(im)
-                dest = cifar10_dir.joinpath(
-                    "cifar10",
-                    data_type,
-                    self._cifar10_labels[lab],
-                    "{}_{}.bmp".format(data_type, image),
-                )
-                os.makedirs(dest.parent, exist_ok=True)
-                im.save(dest, "bmp")
-                pbar.update(1)
-        pbar.close()
-
-    def _process_mnist_dataset(self, local_file: pathlib.Path):
-        """
-        This method process and save MNIST dataset
-        """
-        f1 = local_file.joinpath("train-images-idx3-ubyte")
-        f2 = local_file.joinpath("train-labels-idx1-ubyte")
-        f3 = local_file.joinpath("t10k-images-idx3-ubyte")
-        f4 = local_file.joinpath("t10k-labels-idx1-ubyte")
-        if f1.exists() and f2.exists() and f3.exists() and f4.exists():
-            mnistdata = mnist.MNIST(local_file)
-            images, labels = mnistdata.load_training()
-            self._convert_mnist_dataset("train", local_file, images, labels)
-            images, labels = mnistdata.load_testing()
-            self._convert_mnist_dataset("test", local_file, images, labels)
-            os.remove(f1)
-            os.remove(f2)
-            os.remove(f3)
-            os.remove(f4)
-
-    def _process_cifra10_dataset(self, local_file: pathlib.Path):
-        """
-        This method process and save CIFAR-10 dataset
-        """
-        cifar10_dir = local_file.joinpath("cifar-10-batches-py")
-        if cifar10_dir.exists():
-            for f in cifar10_dir.glob("data_batch_*"):
-                print("=================> {}".format(f))
-                dataset = self._unpickle(f)
-                labels = dataset[b"labels"]
-                images = np.reshape(
-                    dataset[b"data"], (len(dataset[b"data"]), 3, 32, 32)
-                ).transpose(0, 2, 3, 1)
-                self._convert_cifar10_dataset("data", cifar10_dir, images, labels)
-                os.remove(f)
-            for f in cifar10_dir.glob("test_batch*"):
-                print("=================> {}".format(f))
-                dataset = self._unpickle(f)
-                labels = dataset[b"labels"]
-                images = np.reshape(
-                    dataset[b"data"], (len(dataset[b"data"]), 3, 32, 32)
-                ).transpose(0, 2, 3, 1)
-                self._convert_cifar10_dataset("test", cifar10_dir, images, labels)
-                os.remove(f)
-
-    def _process_svhn_dataset(self, local_file: pathlib.Path):
-        """
-        This method process and save SVHN dataset
-        """
-        svhn_dir = local_file.joinpath("train")
-        if svhn_dir.exists():
-            os.mkdir(local_file.joinpath("svhn"))
-            shutil.move(str(local_file.joinpath("train")), local_file.joinpath("svhn"))
-
-        svhn_dir = local_file.joinpath("test")
-        if svhn_dir.exists():
-            os.mkdir(local_file.joinpath("svhn"))
-            shutil.move(str(local_file.joinpath("test")), local_file.joinpath("svhn"))
-
-        svhn_dir = local_file.joinpath("extra")
-        if svhn_dir.exists():
-            os.mkdir(local_file.joinpath("svhn"))
-            shutil.move(str(local_file.joinpath("extra")), local_file.joinpath("svhn"))
 
     def _is_available(self) -> bool:
         for full_url in self._full_url_list:
@@ -404,12 +170,35 @@ class HttpProvider(RemoteProvider):
     def list_versions(self, dataset: str) -> typing.List[str]:
         return [self._version]
 
-    def _after_downloads(self, local_file: pathlib.Path):
+
+class HttpSingleFileProvider(HttpProvider):
+
+    """
+    This provider is a `RemoteProvider` that can only serve a single
+    file over the HTTP protocol.
+    """
+
+    def __init__(
+        self,
+        root_folder: os.PathLike,
+        remote_url: str,
+        name: str,
+        version: str = "1.0.0",
+        authenticator: typing.Optional[HttpSimpleAuthenticator] = None,
+    ):
         """
-        Post-processing of dowloaded dataset.
-        Case of MNIST dataset save images in corresponding label directory
+        Args:
+            root_folder: Root folder to look-up datasets.
+            remote_url: Remote URL of the file to serve.
+            name: Name of the dataset corresponding to the remote file.
+            version: Version of the dataset corresponding to the remote file.
+            authenticator: Authenticator to use.
         """
-        if self._name == "ood":
-            self._process_mnist_dataset(local_file)
-            self._process_cifra10_dataset(local_file)
-            self._process_svhn_dataset(local_file)
+        super().__init__(
+            root_folder,
+            [
+                remote_url,
+            ],
+            name,
+            version,
+        )
