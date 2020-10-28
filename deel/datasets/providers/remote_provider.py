@@ -9,8 +9,6 @@ import tarfile
 import typing
 import zipfile
 
-import scipy.io as sio
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from . import logger
@@ -128,33 +126,6 @@ class GzExtractor(FileModifier):
         file.unlink()
 
 
-class MatExtractor(FileModifier):
-    """
-    Modifier that extract images from .mat file and delete it afterwards
-    """
-
-    def accept(self, file: pathlib.Path) -> bool:
-        return file.suffix == ".mat"
-
-    def apply(self, file: pathlib.Path):
-        mat = sio.loadmat(file)
-        images = mat["X"]
-        labels = mat["y"]
-        os.mkdir(os.path.join(file.with_suffix("")))
-        for i in range(images.shape[3]):
-            plt.figure()
-            lab = labels[i][0] if labels[i][0] != 10 else 0
-            dest = file.with_suffix("").joinpath(str(lab), "%05d.png" % i)
-            if not os.path.isfile(dest):
-                os.makedirs(dest.parent, exist_ok=True)
-                plt.imsave(
-                    file.with_suffix("").joinpath(str(lab), "%05d.png" % i),
-                    images[..., i],
-                )
-            plt.close()
-        os.remove(file)
-
-
 class RemoteFile(object):
 
     """
@@ -200,7 +171,6 @@ class RemoteProvider(LocalProvider):
         ZipExtractor(),
         TarZExtractor(),
         GzExtractor(),
-        MatExtractor(),
     ]
 
     def __init__(self, root_folder: os.PathLike, remote_url: str):
