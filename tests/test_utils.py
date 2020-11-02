@@ -152,7 +152,7 @@ def _test_tensorflow_split_on_label():
     assert len(test_in) + len(test_out) == len(dataset[1])
 
 
-if __name__ == "__main__":
-    test_numpy_split_on_label()
-    test_tensorflow_split_on_label()
-    test_torch_split_on_label()
+# if __name__ == "__main__":
+#     test_numpy_split_on_label()
+#     test_tensorflow_split_on_label()
+#     test_torch_split_on_label()
