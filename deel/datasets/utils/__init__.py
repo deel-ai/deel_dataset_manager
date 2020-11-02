@@ -531,15 +531,17 @@ def split_on_label(datasets: Tuple, labels_in: List[int]):
         return torch_split_on_label(datasets, labels_in)
     except InvalidDatasetModeError:
         pass
-    try:
-        from .tensorflow_utils import tf_split_on_label
 
-        return tf_split_on_label(datasets, labels_in)
-    except InvalidDatasetModeError:
-        pass
     try:
         from .numpy_utils import numpy_split_on_label
 
         return numpy_split_on_label(datasets, labels_in)
+    except InvalidDatasetModeError:
+        pass
+
+    try:
+        from .tensorflow_utils import tf_split_on_label
+
+        return tf_split_on_label(datasets, labels_in)
     except InvalidDatasetModeError:
         pass
