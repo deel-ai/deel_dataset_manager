@@ -136,7 +136,7 @@ def test_torch_split_on_label():
     assert len(test_in) + len(test_out) == len(dataset[1])
 
 
-def test_tensorflow_split_on_label():
+def _test_tensorflow_split_on_label():
     """
     Test the tensorflow split on label methos
     """
