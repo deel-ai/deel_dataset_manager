@@ -507,3 +507,39 @@ def load_tensorflow_image_dataset(
             ),
             idx_to_class,
         )
+
+
+class InvalidDatasetModeError(Exception):
+    """
+    Exception raised if the dataset mode (pytorch, tensorflow, numpy) is invalid.
+    """
+
+    pass
+
+
+def split_on_label(datasets: Tuple, labels_in: List[int]):
+    """
+    Allows to split datasets in in-dataset and out-dataset according to labels_in
+    :param datasets: a tuple of train and test numpy, pytoch or tensorflow datasets
+    :param labels_in: array of 'normal' labels
+    :return: 2 tuple of splited train and test datasets (train_in, train_out),
+     (test_in, test_out)
+    """
+    try:
+        from .torch_utils import torch_split_on_label
+
+        return torch_split_on_label(datasets, labels_in)
+    except InvalidDatasetModeError:
+        pass
+    try:
+        from .tensorflow_utils import tf_split_on_label
+
+        return tf_split_on_label(datasets, labels_in)
+    except InvalidDatasetModeError:
+        pass
+    try:
+        from .numpy_utils import numpy_split_on_label
+
+        return numpy_split_on_label(datasets, labels_in)
+    except InvalidDatasetModeError:
+        pass
