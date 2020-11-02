@@ -525,23 +525,21 @@ def split_on_label(datasets: Tuple, labels_in: List[int]):
     :return: 2 tuple of splited train and test datasets (train_in, train_out),
      (test_in, test_out)
     """
-    try:
+    if "dataset.Subset" in str(type(datasets[0])):
         from .torch_utils import torch_split_on_label
 
         return torch_split_on_label(datasets, labels_in)
-    except InvalidDatasetModeError:
-        pass
 
-    try:
+    elif isinstance(datasets[0], tuple) and "numpy.ndarray" in str(
+        type(datasets[0][0])
+    ):
         from .numpy_utils import numpy_split_on_label
 
         return numpy_split_on_label(datasets, labels_in)
-    except InvalidDatasetModeError:
-        pass
+    else:
+        try:
+            from .tensorflow_utils import tf_split_on_label
 
-    try:
-        from .tensorflow_utils import tf_split_on_label
-
-        return tf_split_on_label(datasets, labels_in)
-    except InvalidDatasetModeError:
-        pass
+            return tf_split_on_label(datasets, labels_in)
+        except InvalidDatasetModeError:
+            pass

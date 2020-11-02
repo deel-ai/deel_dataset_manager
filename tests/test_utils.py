@@ -136,7 +136,7 @@ def test_torch_split_on_label():
     assert len(test_in) + len(test_out) == len(dataset[1])
 
 
-def _test_tensorflow_split_on_label():
+def test_tensorflow_split_on_label():
     """
     Test the tensorflow split on label methos
     """
@@ -150,3 +150,9 @@ def _test_tensorflow_split_on_label():
     assert len(train_in) + len(test_in) == n_broken_small_img
     assert len(train_in) + len(train_out) == len(dataset[0])
     assert len(test_in) + len(test_out) == len(dataset[1])
+
+
+if __name__ == "__main__":
+    test_numpy_split_on_label()
+    test_tensorflow_split_on_label()
+    test_torch_split_on_label()
