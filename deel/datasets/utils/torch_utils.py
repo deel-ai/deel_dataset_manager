@@ -2,6 +2,7 @@
 
 import pathlib
 from typing import Callable, List, Optional, Tuple
+
 from PIL import Image
 from torch.utils.data import Dataset
 
@@ -51,6 +52,7 @@ def torch_split_on_label(datasets: Tuple, labels_in: List[int]):
      (test_in, test_out)
     """
     from torch.utils.data import DataLoader, Subset
+
     from . import InvalidDatasetModeError
 
     class DatasetFromSubset(Dataset):

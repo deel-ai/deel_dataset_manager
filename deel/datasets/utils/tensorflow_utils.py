@@ -13,8 +13,8 @@ def tf_split_on_label(datasets: Tuple, labels_in: List[int]):
     :return: 2 tuple of splited train and test datasets (train_in, train_out),
      (test_in, test_out)
     """
-    import tensorflow as tf
     import numpy as np
+    import tensorflow as tf
 
     if isinstance(datasets[0], tf.data.Dataset) and isinstance(
         datasets[1], tf.data.Dataset
