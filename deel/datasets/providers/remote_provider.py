@@ -265,15 +265,21 @@ class RemoteProvider(LocalProvider):
         """
         pass
 
-    def _after_downloads(self, local_file: pathlib.Path):
+    def _after_downloads(self, local_path: pathlib.Path):
         """
-        Close the initialized tqdm.
+        Call back method at the end of dataset files downloading
+        Can be used to close the initialized tqdm.
+        Args:
+            local_path: path to local destination of dataset files
         """
         pass
 
-    def _file_downloaded(self, file: RemoteFile, local_file: pathlib.Path):
+    def _file_downloaded(self, file: RemoteFile, local_file_path: pathlib.Path):
         """
-        Increments tqdm progression.
+        Call back method at the end of each dataset file downloading
+        Can be used to increments tqdm progression.
+        Args:
+            local_file_path: local path to downloaded file
         """
         pass
 

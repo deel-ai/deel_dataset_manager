@@ -208,13 +208,16 @@ class WebDavProvider(RemoteProvider):
         ]
 
     def list_datasets(self) -> typing.List[str]:
-        return self._remove_hidden_values(
-            [
-                name.strip("/")
-                for name in self._client.list(self._remote_path)
-                if self._is_dataset_folder(name)
-            ]
-        )
+        if self._is_available():
+            return self._remove_hidden_values(
+                [
+                    name.strip("/")
+                    for name in self._client.list(self._remote_path)
+                    if self._is_dataset_folder(name)
+                ]
+            )
+        else:
+            return []
 
     def list_versions(self, dataset: str) -> typing.List[str]:
 

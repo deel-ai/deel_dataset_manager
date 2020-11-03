@@ -110,14 +110,17 @@ class LocalAsProvider(RemoteProvider):
             A list of files for the local source dataset version, that can be copied
             using `RemoteFile.download`.
         """
-        # Path to the dataset:
-        dataset_path = self._source_path.joinpath(name, version)
+        if self._is_available():
+            # Path to the dataset:
+            dataset_path = self._source_path.joinpath(name, version)
 
-        return [
-            LocalFile(dataset_path, fpath)
-            for fpath in dataset_path.rglob("*")
-            if not fpath.is_dir()
-        ]
+            return [
+                LocalFile(dataset_path, fpath)
+                for fpath in dataset_path.rglob("*")
+                if not fpath.is_dir()
+            ]
+        else:
+            return []
 
     def _before_downloads(self, files: typing.List[RemoteFile]):
         # Compute the total volume of data to copy and initialize

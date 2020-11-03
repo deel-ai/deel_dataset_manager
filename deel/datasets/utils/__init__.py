@@ -509,37 +509,55 @@ def load_tensorflow_image_dataset(
         )
 
 
-class InvalidDatasetModeError(Exception):
+def split_on_label(dataset, labels_in: List[int]):
     """
-    Exception raised if the dataset mode (pytorch, tensorflow, numpy) is invalid.
+    Allows to split a dataset in in-dataset and out-dataset according to labels_in
+    Args:
+        param dataset: a numpy, pytoch or tensorflow dataset
+        param labels_in: array of 'normal' labels
+    return:
+        a tuple of splited datasets (dataset_in, dataset_out)
     """
+    try:
+        import torch
 
-    pass
+        if isinstance(dataset, torch.utils.data.Dataset):
 
+            from .torch_utils import torch_split_on_label
 
-def split_on_label(datasets: Tuple, labels_in: List[int]):
-    """
-    Allows to split datasets in in-dataset and out-dataset according to labels_in
-    :param datasets: a tuple of train and test numpy, pytoch or tensorflow datasets
-    :param labels_in: array of 'normal' labels
-    :return: 2 tuple of splited train and test datasets (train_in, train_out),
-     (test_in, test_out)
-    """
-    if "dataset.Subset" in str(type(datasets[0])):
-        from .torch_utils import torch_split_on_label
+            return torch_split_on_label(dataset, labels_in)
+    except ImportError:
+        pass
 
-        return torch_split_on_label(datasets, labels_in)
+    try:
+        import tensorflow as tf
 
-    elif isinstance(datasets[0], tuple) and "numpy.ndarray" in str(
-        type(datasets[0][0])
-    ):
-        from .numpy_utils import numpy_split_on_label
+        if isinstance(dataset, tf.data.Dataset):
 
-        return numpy_split_on_label(datasets, labels_in)
-    else:
-        try:
             from .tensorflow_utils import tf_split_on_label
 
-            return tf_split_on_label(datasets, labels_in)
-        except InvalidDatasetModeError:
-            pass
+            return tf_split_on_label(dataset, labels_in)
+    except ImportError:
+        pass
+
+    if isinstance(dataset, tuple):
+        from .numpy_utils import numpy_split_on_label
+
+        return numpy_split_on_label(dataset, labels_in)
+
+    raise ValueError("Cannot split dataset of type {}.".format(type(dataset)))
+
+
+def split_datasets_on_label(datasets: tuple, labels_in: List[int]):
+    """
+    Allows to split a list of datasets in in-dataset and out-dataset
+    according to labels_in
+    Args:
+        param datasets: list of numpy, pytoch or tensorflow datasets
+        param labels_in: array of 'normal' labels
+    return:
+        a list of splited datasets
+        ((dataset_in, dataset_out), ..., (dataset_in, dataset_out))
+    """
+
+    return (split_on_label(dataset, labels_in) for dataset in datasets)

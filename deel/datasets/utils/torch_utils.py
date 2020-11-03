@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import pathlib
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, List, Optional
 
 from PIL import Image
 from torch.utils.data import Dataset
@@ -43,82 +43,30 @@ class ImageDataset(Dataset):
         return sample, target
 
 
-def torch_split_on_label(datasets: Tuple, labels_in: List[int]):
+def torch_split_on_label(dataset, labels_in: List[int]):
     """
-    Allows to split datasets in in-dataset and out-dataset according to labels_in
-    :param datasets: a tuple of train and test pytoch datasets
-    :param labels_in: array of 'normal' labels
-    :return: 2 tuple of splited train and test datasets (train_in, train_out),
-     (test_in, test_out)
+    Allows to split a torch dataset in in-dataset and out-dataset according to labels_in
+    Args:
+        param dataset: a torch dataset
+        param labels_in: array of 'normal' labels
+    return:
+        a tuple of splited datasets (dataset_in, dataset_out),
     """
-    from torch.utils.data import DataLoader, Subset
+    from torch.utils.data import Subset
+    import numpy as np
 
-    from . import InvalidDatasetModeError
+    if not isinstance(dataset, Subset):
+        raise ValueError("Invalid dataset type")
 
-    class DatasetFromSubset(Dataset):
-        _subset: Subset
+    tmpset = dataset
+    while not hasattr(tmpset, "labels") and hasattr(tmpset, "dataset"):
+        tmpset = tmpset.dataset
+    try:
+        labels = tmpset.labels
+    except AttributeError:
+        raise ValueError("Cannot split torch dataset without explicit labels.")
 
-        def __init__(self, subset: Subset):
-            self._subset = subset
+    train_labels = [labels[index] for index in dataset.indices]
+    mask = np.isin(train_labels, labels_in)
 
-        def __getitem__(self, index):
-            return self._subset[index]
-
-        def __len__(self):
-            return len(self._subset)
-
-    def _get_in_label_index(labels_in: List[int], targets):
-        """
-        Get the indices of labels that are included in targets.
-        :param labels_in: array of normal labels
-        :param targets: list/tuple of dataset labels
-        :return: list with indices of target labels
-        """
-
-        in_lab_dataset = list()
-        out_lab_dataset = list()
-        index = 0
-        for i in targets:
-            if i in labels_in:
-                in_lab_dataset.append(index)
-            else:
-                out_lab_dataset.append(index)
-            index += 1
-
-        return (
-            in_lab_dataset,
-            out_lab_dataset,
-        )
-
-    if isinstance(datasets[0], Subset) and isinstance(datasets[1], Subset):
-        train_labels = []
-        test_labels = []
-
-        train_loader = DataLoader(datasets[0])
-        test_loader = DataLoader(datasets[1])
-
-        for _, labels in train_loader:
-            train_labels.append(labels[0].item())
-
-        for _, labels in test_loader:
-            test_labels.append(labels[0].item())
-
-        train_in_labs_index, train_out_labels_index = _get_in_label_index(
-            labels_in, train_labels
-        )
-        test_in_labs_index, test_out_labels_index = _get_in_label_index(
-            labels_in, test_labels
-        )
-
-        return (
-            (
-                Subset(DatasetFromSubset(datasets[0]), train_in_labs_index),
-                Subset(DatasetFromSubset(datasets[0]), train_out_labels_index),
-            ),
-            (
-                Subset(DatasetFromSubset(datasets[1]), test_in_labs_index),
-                Subset(DatasetFromSubset(datasets[1]), test_out_labels_index),
-            ),
-        )
-    else:
-        raise InvalidDatasetModeError
+    return (Subset(dataset, np.where(mask)[0]), Subset(dataset, np.where(~mask)[0]))

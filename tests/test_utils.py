@@ -10,6 +10,7 @@ from deel.datasets.utils import (
     load_tensorflow_image_dataset,
     load_hierarchical_python_image_dataset,
     split_on_label,
+    split_datasets_on_label,
 )
 
 path_hierachical = pathlib.Path(
@@ -114,7 +115,15 @@ def test_numpy_split_on_label():
         image_size=(64, 64),
         train_split=0.8,
     )
-    (train_in, train_out), (test_in, test_out) = split_on_label(dataset, [1])
+    (train_in, train_out) = split_on_label(dataset[0], [1])
+    (test_in, test_out) = split_on_label(dataset[1], [1])
+
+    assert len(train_in[0]) + len(test_in[0]) == n_broken_small_img
+    assert len(train_in[0]) + len(train_out[0]) == len(dataset[0][0])
+    assert len(test_in[0]) + len(test_out[0]) == len(dataset[1][0])
+
+    (train_in, train_out), (test_in, test_out) = split_datasets_on_label(dataset, [1])
+
     assert len(train_in[0]) + len(test_in[0]) == n_broken_small_img
     assert len(train_in[0]) + len(train_out[0]) == len(dataset[0][0])
     assert len(test_in[0]) + len(test_out[0]) == len(dataset[1][0])
@@ -130,7 +139,15 @@ def test_torch_split_on_label():
         image_size=(64, 64),
         train_split=0.8,
     )
-    (train_in, train_out), (test_in, test_out) = split_on_label(dataset, [1])
+    (train_in, train_out) = split_on_label(dataset[0], [1])
+    (test_in, test_out) = split_on_label(dataset[1], [1])
+
+    assert len(train_in) + len(test_in) == n_broken_small_img
+    assert len(train_in) + len(train_out) == len(dataset[0])
+    assert len(test_in) + len(test_out) == len(dataset[1])
+
+    (train_in, train_out), (test_in, test_out) = split_datasets_on_label(dataset, [1])
+
     assert len(train_in) + len(test_in) == n_broken_small_img
     assert len(train_in) + len(train_out) == len(dataset[0])
     assert len(test_in) + len(test_out) == len(dataset[1])
@@ -146,13 +163,53 @@ def _test_tensorflow_split_on_label():
         image_size=(64, 64),
         train_split=0.8,
     )
-    (train_in, train_out), (test_in, test_out) = split_on_label(dataset, [1])
-    assert len(train_in) + len(test_in) == n_broken_small_img
-    assert len(train_in) + len(train_out) == len(dataset[0])
-    assert len(test_in) + len(test_out) == len(dataset[1])
+    (train_in, train_out) = split_on_label(dataset[0], [1])
+    (test_in, test_out) = split_on_label(dataset[1], [1])
+
+    # TBC
+    train_in_size = 0
+    for _, _ in train_in:
+        train_in_size += 1
+
+    train_out_size = 0
+    for _, _ in train_out:
+        train_out_size += 1
+
+    test_in_size = 0
+    for _, _ in test_in:
+        test_in_size += 1
+
+    test_out_size = 0
+    for _, _ in test_out:
+        test_out_size += 1
+
+    assert train_in_size + test_in_size == n_broken_small_img
+    assert train_in_size + train_out_size == len(dataset[0])
+    assert test_in_size + test_out_size == len(dataset[1])
+
+    (train_in, train_out), (test_in, test_out) = split_datasets_on_label(dataset, [1])
+    # TBC
+    train_in_size = 0
+    for _, _ in train_in:
+        train_in_size += 1
+
+    train_out_size = 0
+    for _, _ in train_out:
+        train_out_size += 1
+
+    test_in_size = 0
+    for _, _ in test_in:
+        test_in_size += 1
+
+    test_out_size = 0
+    for _, _ in test_out:
+        test_out_size += 1
+    assert train_in_size + test_in_size == n_broken_small_img
+    assert train_in_size + train_out_size == len(dataset[0])
+    assert test_in_size + test_out_size == len(dataset[1])
 
 
 # if __name__ == "__main__":
 #     test_numpy_split_on_label()
-#     test_tensorflow_split_on_label()
+#     _test_tensorflow_split_on_label()
 #     test_torch_split_on_label()
