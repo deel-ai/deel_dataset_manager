@@ -1,6 +1,9 @@
 ---
 image: themattrix/tox
 
+before_script:
+  - apt update && apt-get install liblzma-dev
+
 stages:
   - test
 
