@@ -110,6 +110,7 @@ def test_numpy_split_on_label():
     """
     Test the numpy split on label methos
     """
+    # print("========> test_numpy_split_on_label IN")
     dataset, _ = load_numpy_image_dataset(
         path,
         image_size=(64, 64),
@@ -123,17 +124,17 @@ def test_numpy_split_on_label():
     assert len(test_in[0]) + len(test_out[0]) == len(dataset[1][0])
 
     (train_in, train_out), (test_in, test_out) = split_datasets_on_label(dataset, [1])
-
     assert len(train_in[0]) + len(test_in[0]) == n_broken_small_img
     assert len(train_in[0]) + len(train_out[0]) == len(dataset[0][0])
     assert len(test_in[0]) + len(test_out[0]) == len(dataset[1][0])
+    # print("========> test_numpy_split_on_label OUT")
 
 
 def test_torch_split_on_label():
     """
     Test the torch split on label methos
     """
-
+    # print("========> test_torch_split_on_label IN")
     dataset, _ = load_pytorch_image_dataset(
         path,
         image_size=(64, 64),
@@ -151,13 +152,14 @@ def test_torch_split_on_label():
     assert len(train_in) + len(test_in) == n_broken_small_img
     assert len(train_in) + len(train_out) == len(dataset[0])
     assert len(test_in) + len(test_out) == len(dataset[1])
+    # print("========> test_torch_split_on_label OUT")
 
 
 def _test_tensorflow_split_on_label():
     """
     Test the tensorflow split on label methos
     """
-
+    # print("========> _test_tensorflow_split_on_label IN")
     dataset, _ = load_tensorflow_image_dataset(
         path,
         image_size=(64, 64),
@@ -207,6 +209,7 @@ def _test_tensorflow_split_on_label():
     assert train_in_size + test_in_size == n_broken_small_img
     assert train_in_size + train_out_size == len(dataset[0])
     assert test_in_size + test_out_size == len(dataset[1])
+    # print("========> test_numpy_split_on_label OUT")
 
 
 # if __name__ == "__main__":

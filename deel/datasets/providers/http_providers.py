@@ -158,14 +158,11 @@ class HttpMultiFilesProvider(RemoteProvider):
         return True
 
     def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
-        if self._is_available():
-            # Path to the dataset:
-            return [
-                HttpRemoteFile(full_url, pathlib.Path(full_url.split("/")[-1]))
-                for full_url in self._full_url_list
-            ]
-        else:
-            return []
+        # Path to the dataset:
+        return [
+            HttpRemoteFile(full_url, pathlib.Path(full_url.split("/")[-1]))
+            for full_url in self._full_url_list
+        ]
 
     def list_datasets(self) -> typing.List[str]:
         return [self._name]

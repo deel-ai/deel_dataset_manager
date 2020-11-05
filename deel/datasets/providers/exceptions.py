@@ -3,6 +3,14 @@
 import typing
 
 
+class ProviderNotAvailableError(Exception):
+    """
+    Exception raised if the provider is not available.
+    """
+
+    pass
+
+
 class InvalidConfigurationError(Exception):
     """
     Exception raised if the provider configuration is invalid.

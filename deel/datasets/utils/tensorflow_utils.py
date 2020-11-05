@@ -1,19 +1,20 @@
 # -*- encoding: utf-8 -*-
 
-from typing import List
-
+from typing import Tuple, Sequence
 import tensorflow as tf
 
 
-def tf_split_on_label(dataset, labels_in: List[int]):
+def tf_split_on_label(
+    dataset: tf.data.Dataset, labels_in: Sequence[int]
+) -> Tuple[tf.data.Dataset, tf.data.Dataset]:
     """
     Allows to split a tensoflow dataset in in-dataset and
     out-dataset according to labels_in
     Args:
-        param dataset: a tensoflow dataset
-        param labels_in: array of 'normal' labels
-    return:
-        a tuple of splited datasets (dataset_in, dataset_out),
+        dataset: a tensoflow dataset
+        labels_in: array of 'normal' labels
+    Returns:
+        a tuple of split datasets (dataset_in, dataset_out),
     """
 
     if not isinstance(dataset, tf.data.Dataset):

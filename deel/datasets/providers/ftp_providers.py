@@ -8,7 +8,7 @@ from pathlib import Path
 from tqdm import tqdm
 
 from . import logger
-from .exceptions import DatasetNotFoundError
+from .exceptions import DatasetNotFoundError, ProviderNotAvailableError
 from .remote_provider import RemoteFile, RemoteProvider, RemoteSingleFileProvider
 
 
@@ -186,15 +186,15 @@ class FtpProvider(RemoteProvider):
         ]
 
     def list_datasets(self) -> typing.List[str]:
-        if self._is_available():
+        try:
             return self._remove_hidden_values(
                 [
                     name.strip("/")
                     for name in self._client.nlst(self._remote_path.as_posix())
                 ]
             )
-        else:
-            return []
+        except ftplib.all_errors as ex:  # type: ignore
+            raise ProviderNotAvailableError(ex)
 
     def list_versions(self, dataset: str) -> typing.List[str]:
 

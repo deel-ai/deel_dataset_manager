@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import pathlib
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Sequence, Tuple
 
 from PIL import Image
 from torch.utils.data import Dataset
@@ -43,14 +43,16 @@ class ImageDataset(Dataset):
         return sample, target
 
 
-def torch_split_on_label(dataset, labels_in: List[int]):
+def torch_split_on_label(
+    dataset: Dataset, labels_in: Sequence[int]
+) -> Tuple[Dataset, Dataset]:
     """
     Allows to split a torch dataset in in-dataset and out-dataset according to labels_in
     Args:
-        param dataset: a torch dataset
-        param labels_in: array of 'normal' labels
-    return:
-        a tuple of splited datasets (dataset_in, dataset_out),
+        dataset: a torch dataset
+        labels_in: array of 'normal' labels
+    Returns:
+        a tuple of split datasets (dataset_in, dataset_out),
     """
     from torch.utils.data import Subset
     import numpy as np
