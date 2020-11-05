@@ -1,8 +1,6 @@
 ---
-image: themattrix/tox
-
-before_script:
-  - apt update && apt-get install liblzma-dev
+# Image that contains tox and tons of Python versions:
+image: fkrull/multi-python
 
 stages:
   - test
