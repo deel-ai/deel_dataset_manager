@@ -135,7 +135,7 @@ class LocalAsProvider(RemoteProvider):
             unit_divisor=1024,
         )
 
-    def _after_downloads(self):
+    def _after_downloads(self, local_file: pathlib.Path):
         self._pbar.close()
 
     def _file_downloaded(self, file: RemoteFile, local_file: pathlib.Path):

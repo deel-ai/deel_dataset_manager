@@ -1,15 +1,14 @@
 # -*- encoding: utf-8 -*-
-
 import os
 import pathlib
 import typing
-import urllib.request
 import urllib.parse
+import urllib.request
 
 from tqdm import tqdm
 
 from . import logger
-from .remote_provider import RemoteFile, RemoteSingleFileProvider
+from .remote_provider import RemoteFile, RemoteProvider
 
 
 class HttpSimpleAuthenticator:
@@ -103,15 +102,81 @@ class HttpRemoteFile(RemoteFile):
         return self._relative_path
 
 
-class HttpSingleFileProvider(RemoteSingleFileProvider):
+class HttpMultiFilesProvider(RemoteProvider):
+
+    """
+    This provider is a `RemoteProvider` that can serve a list of
+    files over the HTTP protocol.
+    """
+
+    # Each remote URL, including credentials:
+    _full_url_list: typing.List[str] = []
+
+    # Name and version of the dataset corresponding to the remote file:
+    _name: str
+    _version: str
+
+    def __init__(
+        self,
+        root_folder: os.PathLike,
+        remote_url_list: typing.List[str],
+        name: str,
+        version: str = "1.0.0",
+        authenticator: typing.Optional[HttpSimpleAuthenticator] = None,
+    ):
+        """
+        Args:
+            root_folder: Root folder to look-up datasets.
+            remote_url: Remote URL of the file to serve.
+            name: Name of the dataset corresponding to the remote file.
+            version: Version of the dataset corresponding to the remote file.
+            authenticator: Authenticator to use.
+        """
+        super().__init__(root_folder, remote_url_list[0])
+
+        # Create the WebDAV client:
+        for remote_url in remote_url_list:
+            if authenticator is not None:
+                remote_url = "{}:{}@{}".format(
+                    urllib.parse.quote(authenticator.username, safe=""),
+                    urllib.parse.quote(authenticator.password, safe=""),
+                    remote_url,
+                )
+            self._full_url_list.append(remote_url)
+
+        self._remote_version = version
+        self._name = name
+        self._version = version
+
+    def _is_available(self) -> bool:
+        for full_url in self._full_url_list:
+            with urllib.request.urlopen(full_url) as fp:
+                if fp.code == 200:
+                    pass
+                else:
+                    return False
+        return True
+
+    def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
+        # Path to the dataset:
+        return [
+            HttpRemoteFile(full_url, pathlib.Path(full_url.split("/")[-1]))
+            for full_url in self._full_url_list
+        ]
+
+    def list_datasets(self) -> typing.List[str]:
+        return [self._name]
+
+    def list_versions(self, dataset: str) -> typing.List[str]:
+        return [self._version]
+
+
+class HttpSingleFileProvider(HttpMultiFilesProvider):
 
     """
     This provider is a `RemoteProvider` that can only serve a single
     file over the HTTP protocol.
     """
-
-    # The remote URL, including credentials:
-    _full_url: str
 
     def __init__(
         self,
@@ -129,25 +194,11 @@ class HttpSingleFileProvider(RemoteSingleFileProvider):
             version: Version of the dataset corresponding to the remote file.
             authenticator: Authenticator to use.
         """
-        super().__init__(root_folder, remote_url, name, version)
-
-        # Create the WebDAV client:
-        if authenticator is not None:
-            remote_url = "{}:{}@{}".format(
-                urllib.parse.quote(authenticator.username, safe=""),
-                urllib.parse.quote(authenticator.password, safe=""),
+        super().__init__(
+            root_folder,
+            [
                 remote_url,
-            )
-
-        self._remote_version = version
-        self._full_url = remote_url
-
-    def _is_available(self) -> bool:
-        with urllib.request.urlopen(self._full_url) as fp:
-            return fp.code == 200  # type: ignore
-
-    def _list_remote_files(self, name: str, version: str) -> typing.List[RemoteFile]:
-        # Path to the dataset:
-        return [
-            HttpRemoteFile(self._full_url, pathlib.Path(self._full_url.split("/")[-1]))
-        ]
+            ],
+            name,
+            version,
+        )
