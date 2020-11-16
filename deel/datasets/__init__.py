@@ -6,8 +6,8 @@ import pkg_resources
 
 logger = logging.getLogger(__name__)
 
-from .providers.exceptions import DatasetNotFoundError  # noqa
-from .settings import Settings  # noqa
+from .providers.exceptions import DatasetNotFoundError  # noqa: E402
+from .settings import Settings  # noqa: E402
 
 
 def load(
@@ -79,7 +79,11 @@ def load(
 
     # If the dataset object is required, we must download it:
     if mode == "dataset":
-        dataset_object.load(mode="path", force_update=force_update, **kwargs)
+
+        # If this is not a volatile dataset:
+        if isinstance(dataset_object, Dataset):
+            dataset_object.load(mode="path", force_update=force_update, **kwargs)
+
         return dataset_object
 
     # Create the dataset object and load:
