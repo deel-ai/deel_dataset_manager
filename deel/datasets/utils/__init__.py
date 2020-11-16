@@ -43,7 +43,7 @@ def load_hierarchical_python_image_dataset(
             dataset (e.g, `["train", "a"]`) to represent the dataset
             `train/a` and the second element is the class of the file.
         unique_labels: If `True`, the labels will be unique across all
-            datasets, otherwize the labels will go from 0 to the number
+            datasets, otherwise the labels will go from 0 to the number
             of class in the datasets - 1.
 
     Returns:
@@ -130,9 +130,9 @@ def load_python_image_dataset(
         folder: The folder containing the dataset. The folder should contain,
         for each class, a subfolder with only images inside.
         shuffle: If True, shuffle images with the default seed. If an int is given,
-        use it as the seed for shufling. If False, do not shuffle. Shuffle is done
+        use it as the seed for shuffling. If False, do not shuffle. Shuffle is done
         using the standard `random.shuffle` module
-        False otherwize.
+        False otherwise.
         aggregate_fn: Callable to aggregate classes. The function should take
         the name of an original class (subfolder) and returns the name of the
         "parent" class. If the call returns `None`, the class is discarded.
@@ -212,9 +212,9 @@ def load_numpy_image_dataset(
         three datasets will be returned: a training dataset, a validation
         dataset and a testing dataset.
         shuffle: If True, shuffle images before spliting with the default seed.
-        If an int is given, use it as the seed for shufling. If False, do not
+        If an int is given, use it as the seed for shuffling. If False, do not
         shuffle.
-        False otherwize.
+        False otherwise.
         aggregate_fn: Callable to aggregate classes. The function should take
         the name of an original class (subfolder) and returns the name of the
         "parent" class. If the call returns `None`, the class is discarded.
@@ -297,7 +297,7 @@ def load_hierarchical_pytorch_image_dataset(
             `train/a` and the second element is the class of the file.
         image_size: The size of the image, or None to not resize images.
         unique_labels: If `True`, the labels will be unique across all
-            datasets, otherwize the labels will go from 0 to the number
+            datasets, otherwise the labels will go from 0 to the number
             of class in the datasets - 1.
         transform: Transformation to apply to the image before the conversion
         to a torch tensor via `ToTensor()`. If `image_size` is not None, the
@@ -367,7 +367,7 @@ def load_pytorch_image_dataset(
             three datasets will be returned: a training dataset, a validation
             dataset and a testing dataset.
         shuffle: If True, shuffle images before spliting with the default seed.
-            If an int is given, use it as the seed for shufling. If False, do not
+            If an int is given, use it as the seed for shuffling. If False, do not
             shuffle.
         aggregate_fn: Callable to aggregate classes. The function should take
             the name of an original class (subfolder) and returns the name of the
@@ -419,7 +419,10 @@ def load_pytorch_image_dataset(
     if isinstance(train_split, float):
         i1 = int(train_split * len(dataset))
         return (
-            (Subset(dataset, range(i1)), Subset(dataset, range(i1, len(dataset))),),
+            (
+                Subset(dataset, range(i1)),
+                Subset(dataset, range(i1, len(dataset))),
+            ),
             idx_to_class,
         )
     else:
@@ -457,9 +460,9 @@ def load_tensorflow_image_dataset(
         three datasets will be returned: a training dataset, a validation
         dataset and a testing dataset.
         shuffle: If True, shuffle images before spliting with the default seed.
-        If an int is given, use it as the seed for shufling. If False, do not
+        If an int is given, use it as the seed for shuffling. If False, do not
         shuffle.
-        False otherwize.
+        False otherwise.
         aggregate_fn: Callable to aggregate classes. The function should take
         the name of an original class (subfolder) and returns the name of the
         "parent" class. If the call returns `None`, the class is discarded.
@@ -543,7 +546,7 @@ def split_on_label(
     """
     Allows to split a dataset in in-dataset and out-dataset according to labels_in
     Args:
-        dataset: a numpy, pytoch or tensorflow dataset
+        dataset: a numpy, pytorch or tensorflow dataset
         labels_in: array of 'normal' labels
     Returns:
         a tuple of split datasets (dataset_in, dataset_out)
@@ -586,7 +589,7 @@ def split_datasets_on_label(
     Allows to split a list of datasets in in-dataset and out-dataset
     according to labels_in
     Args:
-        datasets: list of numpy, pytoch or tensorflow datasets
+        datasets: list of numpy, pytorch or tensorflow datasets
         labels_in: array of 'normal' labels
     Returns:
         a list of split datasets
