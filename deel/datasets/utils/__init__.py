@@ -290,7 +290,7 @@ def load_hierarchical_pytorch_image_dataset(
 
     Args:
         folder: The folder containing the dataset. The folder should contain,
-        for each classes, a subfolder with only images inside.
+            for each classes, a subfolder with only images inside.
         dispatch_fn: A function that should return a 2-tuple where
             the first element in a list of str to represent the
             dataset (e.g, `["train", "a"]`) to represent the dataset
@@ -327,7 +327,11 @@ def load_hierarchical_pytorch_image_dataset(
         transforms.append(torchvision.transforms.Resize(image_size))
     if transform is not None:
         transforms.append(transform)
-    transforms.append(torchvision.transforms.ToTensor())
+    transforms.append(
+        lambda t: t
+        if isinstance(t, torch.Tensor)
+        else torchvision.transforms.ToTensor()(t)
+    )
 
     transform = torchvision.transforms.Compose(transforms)
 
@@ -400,7 +404,11 @@ def load_pytorch_image_dataset(
         transforms.append(torchvision.transforms.Resize(image_size))
     if transform is not None:
         transforms.append(transform)
-    transforms.append(torchvision.transforms.ToTensor())
+    transforms.append(
+        lambda t: t
+        if isinstance(t, torch.Tensor)
+        else torchvision.transforms.ToTensor()(t)
+    )
 
     transform = torchvision.transforms.Compose(transforms)
 
@@ -411,10 +419,7 @@ def load_pytorch_image_dataset(
     if isinstance(train_split, float):
         i1 = int(train_split * len(dataset))
         return (
-            (
-                Subset(dataset, range(i1)),
-                Subset(dataset, range(i1, len(dataset))),
-            ),
+            (Subset(dataset, range(i1)), Subset(dataset, range(i1, len(dataset))),),
             idx_to_class,
         )
     else:
