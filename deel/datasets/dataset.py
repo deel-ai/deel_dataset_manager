@@ -3,6 +3,8 @@
 import pathlib
 import typing
 
+from abc import abstractmethod
+
 from .providers.provider import Provider
 from .settings import Settings, get_default_settings
 
@@ -14,7 +16,7 @@ class InvalidModeError(Exception):
     given dataset.
     """
 
-    def __init__(self, dataset: "Dataset", mode: str):
+    def __init__(self, dataset: "BaseDataset", mode: str):
         """
         Args:
             dataset: Dataset for which the mode is not available.
@@ -25,42 +27,21 @@ class InvalidModeError(Exception):
         )
 
 
-class Dataset(object):
+class BaseDataset(object):
 
     """
-    Dataset is the base class for all DEEL dataset and can be used as
-    a non-specific dataset handler.
-
-    A `Dataset` object can be extended to easily interface with the local
-    file system to access datasets files using the `load` method.
-
-    A dataset can be loaded using different modes (see `available_modes`
-    and `default_mode`). Inheriting classes can add extra modes by providing
-    `load_MODE` method and overriding `_default_mode`.
-
-    Example:
-        Basic usage of the `Dataset` class is via the `load` method.
-
-        >>> dataset = Dataset("blink")
-        >>> dataset.load()
-        PosixPath('/home/username/.deel/datasets/blink/3.0.1')
+    Base dataset for all dataset types.
     """
 
     # Name and version of the dataset:
     _name: str
     _version: str
 
-    # Information about this dataset:
-    _info: typing.Dict[str, typing.Any] = {}
-
     # The settings to use:
     _settings: Settings
 
-    # The default mode:
-    _default_mode: str = "path"
-
-    # Indicates if this dataset consists of a single file:
-    _single_file: bool = False
+    # The default mode (must be specified by inheriting classes):
+    _default_mode: str
 
     def __init__(
         self,
@@ -80,26 +61,10 @@ class Dataset(object):
         self._name = name
         self._version = version
 
-        self._info[name] = name
-
         if settings is None:
             self._settings = get_default_settings()
         else:
             self._settings = settings
-
-    def _get_provider(self) -> Provider:
-        """
-        Create and returns a provider for this dataset.
-
-        By default, this uses creates the provider using `self._settings`.
-        This method should only be overriden if the dataset requires a
-        custom provider, e.g., because the dataset is not hosted on the
-        standard dataset repository.
-
-        Returns:
-            A provider suitable to retrieve this dataset.
-        """
-        return self._settings.make_provider(self._name)
 
     def _make_class_info(
         self, idx_to_class: typing.Dict[int, str]
@@ -161,6 +126,91 @@ class Dataset(object):
         """
         return self._default_mode
 
+    @abstractmethod
+    def load(
+        self, mode: typing.Optional[str] = None, with_info: bool = False, **kwargs
+    ) -> typing.Any:
+        """
+        Load this dataset as specified by `mode`.
+
+        Args:
+            mode: Mode to load the dataset, or `None` to use the default mode.
+            with_info: Returns information about the dataset alongside the actual
+                dataset(s).
+            **kwargs: Extra arguments for the specific mode.
+
+        Returns:
+            The dataset as specified by `mode` and the given extra arguments.
+
+        Raises:
+            InvalidModeError: If the given mode is not available for this dataset.
+        """
+        pass
+
+
+class Dataset(BaseDataset):
+
+    """
+    Dataset is the base class for all DEEL dataset and can be used as
+    a non-specific dataset handler.
+
+    A `Dataset` object can be extended to easily interface with the local
+    file system to access datasets files using the `load` method.
+
+    A dataset can be loaded using different modes (see `available_modes`
+    and `default_mode`). Inheriting classes can add extra modes by providing
+    `load_MODE` method and overriding `_default_mode`.
+
+    Example:
+        Basic usage of the `Dataset` class is via the `load` method.
+
+        >>> dataset = Dataset("blink")
+        >>> dataset.load()
+        PosixPath('/home/username/.deel/datasets/blink/3.0.1')
+    """
+
+    # Information about this dataset:
+    _info: typing.Dict[str, typing.Any] = {}
+
+    # The default mode:
+    _default_mode: str = "path"
+
+    # Indicates if this dataset consists of a single file:
+    _single_file: bool = False
+
+    def __init__(
+        self,
+        name: str,
+        version: str = "latest",
+        settings: typing.Optional[Settings] = None,
+    ):
+        """
+        Creates a new dataset of the given name and version.
+
+        Args:
+            name: Name of the dataset.
+            version: Version of the dataset.
+            settings: The settings to use for this dataset, or `None` to use the
+            default settings.
+        """
+        super().__init__(name, version, settings)
+
+        self._info[name] = name
+
+    def _get_provider(self) -> Provider:
+        """
+        Create and returns a provider for this dataset.
+
+        By default, this uses creates the provider using `self._settings`.
+        This method should only be overridden if the dataset requires a
+        custom provider, e.g., because the dataset is not hosted on the
+        standard dataset repository.
+
+        Returns:
+            A provider suitable to retrieve this dataset.
+        """
+        return self._settings.make_provider(self._name)
+
     def load_path(self, path: pathlib.Path) -> pathlib.Path:
         """
         Load method for path mode.
@@ -176,9 +226,9 @@ class Dataset(object):
     def load(
         self,
         mode: typing.Optional[str] = None,
-        force_update: bool = False,
         with_info: bool = False,
-        **kargs
+        force_update: bool = False,
+        **kwargs
     ) -> typing.Any:
         """
         Load this dataset as specified by `mode`.
@@ -188,7 +238,7 @@ class Dataset(object):
         data to a `load_MODE` method.
 
         If this dataset consists of a single file as specified by `_single_file`,
-        the path used will be the one of this file, otherwize, the folder will
+        the path used will be the one of this file, otherwise, the folder will
         be used.
 
         Args:
@@ -196,7 +246,7 @@ class Dataset(object):
             force_update: Force update of the dataset if possible.
             with_info: Returns information about the dataset alongside the actual
                 dataset(s).
-            **kargs: Extra arguments for the specific mode.
+            **kwargs: Extra arguments for the specific mode.
 
         Returns:
             The dataset as specified by `mode` and the given extra arguments.
@@ -232,7 +282,107 @@ class Dataset(object):
         # Retrieve the method:
         load_fn = getattr(self, "load_" + mode)
 
-        retvalue = load_fn(path, **kargs)
+        retvalue = load_fn(path, **kwargs)
+
+        # Extract information from the returned value:
+        try:
+            assert len(retvalue) == 2
+            assert isinstance(retvalue[1], dict)
+            retvalue, info = retvalue
+        except (TypeError, AssertionError):
+            info = {}
+
+        # If information are requested, returns it:
+        if with_info:
+            info.update(self._info)
+            return retvalue, info
+
+        return retvalue
+
+
+class VolatileDataset(BaseDataset):
+
+    """
+    Dataset that are generated on-the-fly.
+    """
+
+    # Information about this dataset:
+    _info: typing.Dict[str, typing.Any] = {}
+
+    # The default mode:
+    _default_mode: str = "basic"
+
+    def __init__(
+        self,
+        name: str,
+        version: str = "latest",
+        settings: typing.Optional[Settings] = None,
+    ):
+        """
+        Creates a new dataset of the given name and version.
+
+        Args:
+            name: Name of the dataset.
+            version: Version of the dataset.
+            settings: The settings to use for this dataset, or `None` to use the
+            default settings.
+        """
+        super().__init__(name, version, settings)
+
+        self._info[name] = name
+
+    @abstractmethod
+    def load_basic(self):
+        """
+        Load method for path mode.
+
+        Args:
+            path: Path of the dataset.
+
+        Returns:
+            The actual path to the dataset.
+        """
+        pass
+
+    def load(
+        self, mode: typing.Optional[str] = None, with_info: bool = False, **kwargs
+    ) -> typing.Any:
+        """
+        Load this dataset as specified by `mode`.
+
+        This method checks that the given `mode` is valid and generates the dataset
+        using the given `load_MODE` method.
+
+        Args:
+            mode: Mode to load the dataset, or `None` to use the default mode.
+            with_info: Returns information about the dataset alongside the actual
+                dataset(s).
+            **kwargs: Extra arguments for the specific mode.
+
+        Returns:
+            The dataset as specified by `mode` and the given extra arguments.
+
+        Raises:
+            InvalidModeError: If the given mode is not available for this dataset.
+        """
+
+        if mode is None:
+            mode = self.default_mode
+
+        # Replace characters:
+        mode = mode.replace(".", "_").replace("-", "_")
+
+        if mode not in self.available_modes:
+            raise InvalidModeError(self, mode)
+
+        # Remove force_update:
+        if "force_update" in kwargs:
+            del kwargs["force_update"]
+
+        # Retrieve the method:
+        load_fn = getattr(self, "load_" + mode)
+
+        retvalue = load_fn(**kwargs)
 
         # Extract information from the returned value:
         try:
