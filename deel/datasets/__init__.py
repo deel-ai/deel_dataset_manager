@@ -20,13 +20,14 @@ def load(
     **kwargs
 ) -> Any:
 
-    """Load the given dataset using the given arguments.
+    """
+    Load the given dataset using the given arguments.
 
     Args:
         dataset: Dataset to load.
         mode: Mode to use. The `"path"` mode is always available and will
-        simply returns the path to the local dataset. Each dataset have its
-        own sets of available modes.
+            simply returns the path to the local dataset. Each dataset have its
+            own sets of available modes.
         version: Version of the dataset.
         force_update: Force update of the local dataset if possible.
         with_info: Returns information about the dataset alongside the actual
@@ -39,7 +40,7 @@ def load(
 
     Raises:
         DatasetNotFoundError: If the `dataset` does not exist.
-        ImportError : if plugin loading failed
+        ImportError: If the plugin could not be loaded.
     """
 
     dataset_object = None

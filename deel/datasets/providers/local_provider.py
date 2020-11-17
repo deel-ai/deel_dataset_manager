@@ -33,7 +33,8 @@ class LocalProvider(Provider):
     @property
     def root_folder(self) -> pathlib.Path:
         """
-        Returns: The local path to root folder for the datasets.
+        Returns:
+            The local path to root folder for the datasets.
         """
         return self._root_folder
 
@@ -76,7 +77,7 @@ class LocalProvider(Provider):
 
         Returns:
             If `version` is `None`, a path to the root folder for the given dataset,
-            otherwize, a path to the folder containing the specified version for the
+            otherwise, a path to the folder containing the specified version for the
             given dataset.
         """
         folder = self._root_folder.joinpath(name)

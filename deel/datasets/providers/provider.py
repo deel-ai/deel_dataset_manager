@@ -120,12 +120,12 @@ class Provider(abc.ABC):
         Args:
             name: Name of the dataset to retrieve the folder for.
             version: Version of the dataset to retrieve the folder for. Can be
-            an exact version like `"3.1.2"`, or `"latest"`, or a wildcard, e.g.,
-            `"3.1.*"`.
+                an exact version like `"3.1.2"`, or `"latest"`, or a wildcard, e.g.,
+                `"3.1.*"`.
             force_update: Force the update of the local dataset if possible.
-            May have no effect on some providers.
+                May have no effect on some providers.
             returns_version: If `True`, the exact version of the dataset will be
-            returned along the path.
+                returned along the path.
 
         Returns:
             A path to the root folder for the given dataset name, or a tuple containing
