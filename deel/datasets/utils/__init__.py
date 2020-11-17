@@ -55,7 +55,7 @@ def load_hierarchical_python_image_dataset(
         Let assume the folder contains image under `$class/train/` and
         `$class/test`, where `$class` is a class name. We could have
         `dispatch_fn` returns either `["train"], $class` or `["test"], $class`
-         which would result in creating two distinct datasets.
+        which would result in creating two distinct datasets.
     """
 
     classes: Dict[Tuple[str, ...], Dict[str, List[pathlib.Path]]] = {}
@@ -128,17 +128,17 @@ def load_python_image_dataset(
 
     Args:
         folder: The folder containing the dataset. The folder should contain,
-        for each class, a subfolder with only images inside.
+            for each class, a subfolder with only images inside.
         shuffle: If True, shuffle images with the default seed. If an int is given,
-        use it as the seed for shuffling. If False, do not shuffle. Shuffle is done
-        using the standard `random.shuffle` module
-        False otherwise.
+            use it as the seed for shuffling. If False, do not shuffle. Shuffle is done
+            using the standard `random.shuffle` module
+            False otherwise.
         aggregate_fn: Callable to aggregate classes. The function should take
-        the name of an original class (subfolder) and returns the name of the
-        "parent" class. If the call returns `None`, the class is discarded.
+            the name of an original class (subfolder) and returns the name of the
+            "parent" class. If the call returns `None`, the class is discarded.
         filter_fn: A function to filter out images. This function should take
-        a string (name of the file) and a path to the file and returns True
-        if the image should be included, False if it should be excluded.
+            a string (name of the file) and a path to the file and returns True
+            if the image should be included, False if it should be excluded.
 
     Returns: A 3-tuple `(paths, labels, classes)` where `paths` is a list of
     paths, `labels` is a list of labels (integers) and classes is a dictionary
@@ -203,24 +203,24 @@ def load_numpy_image_dataset(
 
     Args:
         folder: The folder containing the dataset. The folder should contain,
-        for each classes, a subfolder with only images inside.
+            for each classes, a subfolder with only images inside.
         image_size: The size of the image, or None to not resize images. `None`
-        is only supported if all the images already have the same size.
+            is only supported if all the images already have the same size.
         train_split: One or two float values. If a single value is specified,
-        two datasets will be returned, one for training (using a percentage
-        `train_split` of data) and one for testing. If two values are specified,
-        three datasets will be returned: a training dataset, a validation
-        dataset and a testing dataset.
+            two datasets will be returned, one for training (using a percentage
+            `train_split` of data) and one for testing. If two values are specified,
+            three datasets will be returned: a training dataset, a validation
+            dataset and a testing dataset.
         shuffle: If True, shuffle images before spliting with the default seed.
-        If an int is given, use it as the seed for shuffling. If False, do not
-        shuffle.
-        False otherwise.
+            If an int is given, use it as the seed for shuffling. If False, do not
+            shuffle.
+            False otherwise.
         aggregate_fn: Callable to aggregate classes. The function should take
-        the name of an original class (subfolder) and returns the name of the
-        "parent" class. If the call returns `None`, the class is discarded.
+            the name of an original class (subfolder) and returns the name of the
+            "parent" class. If the call returns `None`, the class is discarded.
         filter_fn: A function to filter out images. This function should take
-        a string (name of the file) and a path to the file and returns True
-        if the image should be included, False if it should be excluded.
+            a string (name of the file) and a path to the file and returns True
+            if the image should be included, False if it should be excluded.
 
     Returns:
         A two-tuple whose first element is another tuple containing two or three
@@ -300,10 +300,10 @@ def load_hierarchical_pytorch_image_dataset(
             datasets, otherwise the labels will go from 0 to the number
             of class in the datasets - 1.
         transform: Transformation to apply to the image before the conversion
-        to a torch tensor via `ToTensor()`. If `image_size` is not None, the
-        resize transform will be applied before these, if you want to do the
-        opposite, simply pass `None` as `image_size` and add the resize
-        transformation manually.
+            to a torch tensor via `ToTensor()`. If `image_size` is not None, the
+            resize transform will be applied before these, if you want to do the
+            opposite, simply pass `None` as `image_size` and add the resize
+            transformation manually.
 
 
     Returns:
@@ -452,23 +452,23 @@ def load_tensorflow_image_dataset(
 
     Args:
         folder: The folder containing the dataset. The folder should contain,
-        for each classes, a subfolder with only images inside.
+            for each classes, a subfolder with only images inside.
         image_size: The size of the image, or None to not resize images.
         train_split: One or two float values. If a single value is specified,
-        two datasets will be returned, one for training (using a percentage
-        `train_split` of data) and one for testing. If two values are specified,
-        three datasets will be returned: a training dataset, a validation
-        dataset and a testing dataset.
+            two datasets will be returned, one for training (using a percentage
+            `train_split` of data) and one for testing. If two values are specified,
+            three datasets will be returned: a training dataset, a validation
+            dataset and a testing dataset.
         shuffle: If True, shuffle images before spliting with the default seed.
-        If an int is given, use it as the seed for shuffling. If False, do not
-        shuffle.
-        False otherwise.
+            If an int is given, use it as the seed for shuffling. If False, do not
+            shuffle.
+            False otherwise.
         aggregate_fn: Callable to aggregate classes. The function should take
-        the name of an original class (subfolder) and returns the name of the
-        "parent" class. If the call returns `None`, the class is discarded.
+            the name of an original class (subfolder) and returns the name of the
+            "parent" class. If the call returns `None`, the class is discarded.
         filter_fn: A function to filter out images. This function should take
-        a string (name of the file) and a path to the file and returns True
-        if the image should be included, False if it should be excluded.
+            a string (name of the file) and a path to the file and returns True
+            if the image should be included, False if it should be excluded.
 
     Returns:
         A two-tuple whose first element is another tuple containing two or three
@@ -544,12 +544,17 @@ def split_on_label(
     dataset: "DatasetType", labels_in: Sequence[int]
 ) -> Tuple["DatasetType", "DatasetType"]:
     """
-    Allows to split a dataset in in-dataset and out-dataset according to labels_in
+    Allows to split a dataset in in-dataset and out-dataset according to the
+    given labels.
+
     Args:
-        dataset: a numpy, pytorch or tensorflow dataset
-        labels_in: array of 'normal' labels
+        dataset: A numpy, pytorch or tensorflow dataset.
+        labels_in: Array containing 'normal' labels.
+
     Returns:
-        a tuple of split datasets (dataset_in, dataset_out)
+        A tuple of split datasets (`dataset_in`, `dataset_out`), where `dataset_in`
+        is the subset of samples whose labels are in `labels_in` and `dataset_out`
+        the remaining part of the dataset.
     """
     try:
         import torch
@@ -587,13 +592,16 @@ def split_datasets_on_label(
 ) -> Sequence[Tuple["DatasetType", "DatasetType"]]:
     """
     Allows to split a list of datasets in in-dataset and out-dataset
-    according to labels_in
+    according to the given labels.
+    See `split_on_label` for more details.
+
     Args:
-        datasets: list of numpy, pytorch or tensorflow datasets
-        labels_in: array of 'normal' labels
+        datasets: List of numpy, pytorch or tensorflow datasets.
+        labels_in: Array containing 'normal' labels.
+
     Returns:
-        a list of split datasets
-        ((dataset_in, dataset_out), ..., (dataset_in, dataset_out))
+        A list of split datasets
+        `((dataset_in, dataset_out), ..., (dataset_in, dataset_out))`.
     """
     return type(datasets)(  # type: ignore
         split_on_label(dataset, labels_in) for dataset in datasets
