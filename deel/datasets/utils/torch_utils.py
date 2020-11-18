@@ -3,6 +3,9 @@
 import pathlib
 from typing import Callable, List, Optional, Sequence, Tuple
 
+import torch
+import torchvision.transforms.functional as F
+
 from PIL import Image
 from torch.utils.data import Dataset
 
@@ -43,6 +46,21 @@ class ImageDataset(Dataset):
         return sample, target
 
 
+class OptionalToTensor:
+
+    """
+    Optional call to ToTensor() if the object is not already a tensor.
+    """
+
+    def __call__(self, pic) -> torch.Tensor:
+        if isinstance(pic, torch.Tensor):
+            return pic
+        return F.to_tensor(pic)  # type: ignore
+
+    def __repr__(self):
+        return self.__class__.__name__ + "()"
+
+
 def torch_split_on_label(
     dataset: Dataset, labels_in: Sequence[int]
 ) -> Tuple[Dataset, Dataset]:
@@ -60,11 +78,11 @@ def torch_split_on_label(
     if not isinstance(dataset, Subset):
         raise ValueError("Invalid dataset type")
 
-    tmpset = dataset
+    tmpset: Dataset = dataset
     while not hasattr(tmpset, "labels") and hasattr(tmpset, "dataset"):
-        tmpset = tmpset.dataset
+        tmpset = tmpset.dataset  # type: ignore
     try:
-        labels = tmpset.labels
+        labels = tmpset.labels  # type: ignore
     except AttributeError:
         raise ValueError("Cannot split torch dataset without explicit labels.")
 

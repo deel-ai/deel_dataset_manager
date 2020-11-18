@@ -21,6 +21,19 @@ from PIL import Image
 log = logging.getLogger("deel.dataset.manager")
 
 
+if TYPE_CHECKING:
+    import tensorflow as tf
+    import torch
+    import numpy as np
+
+    DatasetType = TypeVar(
+        "DatasetType",
+        Tuple[np.ndarray, np.ndarray],
+        tf.data.Dataset,
+        torch.utils.data.Dataset,
+    )
+
+
 def load_hierarchical_python_image_dataset(
     folder: pathlib.Path,
     dispatch_fn: Callable[[pathlib.Path], Optional[Tuple[List[str], str]]],
@@ -314,7 +327,7 @@ def load_hierarchical_pytorch_image_dataset(
 
     import torchvision.transforms
 
-    from .torch_utils import ImageDataset
+    from .torch_utils import ImageDataset, OptionalToTensor
 
     # Retrieve files:
     pdatasets = load_hierarchical_python_image_dataset(
@@ -327,12 +340,7 @@ def load_hierarchical_pytorch_image_dataset(
         transforms.append(torchvision.transforms.Resize(image_size))
     if transform is not None:
         transforms.append(transform)
-    transforms.append(
-        lambda t: t
-        if isinstance(t, torch.Tensor)
-        else torchvision.transforms.ToTensor()(t)
-    )
-
+    transforms.append(OptionalToTensor())
     transform = torchvision.transforms.Compose(transforms)
 
     def create_dict(from_):
@@ -391,7 +399,7 @@ def load_pytorch_image_dataset(
     import torchvision.transforms
     from torch.utils.data import Subset
 
-    from .torch_utils import ImageDataset
+    from .torch_utils import ImageDataset, OptionalToTensor
 
     # Retrieve files:
     files, labels, idx_to_class = load_python_image_dataset(
@@ -404,12 +412,7 @@ def load_pytorch_image_dataset(
         transforms.append(torchvision.transforms.Resize(image_size))
     if transform is not None:
         transforms.append(transform)
-    transforms.append(
-        lambda t: t
-        if isinstance(t, torch.Tensor)
-        else torchvision.transforms.ToTensor()(t)
-    )
-
+    transforms.append(OptionalToTensor())
     transform = torchvision.transforms.Compose(transforms)
 
     # Create the dataset:
@@ -525,19 +528,6 @@ def load_tensorflow_image_dataset(
             ),
             idx_to_class,
         )
-
-
-if TYPE_CHECKING:
-    import tensorflow as tf
-    import torch
-    import numpy as np
-
-    DatasetType = TypeVar(
-        "DatasetType",
-        Tuple[np.ndarray, np.ndarray],
-        tf.data.Dataset,
-        torch.utils.data.Dataset,
-    )
 
 
 def split_on_label(
