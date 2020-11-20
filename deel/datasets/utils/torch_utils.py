@@ -14,18 +14,18 @@ class ImageDataset(Dataset):
     def __init__(
         self,
         files: List[pathlib.Path],
-        labels: List[int],
+        labels: Optional[List[int]] = None,
         transform: Optional[Callable[[Image.Image], Image.Image]] = None,
     ):
         self.files = files
         self.labels = labels
         self.transform = transform
 
-    def loader(self, path):
+    def loader(self, path) -> Image.Image:
         with open(path, "rb") as fp:
             return Image.open(fp).convert("RGB")
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.files)
 
     # Copy from: torchvision.datasets.DatasetFolder
@@ -37,13 +37,16 @@ class ImageDataset(Dataset):
         Returns:
             tuple: (sample, target) where target is class_index of the target class.
         """
-        path, target = self.files[index], self.labels[index]
+        path = self.files[index]
         sample = self.loader(path)
 
         if self.transform is not None:
             sample = self.transform(sample)
 
-        return sample, target
+        if not self.labels:
+            return sample
+
+        return sample, self.labels[index]
 
 
 class OptionalToTensor:
