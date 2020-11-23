@@ -3,6 +3,8 @@
 import logging
 import pathlib
 import random
+
+from collections import defaultdict
 from typing import (
     TYPE_CHECKING,
     Callable,
@@ -55,7 +57,7 @@ def load_hierarchical_python_image_dataset(
         of dictionary, indexed by string, whose leaves are list of paths).
     """
 
-    classes: Dict[Tuple[str, ...], List[pathlib.Path]] = {}
+    classes: Dict[Tuple[str, ...], List[pathlib.Path]] = defaultdict(list)
     for path in filter(pathlib.Path.is_file, folder.glob("*/**/*")):
 
         # The "class" path:
