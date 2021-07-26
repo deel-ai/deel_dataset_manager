@@ -32,7 +32,7 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     # License:
-    license="WTFPL",
+    license="MIT",
     # Requirements:
     install_requires=[
         "webdavclient3==0.13",
