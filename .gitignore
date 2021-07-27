@@ -20,4 +20,4 @@ __pycache__
 examples/mvtec_ad/results
 tests/dev_test_data/results.txt
 build
-dist/deel_datasets-0.0.6-py3.6.egg
+dist

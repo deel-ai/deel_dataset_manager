@@ -5,7 +5,12 @@ project.
 
 ## Installation
 
-You can install this package by using `pip`. If you have set-up SSH keys properly
+You can install the manager directly from pypi:
+```bash
+pip install deel-datasets
+```
+
+You can also install this package by using `pip`. If you have set-up SSH keys properly
 for [https://forge.deel.ai](https://forge.deel.ai), you can use the SSH version:
 
 ```
