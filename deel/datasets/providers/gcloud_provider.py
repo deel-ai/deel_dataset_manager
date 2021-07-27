@@ -11,7 +11,7 @@ from .local_provider import LocalProvider
 
 class GCloudProvider(LocalProvider):
 
-    """ The `GCloudProvider` is a simple alias for `LocalProvider`.  """
+    """The `GCloudProvider` is a simple alias for `LocalProvider`."""
 
     # Link to the GCloud drive:
     _GCLOUD_DRIVE_BASE_PATH = Path("/dev/disk/by-id/")

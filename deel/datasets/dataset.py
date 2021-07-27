@@ -89,14 +89,12 @@ class BaseDataset(object):
 
     @property
     def name(self) -> str:
-        """ Returns: The name of the dataset. """
+        """Returns: The name of the dataset."""
         return self._name
 
     @property
     def version(self) -> str:
-        """
-        Returns: The requested version of the dataset.
-        """
+        """Returns: The requested version of the dataset."""
         return self._version
 
     @property
