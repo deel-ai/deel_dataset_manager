@@ -19,3 +19,5 @@ __pycache__
 
 examples/mvtec_ad/results
 tests/dev_test_data/results.txt
+build
+dist
