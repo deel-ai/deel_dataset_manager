@@ -1,4 +1,4 @@
-name: Xplique tests
+name: deel_dataset tests
 
 on: [push, pull_request]
 
