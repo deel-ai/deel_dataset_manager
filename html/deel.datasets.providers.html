@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>deel.datasets.providers package &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="deel.datasets.utils package" href="deel.datasets.utils.html" />
+    <link rel="prev" title="deel.datasets package" href="deel.datasets.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DEEL Dataset Manager
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#extending-the-dataset-class">Extending the <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#utility-functions">Utility functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#packaging-the-dataset-s">Packaging the dataset(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#listing-datasets">Listing datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#downloading-datasets">Downloading datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#removing-datasets">Removing datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="deel.datasets.html">deel.datasets package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="deel.datasets.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">deel.datasets.providers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.exceptions">deel.datasets.providers.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.ftp_providers">deel.datasets.providers.ftp_providers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.gcloud_provider">deel.datasets.providers.gcloud_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.http_providers">deel.datasets.providers.http_providers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.local_as_provider">deel.datasets.providers.local_as_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.local_provider">deel.datasets.providers.local_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.provider">deel.datasets.providers.provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.remote_provider">deel.datasets.providers.remote_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.providers.webdav_provider">deel.datasets.providers.webdav_provider module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deel.datasets.utils.html">deel.datasets.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.numpy_utils">deel.datasets.utils.numpy_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.supervised">deel.datasets.utils.supervised module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">deel.datasets.utils.tensorflow_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">deel.datasets.utils.torch_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.unsupervised">deel.datasets.utils.unsupervised module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.dataset">deel.datasets.dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.settings">deel.datasets.settings module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DEEL Dataset Manager</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="deel.datasets.html">deel.datasets package</a> &raquo;</li>
+      <li>deel.datasets.providers package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/deel.datasets.providers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-deel.datasets.providers">
+<span id="deel-datasets-providers-package"></span><h1>deel.datasets.providers package<a class="headerlink" href="#module-deel.datasets.providers" title="Permalink to this headline"></a></h1>
+<dl class="py function">
+<dt id="deel.datasets.providers.make_provider">
+<code class="sig-prename descclassname">deel.datasets.providers.</code><code class="sig-name descname">make_provider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">provider_type</span></em>, <em class="sig-param"><span class="n">root_path</span></em>, <em class="sig-param"><span class="n">provider_options</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.make_provider" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new provider using the given arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>provider_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Type of the provider.</p></li>
+<li><p><strong>root_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Local path for the datasets.</p></li>
+<li><p><strong>provider_options</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – Extra options to pass to the provider</p></li>
+<li><p><strong>constructor.</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#deel.datasets.providers.provider.Provider" title="deel.datasets.providers.provider.Provider"><code class="xref py py-class docutils literal notranslate"><span class="pre">Provider</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A provider corresponding to the given arguments.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the given <cite>provider_type</cite> is invalid or if the</p></li>
+<li><p><strong>given options do not match the given provider.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-deel.datasets.providers.exceptions">
+<span id="deel-datasets-providers-exceptions-module"></span><h2>deel.datasets.providers.exceptions module<a class="headerlink" href="#module-deel.datasets.providers.exceptions" title="Permalink to this headline"></a></h2>
+<dl class="py exception">
+<dt id="deel.datasets.providers.exceptions.DatasetNotFoundError">
+<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">DatasetNotFoundError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception thrown by providers when the requested dataset
+is not found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="deel.datasets.providers.exceptions.DatasetVersionNotFoundError">
+<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">DatasetVersionNotFoundError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.DatasetVersionNotFoundError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.exceptions.DatasetNotFoundError</span></code></a>, <a class="reference internal" href="#deel.datasets.providers.exceptions.VersionNotFoundError" title="deel.datasets.providers.exceptions.VersionNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.exceptions.VersionNotFoundError</span></code></a></p>
+<p>Exception thrown by providers when the requested dataset
+version is not found.</p>
+<p>This exception is meant to be more specific than DatasetNotFoundError.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset not found.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset not found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="deel.datasets.providers.exceptions.InvalidConfigurationError">
+<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">InvalidConfigurationError</code><a class="headerlink" href="#deel.datasets.providers.exceptions.InvalidConfigurationError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception raised if the provider configuration is invalid.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="deel.datasets.providers.exceptions.ProviderNotAvailableError">
+<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">ProviderNotAvailableError</code><a class="headerlink" href="#deel.datasets.providers.exceptions.ProviderNotAvailableError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception raised if the provider is not available.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="deel.datasets.providers.exceptions.VersionNotFoundError">
+<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">VersionNotFoundError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.VersionNotFoundError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception thrown by providers when the requested version
+is not found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>version</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Version of the dataset not found (or a version selector).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.ftp_providers">
+<span id="deel-datasets-providers-ftp-providers-module"></span><h2>deel.datasets.providers.ftp_providers module<a class="headerlink" href="#module-deel.datasets.providers.ftp_providers" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.ftp_providers.FtpProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<p>The <cite>FtpProvider</cite> is a <cite>RemoteProvider</cite> associated to a FTP
+server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>remote_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Remote URL of the Ftp server.</p></li>
+<li><p><strong>authenticator</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator" title="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">FtpSimpleAuthenticator</span></code></a>]) – Authenticator to use.</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments for the <cite>FTP</cite> constructor.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.ftp_providers.FtpProvider.list_datasets">
+<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dd><p>List the available datasets for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of datasets available for this provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.ftp_providers.FtpProvider.list_versions">
+<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List the available versions of the given dataset for this
+provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of available versions of the given dataset for this
+provider.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the given dataset does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.ftp_providers.FtpRemoteFile">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpRemoteFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">remote_path</span></em>, <em class="sig-param"><span class="n">local_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<p>Class representing a remote file for the FTP provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">FTP</span></code>) – The FTP client (used for download).</p></li>
+<li><p><strong>remote_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Remote path to the dataset file, relative the root of
+the FTP server..</p></li>
+<li><p><strong>local_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Local path to the file of the dataset, relative to the dataset
+folder.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.ftp_providers.FtpRemoteFile.download">
+<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile.download" title="Permalink to this definition"></a></dt>
+<dd><p>Download this file from the remote storage to the local path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>local_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Local path where the file should be downloaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.ftp_providers.FtpRemoteFile.relative_path">
+<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The path of this file relative to the dataset and version it belongs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpSimpleAuthenticator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Authenticator for a simple FTP authentication with a
+username and a password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Username to use for authentication.</p></li>
+<li><p><strong>password</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Password to use for authentication.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.password">
+<em class="property">property </em><code class="sig-name descname">password</code><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
+<dd><p>The password to use for authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.username">
+<em class="property">property </em><code class="sig-name descname">username</code><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
+<dd><p>The username to use for authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.ftp_providers.FtpSingleFileProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpSingleFileProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSingleFileProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider" title="deel.datasets.providers.remote_provider.RemoteSingleFileProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteSingleFileProvider</span></code></a>, <a class="reference internal" href="#deel.datasets.providers.ftp_providers.FtpProvider" title="deel.datasets.providers.ftp_providers.FtpProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.ftp_providers.FtpProvider</span></code></a></p>
+<p>The <cite>FtpProvider</cite> is a <cite>RemoteProvider</cite> associated to a FTP server.</p>
+<p>This provider currently does not supported encrypted connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>remote_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Remote URL of the file to serve.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset corresponding to the remote file.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset corresponding to the remote file.</p></li>
+<li><p><strong>authenticator</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator" title="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">FtpSimpleAuthenticator</span></code></a>]) – Authenticator to use.</p></li>
+<li><p><strong>**kwargs</strong> – Extra arguments for the <cite>FTP</cite> constructor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.gcloud_provider">
+<span id="deel-datasets-providers-gcloud-provider-module"></span><h2>deel.datasets.providers.gcloud_provider module<a class="headerlink" href="#module-deel.datasets.providers.gcloud_provider" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.gcloud_provider.GCloudProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.gcloud_provider.</code><code class="sig-name descname">GCloudProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">disk</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.gcloud_provider.GCloudProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.local_provider.LocalProvider" title="deel.datasets.providers.local_provider.LocalProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.local_provider.LocalProvider</span></code></a></p>
+<p>The <cite>GCloudProvider</cite> is a simple alias for <cite>LocalProvider</cite>.</p>
+<p>Args:
+root_folder: Root folder to look-up datasets.</p>
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.http_providers">
+<span id="deel-datasets-providers-http-providers-module"></span><h2>deel.datasets.providers.http_providers module<a class="headerlink" href="#module-deel.datasets.providers.http_providers" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.http_providers.HttpMultiFilesProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpMultiFilesProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url_list</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<p>This provider is a <cite>RemoteProvider</cite> that can serve a list of
+files over the HTTP protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>remote_url</strong> – Remote URL of the file to serve.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset corresponding to the remote file.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset corresponding to the remote file.</p></li>
+<li><p><strong>authenticator</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator" title="deel.datasets.providers.http_providers.HttpSimpleAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpSimpleAuthenticator</span></code></a>]) – Authenticator to use.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_datasets">
+<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dd><p>List the available datasets for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of datasets available for this provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_versions">
+<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List the available versions of the given dataset for this
+provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of available versions of the given dataset for this
+provider.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the given dataset does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.http_providers.HttpRemoteFile">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpRemoteFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">relative_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<p>Class representing a remote file for the WebDAV provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>remote_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Remote URL of the file..</p></li>
+<li><p><strong>relative_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Relative path to the file from the dataset
+folder.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.http_providers.HttpRemoteFile.download">
+<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile.download" title="Permalink to this definition"></a></dt>
+<dd><p>Download this file from the remote storage to the local path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>local_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Local path where the file should be downloaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.http_providers.HttpRemoteFile.relative_path">
+<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The path of this file relative to the dataset and version it belongs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpSimpleAuthenticator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Authenticator for a simple HTTP authentication with a
+username and a password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Username to use for authentication.</p></li>
+<li><p><strong>password</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Password to use for authentication.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator.password">
+<em class="property">property </em><code class="sig-name descname">password</code><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
+<dd><p>The password to use for authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator.username">
+<em class="property">property </em><code class="sig-name descname">username</code><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
+<dd><p>The username to use for authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.http_providers.HttpSingleFileProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpSingleFileProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSingleFileProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider" title="deel.datasets.providers.http_providers.HttpMultiFilesProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.http_providers.HttpMultiFilesProvider</span></code></a></p>
+<p>This provider is a <cite>RemoteProvider</cite> that can only serve a single
+file over the HTTP protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>remote_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Remote URL of the file to serve.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset corresponding to the remote file.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset corresponding to the remote file.</p></li>
+<li><p><strong>authenticator</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator" title="deel.datasets.providers.http_providers.HttpSimpleAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpSimpleAuthenticator</span></code></a>]) – Authenticator to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.local_as_provider">
+<span id="deel-datasets-providers-local-as-provider-module"></span><h2>deel.datasets.providers.local_as_provider module<a class="headerlink" href="#module-deel.datasets.providers.local_as_provider" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.local_as_provider.LocalAsProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.local_as_provider.</code><code class="sig-name descname">LocalAsProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">source_folder</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<p>The <cite>LocalAsProvider</cite> is a <cite>Provider</cite> associated to a local source of
+datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>source_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – local source directory of datasets.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.local_as_provider.LocalAsProvider.list_datasets">
+<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dd><p>List the available datasets for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of datasets available for this provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_as_provider.LocalAsProvider.list_versions">
+<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List the available versions of the given dataset for this
+provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of available versions of the given dataset for this
+provider.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the given dataset does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.local_as_provider.LocalFile">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.local_as_provider.</code><code class="sig-name descname">LocalFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset_path</span></em>, <em class="sig-param"><span class="n">source_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<p>Representing a local file as local provider file.</p>
+<dl class="py method">
+<dt id="deel.datasets.providers.local_as_provider.LocalFile.download">
+<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.download" title="Permalink to this definition"></a></dt>
+<dd><p>Copy this file from the local provider directory to the local path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>local_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Local path where the file should be copied.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_as_provider.LocalFile.relative_path">
+<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.relative_path" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The path of this file relative to the local provider directory
+and version it belongs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_as_provider.LocalFile.size">
+<em class="property">property </em><code class="sig-name descname">size</code><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.size" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The size of the file, in bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_as_provider.LocalFile.source_path">
+<em class="property">property </em><code class="sig-name descname">source_path</code><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.source_path" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The full path to the source file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.local_provider">
+<span id="deel-datasets-providers-local-provider-module"></span><h2>deel.datasets.providers.local_provider module<a class="headerlink" href="#module-deel.datasets.providers.local_provider" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.local_provider.LocalProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.local_provider.</code><code class="sig-name descname">LocalProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.provider.Provider" title="deel.datasets.providers.provider.Provider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.provider.Provider</span></code></a></p>
+<p>A <cite>LocalProvider</cite> is a provider that look-up datasets in
+a local location (a folder).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.local_provider.LocalProvider.del_folder">
+<code class="sig-name descname">del_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span></em>, <em class="sig-param"><span class="n">keep_dataset</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.del_folder" title="Permalink to this definition"></a></dt>
+<dd><p>Delete the folder corresponding to the given dataset version.
+If after deleting this dataset, there are no versions remaining,
+the dataset folder is also removed, unless <cite>keep_dataset</cite> is <cite>True</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset to delete.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset to delete.</p></li>
+<li><p><strong>keep_dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – <cite>True</cite> to not remove the dataset folder</p></li>
+<li><p><strong>there are no remaining versions.</strong> (<em>when</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_provider.LocalProvider.get_folder">
+<code class="sig-name descname">get_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'latest'</span></em>, <em class="sig-param"><span class="n">force_update</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">returns_version</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.get_folder" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the root folder for the given dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset to retrieve the folder for.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset to retrieve the folder for. Can be
+an exact version like <cite>“3.1.2”</cite>, or <cite>“latest”</cite>, or a wildcard, e.g.,
+<cite>“3.1.*”</cite>.</p></li>
+<li><p><strong>force_update</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Force the update of the local dataset if possible.
+May have no effect on some providers.</p></li>
+<li><p><strong>returns_version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If <cite>True</cite>, the exact version of the dataset will be
+returned along the path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A path to the root folder for the given dataset name, or a tuple containing
+the path and the exact version.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the requested dataset was not found by this</p></li>
+<li><p><strong>provider.</strong> – </p></li>
+<li><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetVersionNotFoundError" title="deel.datasets.providers.exceptions.DatasetVersionNotFoundError"><strong>DatasetVersionNotFoundError</strong></a> – If the requested version of the dataset was</p></li>
+<li><p><strong>not found by this provider.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_provider.LocalProvider.list_datasets">
+<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dd><p>List the available datasets for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of datasets available for this provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_provider.LocalProvider.list_versions">
+<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List the available versions of the given dataset for this
+provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of available versions of the given dataset for this
+provider.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the given dataset does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.local_provider.LocalProvider.root_folder">
+<em class="property">property </em><code class="sig-name descname">root_folder</code><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.root_folder" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The local path to root folder for the datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.provider">
+<span id="deel-datasets-providers-provider-module"></span><h2>deel.datasets.providers.provider module<a class="headerlink" href="#module-deel.datasets.providers.provider" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.provider.Provider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.provider.</code><code class="sig-name descname">Provider</code><a class="headerlink" href="#deel.datasets.providers.provider.Provider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>The <cite>Provider</cite> class is an abstract interface for classes
+that provides access to dataset storages.</p>
+<p>The list of methods that should be overriden by all child classes
+are indicated with the <cite>abc.abstractmethod</cite> decorator. If a class
+requires specific clean-up, the <cite>__enter__</cite> and <cite>__exit__</cite> special
+functions can be overriden.</p>
+<dl class="py method">
+<dt id="deel.datasets.providers.provider.Provider.get_folder">
+<em class="property">abstract </em><code class="sig-name descname">get_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'latest'</span></em>, <em class="sig-param"><span class="n">force_update</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">returns_version</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.get_folder" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the root folder for the given dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset to retrieve the folder for.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset to retrieve the folder for. Can be
+an exact version like <cite>“3.1.2”</cite>, or <cite>“latest”</cite>, or a wildcard, e.g.,
+<cite>“3.1.*”</cite>.</p></li>
+<li><p><strong>force_update</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Force the update of the local dataset if possible.
+May have no effect on some providers.</p></li>
+<li><p><strong>returns_version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If <cite>True</cite>, the exact version of the dataset will be
+returned along the path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A path to the root folder for the given dataset name, or a tuple containing
+the path and the exact version.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the requested dataset was not found by this</p></li>
+<li><p><strong>provider.</strong> – </p></li>
+<li><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetVersionNotFoundError" title="deel.datasets.providers.exceptions.DatasetVersionNotFoundError"><strong>DatasetVersionNotFoundError</strong></a> – If the requested version of the dataset was</p></li>
+<li><p><strong>not found by this provider.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.provider.Provider.get_version">
+<code class="sig-name descname">get_version</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">version</span></em>, <em class="sig-param"><span class="n">versions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.get_version" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the version from the list of <cite>versions</cite> that best match
+the given one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version to retrieve. Can be an exact version, e.g., <cite>“3.1.2”</cite>,</p></li>
+<li><p><strong>a wildcard &quot;3.1.*&quot;</strong> (<em>or</em>) – </p></li>
+<li><p><strong>&quot;latest&quot;.</strong> (<em>or</em>) – </p></li>
+<li><p><strong>versions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of versions to retrieve the version from. Versions should</p></li>
+<li><p><strong>be of the form x.y.z.</strong> (<em>all</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The version in <cite>versions</cite> that best matches <cite>version</cite>.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#deel.datasets.providers.exceptions.VersionNotFoundError" title="deel.datasets.providers.exceptions.VersionNotFoundError"><strong>VersionNotFoundError</strong></a> – If the specified version did not match</p></li>
+<li><p><strong>any version in versions.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.provider.Provider.list_datasets">
+<em class="property">abstract </em><code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.list_datasets" title="Permalink to this definition"></a></dt>
+<dd><p>List the available datasets for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of datasets available for this provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.provider.Provider.list_versions">
+<em class="property">abstract </em><code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List the available versions of the given dataset for this
+provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of available versions of the given dataset for this
+provider.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the given dataset does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.remote_provider">
+<span id="deel-datasets-providers-remote-provider-module"></span><h2>deel.datasets.providers.remote_provider module<a class="headerlink" href="#module-deel.datasets.providers.remote_provider" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.remote_provider.FileModifier">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">FileModifier</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract class representing a modifier to apply to the file
+downloaded by the WebDAV provider.</p>
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.FileModifier.accept">
+<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier.accept" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the given file can be modified by this modifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to check.</p>
+</dd>
+</dl>
+<p>Returns: True if the file can be modified, False otherwize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.FileModifier.apply">
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Apply this modifier to the given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to apply the modifier to.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the file does not exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.remote_provider.GzExtractor">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">GzExtractor</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.FileModifier</span></code></a></p>
+<p>Modifier that extract files from gz archives and delete
+them afterwards.</p>
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.GzExtractor.accept">
+<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor.accept" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the given file can be modified by this modifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to check.</p>
+</dd>
+</dl>
+<p>Returns: True if the file can be modified, False otherwize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.GzExtractor.apply">
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Apply this modifier to the given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to apply the modifier to.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the file does not exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.remote_provider.RemoteFile">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">RemoteFile</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstraction representing a remote file.</p>
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.RemoteFile.download">
+<em class="property">abstract </em><code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile.download" title="Permalink to this definition"></a></dt>
+<dd><p>Download this file from the remote storage to the local path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>local_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Local path where the file should be downloaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.RemoteFile.relative_path">
+<em class="property">abstract property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The path of this file relative to the dataset and version it belongs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.remote_provider.RemoteProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">RemoteProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.local_provider.LocalProvider" title="deel.datasets.providers.local_provider.LocalProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.local_provider.LocalProvider</span></code></a></p>
+<p>The <cite>RemoteProvider</cite> extends <cite>LocalProvider</cite> by fetching datasets
+from a remote server if they are not found on the local storage.</p>
+<p>If a dataset is not found locally (or a force download is required), the
+provider will first downloads all the files corresponding to the given dataset,
+and then extract all archived files (.zip, .gz, .tgz) in the local folder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>remote_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Remote URL of the WebDAV server.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.RemoteProvider.get_folder">
+<code class="sig-name descname">get_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'latest'</span></em>, <em class="sig-param"><span class="n">force_update</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">returns_version</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.get_folder" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve the root folder for the given dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset to retrieve the folder for.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset to retrieve the folder for. Can be
+an exact version like <cite>“3.1.2”</cite>, or <cite>“latest”</cite>, or a wildcard, e.g.,
+<cite>“3.1.*”</cite>.</p></li>
+<li><p><strong>force_update</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Force the update of the local dataset if possible.
+May have no effect on some providers.</p></li>
+<li><p><strong>returns_version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – If <cite>True</cite>, the exact version of the dataset will be
+returned along the path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A path to the root folder for the given dataset name, or a tuple containing
+the path and the exact version.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the requested dataset was not found by this</p></li>
+<li><p><strong>provider.</strong> – </p></li>
+<li><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetVersionNotFoundError" title="deel.datasets.providers.exceptions.DatasetVersionNotFoundError"><strong>DatasetVersionNotFoundError</strong></a> – If the requested version of the dataset was</p></li>
+<li><p><strong>not found by this provider.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.RemoteProvider.local_provider">
+<code class="sig-name descname">local_provider</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.local_provider" title="Permalink to this definition"></a></dt>
+<dd><p>Create and returns a <cite>LocalProvider</cite> corresponding to the local
+storage for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.local_provider.LocalProvider" title="deel.datasets.providers.local_provider.LocalProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalProvider</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <cite>LocalProvider</cite> that fetches datasets from the local folder this
+provider stores the datasets to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="deel.datasets.providers.remote_provider.RemoteProvider.modifiers">
+<code class="sig-name descname">modifiers</code><em class="property">: List<span class="p">[</span><a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier">deel.datasets.providers.remote_provider.FileModifier</a><span class="p">]</span></em><em class="property"> = [&lt;deel.datasets.providers.remote_provider.ZipExtractor object&gt;, &lt;deel.datasets.providers.remote_provider.TarZExtractor object&gt;, &lt;deel.datasets.providers.remote_provider.GzExtractor object&gt;]</em><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.modifiers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.RemoteProvider.remote_url">
+<em class="property">property </em><code class="sig-name descname">remote_url</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.remote_url" title="Permalink to this definition"></a></dt>
+<dd><p>The remote URL from where the datasets are fetched.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Returns</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">RemoteSingleFileProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<p>The <cite>RemoteSingleFileProvider</cite> extends <cite>RemoteProvider</cite> and should be used
+to fetch files from custom web servers (HTTP, FTP) that only provide a single
+file. The only methods that should be implemented are <cite>_is_available</cite> and
+<cite>_list_remote_files</cite>.`</p>
+<p>The goal of this class is mainly to be used to allow the creation of datasets
+from publicly available files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>remote_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Remote URL of the WebDAV server.</p></li>
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset corresponding to the remote file.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset corresponding to the remote file.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_datasets">
+<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dd><p>List the available datasets for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of datasets available for this provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_versions">
+<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List the available versions of the given dataset for this
+provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of available versions of the given dataset for this
+provider.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the given dataset does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.remote_provider.TarZExtractor">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">TarZExtractor</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.FileModifier</span></code></a></p>
+<p>Modifier that extract files from tar archives, with or
+without comrpession and delete them afterwards.</p>
+<p>See the <cite>tarfile</cite> library for the list of supported compression
+methods.</p>
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.TarZExtractor.accept">
+<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor.accept" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the given file can be modified by this modifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to check.</p>
+</dd>
+</dl>
+<p>Returns: True if the file can be modified, False otherwize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.TarZExtractor.apply">
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Apply this modifier to the given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to apply the modifier to.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the file does not exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.remote_provider.ZipExtractor">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">ZipExtractor</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.FileModifier</span></code></a></p>
+<p>Modifier that unzip files and delete them afterwards.</p>
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.ZipExtractor.accept">
+<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor.accept" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the given file can be modified by this modifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to check.</p>
+</dd>
+</dl>
+<p>Returns: True if the file can be modified, False otherwize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.remote_provider.ZipExtractor.apply">
+<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Apply this modifier to the given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – The file to apply the modifier to.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the file does not exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-deel.datasets.providers.webdav_provider">
+<span id="deel-datasets-providers-webdav-provider-module"></span><h2>deel.datasets.providers.webdav_provider module<a class="headerlink" href="#module-deel.datasets.providers.webdav_provider" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt id="deel.datasets.providers.webdav_provider.WebDavAuthenticator">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavAuthenticator</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavAuthenticator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base class for WebDAV authenticators.</p>
+<p>Authenticator classes are used for dispatching and storing eventual parameters.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.webdav_provider.WebDavProvider">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">remote_path</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<p>The <cite>WebDavProvider</cite> is a <cite>RemoteProvider</cite> associated to a WebDAV
+server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code>) – Root folder to look-up datasets.</p></li>
+<li><p><strong>remote_url</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Remote URL of the WebDAV server.</p></li>
+<li><p><strong>authenticator</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#deel.datasets.providers.webdav_provider.WebDavAuthenticator" title="deel.datasets.providers.webdav_provider.WebDavAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">WebDavAuthenticator</span></code></a>]) – Authenticator to use.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="deel.datasets.providers.webdav_provider.WebDavProvider.VERSION_REGEX">
+<code class="sig-name descname">VERSION_REGEX</code><em class="property">: Pattern</em><em class="property"> = re.compile('[0-9]+[.][0-9]+[.][0-9]+')</em><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.VERSION_REGEX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.webdav_provider.WebDavProvider.list_datasets">
+<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dd><p>List the available datasets for this provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of datasets available for this provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.webdav_provider.WebDavProvider.list_versions">
+<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List the available versions of the given dataset for this
+provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of available versions of the given dataset for this
+provider.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><strong>DatasetNotFoundError</strong></a> – If the given dataset does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.webdav_provider.WebDavRemoteFile">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavRemoteFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">dataset_path</span></em>, <em class="sig-param"><span class="n">file_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<p>Class representing a remote file for the WebDAV provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code>) – The WebDAV client (used for download).</p></li>
+<li><p><strong>dataset_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path to the dataset, relative the root of the server.</p></li>
+<li><p><strong>file_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Path to the file of the dataset, relative to the dataset path.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.webdav_provider.WebDavRemoteFile.download">
+<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile.download" title="Permalink to this definition"></a></dt>
+<dd><p>Download this file from the remote storage to the local path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>local_file</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Local path where the file should be downloaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.webdav_provider.WebDavRemoteFile.relative_path">
+<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dd><p>Returns:
+The path of this file relative to the dataset and version it belongs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator">
+<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavSimpleAuthenticator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.webdav_provider.WebDavAuthenticator" title="deel.datasets.providers.webdav_provider.WebDavAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.webdav_provider.WebDavAuthenticator</span></code></a></p>
+<p>Authenticator for a simple HTTP authentication with a username and a
+password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Username to use for authentication.</p></li>
+<li><p><strong>password</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Password to use for authentication.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.password">
+<em class="property">property </em><code class="sig-name descname">password</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
+<dd><p>The password to use for authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.username">
+<em class="property">property </em><code class="sig-name descname">username</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
+<dd><p>The username to use for authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Returns</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="deel.datasets.html" class="btn btn-neutral float-left" title="deel.datasets package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="deel.datasets.utils.html" class="btn btn-neutral float-right" title="deel.datasets.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Mikaël Capelle, Justin Plakoo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

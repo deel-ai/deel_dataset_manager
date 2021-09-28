@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DEEL Dataset Manager
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#extending-the-dataset-class">Extending the <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#utility-functions">Utility functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#packaging-the-dataset-s">Packaging the dataset(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#listing-datasets">Listing datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#downloading-datasets">Downloading datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#removing-datasets">Removing datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deel.datasets.html">deel.datasets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deel.datasets.providers.html">deel.datasets.providers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.exceptions">deel.datasets.providers.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.ftp_providers">deel.datasets.providers.ftp_providers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.gcloud_provider">deel.datasets.providers.gcloud_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.http_providers">deel.datasets.providers.http_providers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.local_as_provider">deel.datasets.providers.local_as_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.local_provider">deel.datasets.providers.local_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.provider">deel.datasets.providers.provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.remote_provider">deel.datasets.providers.remote_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.webdav_provider">deel.datasets.providers.webdav_provider module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deel.datasets.utils.html">deel.datasets.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.numpy_utils">deel.datasets.utils.numpy_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.supervised">deel.datasets.utils.supervised module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">deel.datasets.utils.tensorflow_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">deel.datasets.utils.torch_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.unsupervised">deel.datasets.utils.unsupervised module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.dataset">deel.datasets.dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.settings">deel.datasets.settings module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DEEL Dataset Manager</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Index</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.FileModifier.accept">accept() (deel.datasets.providers.remote_provider.FileModifier method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.GzExtractor.accept">(deel.datasets.providers.remote_provider.GzExtractor method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.TarZExtractor.accept">(deel.datasets.providers.remote_provider.TarZExtractor method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.ZipExtractor.accept">(deel.datasets.providers.remote_provider.ZipExtractor method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.FileModifier.apply">apply() (deel.datasets.providers.remote_provider.FileModifier method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.GzExtractor.apply">(deel.datasets.providers.remote_provider.GzExtractor method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.TarZExtractor.apply">(deel.datasets.providers.remote_provider.TarZExtractor method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.ZipExtractor.apply">(deel.datasets.providers.remote_provider.ZipExtractor method)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.BaseDataset.available_modes">available_modes() (deel.datasets.dataset.BaseDataset property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.BaseDataset">BaseDataset (class in deel.datasets.dataset)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.settings.SettingsProvider.create_provider">create_provider() (deel.datasets.settings.SettingsProvider method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.Dataset">Dataset (class in deel.datasets.dataset)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.exceptions.DatasetNotFoundError">DatasetNotFoundError</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.exceptions.DatasetVersionNotFoundError">DatasetVersionNotFoundError</a>
+</li>
+      <li>
+    deel.datasets
+
+      <ul>
+        <li><a href="deel.datasets.html#module-deel.datasets">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.dataset
+
+      <ul>
+        <li><a href="deel.datasets.html#module-deel.datasets.dataset">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.exceptions
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.exceptions">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.ftp_providers
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.ftp_providers">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.gcloud_provider
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.gcloud_provider">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.http_providers
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.http_providers">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.local_as_provider
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.local_as_provider">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.local_provider
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.local_provider">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.provider
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.provider">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.providers.remote_provider
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.remote_provider">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    deel.datasets.providers.webdav_provider
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.webdav_provider">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.settings
+
+      <ul>
+        <li><a href="deel.datasets.html#module-deel.datasets.settings">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.utils
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.utils.numpy_utils
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.numpy_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.utils.supervised
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.supervised">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.utils.tensorflow_utils
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.utils.torch_utils
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.utils.unsupervised
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.unsupervised">module</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.BaseDataset.default_mode">default_mode() (deel.datasets.dataset.BaseDataset property)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_provider.LocalProvider.del_folder">del_folder() (deel.datasets.providers.local_provider.LocalProvider method)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpRemoteFile.download">download() (deel.datasets.providers.ftp_providers.FtpRemoteFile method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpRemoteFile.download">(deel.datasets.providers.http_providers.HttpRemoteFile method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalFile.download">(deel.datasets.providers.local_as_provider.LocalFile method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteFile.download">(deel.datasets.providers.remote_provider.RemoteFile method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavRemoteFile.download">(deel.datasets.providers.webdav_provider.WebDavRemoteFile method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.FileModifier">FileModifier (class in deel.datasets.providers.remote_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpProvider">FtpProvider (class in deel.datasets.providers.ftp_providers)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpRemoteFile">FtpRemoteFile (class in deel.datasets.providers.ftp_providers)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator">FtpSimpleAuthenticator (class in deel.datasets.providers.ftp_providers)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpSingleFileProvider">FtpSingleFileProvider (class in deel.datasets.providers.ftp_providers)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.gcloud_provider.GCloudProvider">GCloudProvider (class in deel.datasets.providers.gcloud_provider)</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.settings.Settings.get_best_provider">get_best_provider() (deel.datasets.settings.Settings method)</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.settings.get_default_settings">get_default_settings() (in module deel.datasets.settings)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_provider.LocalProvider.get_folder">get_folder() (deel.datasets.providers.local_provider.LocalProvider method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.provider.Provider.get_folder">(deel.datasets.providers.provider.Provider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteProvider.get_folder">(deel.datasets.providers.remote_provider.RemoteProvider method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.settings.Settings.get_provider_list">get_provider_list() (deel.datasets.settings.Settings method)</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.settings.get_settings_for_local">get_settings_for_local() (in module deel.datasets.settings)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.provider.Provider.get_version">get_version() (deel.datasets.providers.provider.Provider method)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.GzExtractor">GzExtractor (class in deel.datasets.providers.remote_provider)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpMultiFilesProvider">HttpMultiFilesProvider (class in deel.datasets.providers.http_providers)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpRemoteFile">HttpRemoteFile (class in deel.datasets.providers.http_providers)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpSimpleAuthenticator">HttpSimpleAuthenticator (class in deel.datasets.providers.http_providers)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpSingleFileProvider">HttpSingleFileProvider (class in deel.datasets.providers.http_providers)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.ImageDataset">ImageDataset (class in deel.datasets.utils.torch_utils)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.exceptions.InvalidConfigurationError">InvalidConfigurationError</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.InvalidModeError">InvalidModeError</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpProvider.list_datasets">list_datasets() (deel.datasets.providers.ftp_providers.FtpProvider method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_datasets">(deel.datasets.providers.http_providers.HttpMultiFilesProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalAsProvider.list_datasets">(deel.datasets.providers.local_as_provider.LocalAsProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_provider.LocalProvider.list_datasets">(deel.datasets.providers.local_provider.LocalProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.provider.Provider.list_datasets">(deel.datasets.providers.provider.Provider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_datasets">(deel.datasets.providers.remote_provider.RemoteSingleFileProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavProvider.list_datasets">(deel.datasets.providers.webdav_provider.WebDavProvider method)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpProvider.list_versions">list_versions() (deel.datasets.providers.ftp_providers.FtpProvider method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_versions">(deel.datasets.providers.http_providers.HttpMultiFilesProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalAsProvider.list_versions">(deel.datasets.providers.local_as_provider.LocalAsProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_provider.LocalProvider.list_versions">(deel.datasets.providers.local_provider.LocalProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.provider.Provider.list_versions">(deel.datasets.providers.provider.Provider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_versions">(deel.datasets.providers.remote_provider.RemoteSingleFileProvider method)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavProvider.list_versions">(deel.datasets.providers.webdav_provider.WebDavProvider method)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.BaseDataset.load">load() (deel.datasets.dataset.BaseDataset method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.html#deel.datasets.dataset.Dataset.load">(deel.datasets.dataset.Dataset method)</a>
+</li>
+        <li><a href="deel.datasets.html#deel.datasets.dataset.VolatileDataset.load">(deel.datasets.dataset.VolatileDataset method)</a>
+</li>
+        <li><a href="deel.datasets.html#deel.datasets.load">(in module deel.datasets)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.VolatileDataset.load_basic">load_basic() (deel.datasets.dataset.VolatileDataset method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.load_hierarchical_python_image_dataset">load_hierarchical_python_image_dataset() (in module deel.datasets.utils.supervised)</a>
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#deel.datasets.utils.unsupervised.load_hierarchical_python_image_dataset">(in module deel.datasets.utils.unsupervised)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.load_hierarchical_pytorch_image_dataset">load_hierarchical_pytorch_image_dataset() (in module deel.datasets.utils.supervised)</a>
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#deel.datasets.utils.unsupervised.load_hierarchical_pytorch_image_dataset">(in module deel.datasets.utils.unsupervised)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.load_numpy_image_dataset">load_numpy_image_dataset() (in module deel.datasets.utils.supervised)</a>
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#deel.datasets.utils.unsupervised.load_numpy_image_dataset">(in module deel.datasets.utils.unsupervised)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.Dataset.load_path">load_path() (deel.datasets.dataset.Dataset method)</a>
+</li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.load_python_image_dataset">load_python_image_dataset() (in module deel.datasets.utils.supervised)</a>
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#deel.datasets.utils.unsupervised.load_python_image_dataset">(in module deel.datasets.utils.unsupervised)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.load_pytorch_image_dataset">load_pytorch_image_dataset() (in module deel.datasets.utils.supervised)</a>
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#deel.datasets.utils.unsupervised.load_pytorch_image_dataset">(in module deel.datasets.utils.unsupervised)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.load_tensorflow_image_dataset">load_tensorflow_image_dataset() (in module deel.datasets.utils.supervised)</a>
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#deel.datasets.utils.unsupervised.load_tensorflow_image_dataset">(in module deel.datasets.utils.unsupervised)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.ImageDataset.loader">loader() (deel.datasets.utils.torch_utils.ImageDataset method)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteProvider.local_provider">local_provider() (deel.datasets.providers.remote_provider.RemoteProvider method)</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.settings.Settings.local_storage">local_storage() (deel.datasets.settings.Settings property)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalAsProvider">LocalAsProvider (class in deel.datasets.providers.local_as_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalFile">LocalFile (class in deel.datasets.providers.local_as_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_provider.LocalProvider">LocalProvider (class in deel.datasets.providers.local_provider)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.settings.Settings.make_provider">make_provider() (deel.datasets.settings.Settings method)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.make_provider">(in module deel.datasets.providers)</a>
+</li>
+      </ul></li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteProvider.modifiers">modifiers (deel.datasets.providers.remote_provider.RemoteProvider attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="deel.datasets.html#module-deel.datasets">deel.datasets</a>
+</li>
+        <li><a href="deel.datasets.html#module-deel.datasets.dataset">deel.datasets.dataset</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers">deel.datasets.providers</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.exceptions">deel.datasets.providers.exceptions</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.ftp_providers">deel.datasets.providers.ftp_providers</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.gcloud_provider">deel.datasets.providers.gcloud_provider</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.http_providers">deel.datasets.providers.http_providers</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.local_as_provider">deel.datasets.providers.local_as_provider</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.local_provider">deel.datasets.providers.local_provider</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.provider">deel.datasets.providers.provider</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.remote_provider">deel.datasets.providers.remote_provider</a>
+</li>
+        <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.webdav_provider">deel.datasets.providers.webdav_provider</a>
+</li>
+        <li><a href="deel.datasets.html#module-deel.datasets.settings">deel.datasets.settings</a>
+</li>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils">deel.datasets.utils</a>
+</li>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.numpy_utils">deel.datasets.utils.numpy_utils</a>
+</li>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.supervised">deel.datasets.utils.supervised</a>
+</li>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">deel.datasets.utils.tensorflow_utils</a>
+</li>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">deel.datasets.utils.torch_utils</a>
+</li>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.unsupervised">deel.datasets.utils.unsupervised</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.BaseDataset.name">name() (deel.datasets.dataset.BaseDataset property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.numpy_utils.numpy_split_on_label">numpy_split_on_label() (in module deel.datasets.utils.numpy_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.OptionalToTensor">OptionalToTensor (class in deel.datasets.utils.torch_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.settings.ParseSettingsError">ParseSettingsError</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.password">password() (deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator property)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.password">(deel.datasets.providers.http_providers.HttpSimpleAuthenticator property)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.password">(deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.provider.Provider">Provider (class in deel.datasets.providers.provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.exceptions.ProviderNotAvailableError">ProviderNotAvailableError</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.settings.read_one_provider">read_one_provider() (in module deel.datasets.settings)</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.settings.read_settings">read_settings() (in module deel.datasets.settings)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpRemoteFile.relative_path">relative_path() (deel.datasets.providers.ftp_providers.FtpRemoteFile property)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpRemoteFile.relative_path">(deel.datasets.providers.http_providers.HttpRemoteFile property)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalFile.relative_path">(deel.datasets.providers.local_as_provider.LocalFile property)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteFile.relative_path">(deel.datasets.providers.remote_provider.RemoteFile property)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavRemoteFile.relative_path">(deel.datasets.providers.webdav_provider.WebDavRemoteFile property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteProvider.remote_url">remote_url() (deel.datasets.providers.remote_provider.RemoteProvider property)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteFile">RemoteFile (class in deel.datasets.providers.remote_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteProvider">RemoteProvider (class in deel.datasets.providers.remote_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteSingleFileProvider">RemoteSingleFileProvider (class in deel.datasets.providers.remote_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_provider.LocalProvider.root_folder">root_folder() (deel.datasets.providers.local_provider.LocalProvider property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.settings.Settings">Settings (class in deel.datasets.settings)</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.settings.SettingsProvider">SettingsProvider (class in deel.datasets.settings)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalFile.size">size() (deel.datasets.providers.local_as_provider.LocalFile property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.local_as_provider.LocalFile.source_path">source_path() (deel.datasets.providers.local_as_provider.LocalFile property)</a>
+</li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.split_datasets_on_label">split_datasets_on_label() (in module deel.datasets.utils.supervised)</a>
+</li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.split_on_label">split_on_label() (in module deel.datasets.utils.supervised)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.TarZExtractor">TarZExtractor (class in deel.datasets.providers.remote_provider)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.tensorflow_utils.tf_split_on_label">tf_split_on_label() (in module deel.datasets.utils.tensorflow_utils)</a>
+</li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.torch_split_on_label">torch_split_on_label() (in module deel.datasets.utils.torch_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.username">username() (deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator property)</a>
+
+      <ul>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.username">(deel.datasets.providers.http_providers.HttpSimpleAuthenticator property)</a>
+</li>
+        <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.username">(deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.BaseDataset.version">version() (deel.datasets.dataset.BaseDataset property)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavProvider.VERSION_REGEX">VERSION_REGEX (deel.datasets.providers.webdav_provider.WebDavProvider attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.exceptions.VersionNotFoundError">VersionNotFoundError</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.dataset.VolatileDataset">VolatileDataset (class in deel.datasets.dataset)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavAuthenticator">WebDavAuthenticator (class in deel.datasets.providers.webdav_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavProvider">WebDavProvider (class in deel.datasets.providers.webdav_provider)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavRemoteFile">WebDavRemoteFile (class in deel.datasets.providers.webdav_provider)</a>
+</li>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator">WebDavSimpleAuthenticator (class in deel.datasets.providers.webdav_provider)</a>
+</li>
+      <li><a href="deel.datasets.html#deel.datasets.settings.write_settings">write_settings() (in module deel.datasets.settings)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.ZipExtractor">ZipExtractor (class in deel.datasets.providers.remote_provider)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Mikaël Capelle, Justin Plakoo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

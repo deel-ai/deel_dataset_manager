@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="#" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> DEEL Dataset Manager
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#extending-the-dataset-class">Extending the <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#utility-functions">Utility functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#packaging-the-dataset-s">Packaging the dataset(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#listing-datasets">Listing datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#downloading-datasets">Downloading datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html#removing-datasets">Removing datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deel.datasets.html">deel.datasets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deel.datasets.providers.html">deel.datasets.providers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.exceptions">deel.datasets.providers.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.ftp_providers">deel.datasets.providers.ftp_providers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.gcloud_provider">deel.datasets.providers.gcloud_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.http_providers">deel.datasets.providers.http_providers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.local_as_provider">deel.datasets.providers.local_as_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.local_provider">deel.datasets.providers.local_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.provider">deel.datasets.providers.provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.remote_provider">deel.datasets.providers.remote_provider module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.providers.html#module-deel.datasets.providers.webdav_provider">deel.datasets.providers.webdav_provider module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deel.datasets.utils.html">deel.datasets.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.numpy_utils">deel.datasets.utils.numpy_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.supervised">deel.datasets.utils.supervised module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">deel.datasets.utils.tensorflow_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">deel.datasets.utils.torch_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.unsupervised">deel.datasets.utils.unsupervised module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.dataset">deel.datasets.dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.settings">deel.datasets.settings module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DEEL Dataset Manager</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Search</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <noscript>
+  <div id="fallback" class="admonition warning">
+    <p class="last">
+      Please activate JavaScript to enable the search functionality.
+    </p>
+  </div>
+  </noscript>
+
+  
+  <div id="search-results">
+  
+  </div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Mikaël Capelle, Justin Plakoo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+  <script>
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+  
+  <script id="searchindexloader"></script>
+   
+
+
+</body>
+</html>
