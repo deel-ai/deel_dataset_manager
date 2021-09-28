@@ -28,11 +28,11 @@ jobs:
 
       - name: "Build Sphinx Doc"
         run: |
-          make doc
+          cd docs && make html
 
       - name: "Deploy Github Pages"
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          GITHUB_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: build/html/
+          FOLDER: docs/build/html/
