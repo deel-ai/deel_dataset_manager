@@ -7,6 +7,7 @@
 docs/build
 docs/source/modules.rst
 docs/source/deel.datasets*.rst
+ddm_dev_env*/
 
 # Python files
 __pycache__

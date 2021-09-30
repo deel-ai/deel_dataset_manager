@@ -8,6 +8,17 @@ dev_requires = [
     "flake8-black",
     "mypy",
     "pytest",
+    "numpy",
+]
+
+docs_requires = [
+    "sphinx==3.3.1",
+    "recommonmark",
+    "sphinx_rtd_theme",
+    "sphinx_markdown_builder",
+    "sphinx_autodoc_typehints",
+    "sphinxcontrib_katex",
+    "ipython",  # required for Pygments
 ]
 
 setup(
@@ -41,5 +52,5 @@ setup(
         "pyyaml",
         "psutil",
     ],
-    extras_require={"dev": dev_requires},
+    extras_require={"dev": dev_requires, "docs": docs_requires},
 )
