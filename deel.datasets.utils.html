@@ -73,7 +73,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.utils.numpy_utils">deel.datasets.utils.numpy_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.utils.supervised">deel.datasets.utils.supervised module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#deel-datasets-utils-tensorflow-utils-module">deel.datasets.utils.tensorflow_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.utils.tensorflow_utils">deel.datasets.utils.tensorflow_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#deel-datasets-utils-torch-utils-module">deel.datasets.utils.torch_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-deel.datasets.utils.unsupervised">deel.datasets.utils.unsupervised module</a></li>
 </ul>
@@ -405,8 +405,27 @@ the remaining part of the dataset.</p>
 </dd></dl>
 
 </section>
-<section id="deel-datasets-utils-tensorflow-utils-module">
-<h2>deel.datasets.utils.tensorflow_utils module<a class="headerlink" href="#deel-datasets-utils-tensorflow-utils-module" title="Permalink to this headline"></a></h2>
+<section id="module-deel.datasets.utils.tensorflow_utils">
+<span id="deel-datasets-utils-tensorflow-utils-module"></span><h2>deel.datasets.utils.tensorflow_utils module<a class="headerlink" href="#module-deel.datasets.utils.tensorflow_utils" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt id="deel.datasets.utils.tensorflow_utils.tf_split_on_label">
+<code class="sig-prename descclassname">deel.datasets.utils.tensorflow_utils.</code><code class="sig-name descname">tf_split_on_label</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">labels_in</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.tensorflow_utils.tf_split_on_label" title="Permalink to this definition"></a></dt>
+<dd><p>Allows to split a tensoflow dataset in in-dataset and
+out-dataset according to labels_in
+:type dataset: <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>
+:param dataset: a tensoflow dataset
+:type labels_in: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]
+:param labels_in: array of ‘normal’ labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple of split datasets (dataset_in, dataset_out),</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="deel-datasets-utils-torch-utils-module">
 <h2>deel.datasets.utils.torch_utils module<a class="headerlink" href="#deel-datasets-utils-torch-utils-module" title="Permalink to this headline"></a></h2>
