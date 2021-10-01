@@ -7,6 +7,7 @@
 docs/build
 docs/source/modules.rst
 docs/source/deel.datasets*.rst
+ddm_dev_env*/
 
 # Python files
 __pycache__
@@ -21,3 +22,4 @@ examples/mvtec_ad/results
 tests/dev_test_data/results.txt
 build
 dist
+.github

@@ -35,6 +35,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx_rtd_theme",
     "sphinx_autodoc_typehints",
+    "sphinx.ext.githubpages",
 ]
 
 autoclass_content = "both"
