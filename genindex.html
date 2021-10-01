@@ -72,7 +72,7 @@
 <li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.numpy_utils">deel.datasets.utils.numpy_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.supervised">deel.datasets.utils.supervised module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">deel.datasets.utils.tensorflow_utils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#deel-datasets-utils-torch-utils-module">deel.datasets.utils.torch_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">deel.datasets.utils.torch_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="deel.datasets.utils.html#module-deel.datasets.utils.unsupervised">deel.datasets.utils.unsupervised module</a></li>
 </ul>
 </li>
@@ -123,6 +123,7 @@
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -258,8 +259,6 @@
         <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.provider">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     deel.datasets.providers.remote_provider
 
@@ -267,6 +266,8 @@
         <li><a href="deel.datasets.providers.html#module-deel.datasets.providers.remote_provider">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     deel.datasets.providers.webdav_provider
 
@@ -307,6 +308,13 @@
 
       <ul>
         <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    deel.datasets.utils.torch_utils
+
+      <ul>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">module</a>
 </li>
       </ul></li>
       <li>
@@ -402,10 +410,12 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="deel.datasets.providers.html#deel.datasets.providers.exceptions.InvalidConfigurationError">InvalidConfigurationError</a>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.ImageDataset">ImageDataset (class in deel.datasets.utils.torch_utils)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.providers.html#deel.datasets.providers.exceptions.InvalidConfigurationError">InvalidConfigurationError</a>
+</li>
       <li><a href="deel.datasets.html#deel.datasets.dataset.InvalidModeError">InvalidModeError</a>
 </li>
   </ul></td>
@@ -456,10 +466,10 @@
         <li><a href="deel.datasets.html#deel.datasets.load">(in module deel.datasets)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deel.datasets.html#deel.datasets.dataset.VolatileDataset.load_basic">load_basic() (deel.datasets.dataset.VolatileDataset method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deel.datasets.utils.html#deel.datasets.utils.supervised.load_hierarchical_python_image_dataset">load_hierarchical_python_image_dataset() (in module deel.datasets.utils.supervised)</a>
 
       <ul>
@@ -498,6 +508,8 @@
         <li><a href="deel.datasets.utils.html#deel.datasets.utils.unsupervised.load_tensorflow_image_dataset">(in module deel.datasets.utils.unsupervised)</a>
 </li>
       </ul></li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.ImageDataset.loader">loader() (deel.datasets.utils.torch_utils.ImageDataset method)</a>
+</li>
       <li><a href="deel.datasets.providers.html#deel.datasets.providers.remote_provider.RemoteProvider.local_provider">local_provider() (deel.datasets.providers.remote_provider.RemoteProvider method)</a>
 </li>
       <li><a href="deel.datasets.html#deel.datasets.settings.Settings.local_storage">local_storage() (deel.datasets.settings.Settings property)</a>
@@ -560,6 +572,8 @@
 </li>
         <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.tensorflow_utils">deel.datasets.utils.tensorflow_utils</a>
 </li>
+        <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.torch_utils">deel.datasets.utils.torch_utils</a>
+</li>
         <li><a href="deel.datasets.utils.html#module-deel.datasets.utils.unsupervised">deel.datasets.utils.unsupervised</a>
 </li>
       </ul></li>
@@ -574,6 +588,14 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deel.datasets.utils.html#deel.datasets.utils.numpy_utils.numpy_split_on_label">numpy_split_on_label() (in module deel.datasets.utils.numpy_utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.OptionalToTensor">OptionalToTensor (class in deel.datasets.utils.torch_utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -662,6 +684,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deel.datasets.utils.html#deel.datasets.utils.tensorflow_utils.tf_split_on_label">tf_split_on_label() (in module deel.datasets.utils.tensorflow_utils)</a>
+</li>
+      <li><a href="deel.datasets.utils.html#deel.datasets.utils.torch_utils.torch_split_on_label">torch_split_on_label() (in module deel.datasets.utils.torch_utils)</a>
 </li>
   </ul></td>
 </tr></table>
