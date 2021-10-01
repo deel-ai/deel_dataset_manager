@@ -51,6 +51,9 @@ setup(
         "h5py",
         "pyyaml",
         "psutil",
+        "numpy",
+        "Pillow",
+        "PyYAML",
     ],
     extras_require={"dev": dev_requires, "docs": docs_requires},
 )
