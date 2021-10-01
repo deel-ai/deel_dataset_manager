@@ -24,9 +24,9 @@ jobs:
       - name: "Install Python dependencies"
         run: |
           python -m pip install --upgrade pip
-          pip install sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder
+          pip install wheel sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder tensorflow torch
           pip install .
-          
+
       - name: "Build Sphinx Doc"
         run: |
           cd docs && make html
