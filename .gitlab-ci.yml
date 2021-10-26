@@ -4,6 +4,7 @@ image: fkrull/multi-python
 
 stages:
   - test
+  - deploy
 
 linting:
   stage: test
@@ -14,3 +15,17 @@ pytest:
   stage: test
   script:
     - tox -e py36,py37,py38
+
+pages:
+  stage: deploy
+  script:
+    - mkdir .public
+    - cp -r build/* .public
+    - mv .public public
+    - gem install bundler
+    - bundle install
+    - bundle exec jekyll build -d public
+
+  artifacts:
+    paths:
+      - public
