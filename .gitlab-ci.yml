@@ -19,8 +19,12 @@ pytest:
 pages:
   stage: deploy
   script:
-    - pip install wheel sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder tensorflow torch torchvision
-    - pip install .
+    - apt-get update
+    - apt-get install -y virtualenv python-pip git
+    - virtualenv env
+    - env/bin/pip install --upgrade pip
+    - env/bin/pip install wheel sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder tensorflow torch torchvision
+    - env/bin/pip install .
     - cd docs && make html
     - mkdir .public
     - cp -r docs/build/html/* .public
