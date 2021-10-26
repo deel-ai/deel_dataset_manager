@@ -20,7 +20,7 @@ pages:
   stage: deploy
   image: python:3.7-alpine
   script:
-    - pip install -U sphinx
+    - pip install sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder
     - sphinx-build -b html docs/source .public
     - mv .public public
   
