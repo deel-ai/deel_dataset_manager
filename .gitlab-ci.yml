@@ -23,13 +23,10 @@ pages:
     - apt-get install -y python3-venv python3-pip
     - python3 -m venv env
     - env/bin/pip install --upgrade pip
-    - env/bin/pip install -U sphinx
+    - env/bin/pip install sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder
     - sphinx-build -b html docs/source .public
     - mv .public public
-    - gem install bundler
-    - bundle install
-    - bundle exec jekyll build -d public
-
+  
   artifacts:
     paths:
       - public
