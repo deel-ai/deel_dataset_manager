@@ -20,7 +20,7 @@ pages:
   stage: deploy
   image: python:3.7-alpine
   script:
-   - pip install -U sphinx
+    - pip install -U sphinx
     - sphinx-build -b html docs/source .public
     - mv .public public
   
