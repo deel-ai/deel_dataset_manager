@@ -19,8 +19,12 @@ pytest:
 pages:
   stage: deploy
   script:
+    - python -m pip install --upgrade pip
+    - pip install wheel sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder tensorflow torch torchvision
+    - pip install .
+    - cd docs && make html
     - mkdir .public
-    - cp -r build/* .public
+    - cp -r docs/build/html/* .public
     - mv .public public
     - gem install bundler
     - bundle install
