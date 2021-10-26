@@ -14,3 +14,13 @@ pytest:
   stage: test
   script:
     - tox -e py36,py37,py38
+
+pages:
+  script:
+  - pip install -r requirements.txt
+  - mv build/html public
+  artifacts:
+    paths:
+    - public
+  only:
+  - main
