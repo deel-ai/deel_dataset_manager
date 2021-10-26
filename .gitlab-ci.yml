@@ -18,12 +18,9 @@ pytest:
 
 pages:
   stage: deploy
+  image: python:3.7-alpine
   script:
-    - apt-get update
-    - apt-get install -y python3-venv python3-pip
-    - python3 -m venv env
-    - env/bin/pip install --upgrade pip
-    - env/bin/pip install -U sphinx sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder
+   - pip install -U sphinx
     - sphinx-build -b html docs/source .public
     - mv .public public
   
