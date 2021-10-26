@@ -3,7 +3,6 @@
 image: fkrull/multi-python
 
 stages:
-#  - test
   - deploy
 
 linting:
