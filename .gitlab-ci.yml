@@ -3,7 +3,7 @@
 image: fkrull/multi-python
 
 stages:
-  - test
+#  - test
   - deploy
 
 linting:
@@ -20,7 +20,7 @@ pages:
   stage: deploy
   script:
     - apt-get update
-    - apt-get install -y virtualenv python-pip git
+    - apt-get install -y virtualenv python3-pip git
     - virtualenv env
     - env/bin/pip install --upgrade pip
     - env/bin/pip install wheel sphinx==3.3.1 sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder tensorflow torch torchvision
