@@ -25,12 +25,12 @@ import os
 import pathlib
 import typing
 
-from deel.datasets.utils import load_hierarchical_python_image_dataset
-from deel.datasets.utils import load_numpy_image_dataset
-from deel.datasets.utils import load_pytorch_image_dataset
-from deel.datasets.utils import load_tensorflow_image_dataset
-from deel.datasets.utils import split_datasets_on_label
-from deel.datasets.utils import split_on_label
+from deel.datasets.utils.supervised import load_hierarchical_python_image_dataset
+from deel.datasets.utils.supervised import load_numpy_image_dataset
+from deel.datasets.utils.supervised import load_pytorch_image_dataset
+from deel.datasets.utils.supervised import load_tensorflow_image_dataset
+from deel.datasets.utils.supervised import split_datasets_on_label
+from deel.datasets.utils.supervised import split_on_label
 
 path_hierachical = pathlib.Path(
     os.path.join(
