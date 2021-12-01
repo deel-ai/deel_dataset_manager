@@ -29,8 +29,7 @@ from tqdm import tqdm
 
 from . import logger
 from .exceptions import DatasetNotFoundError, ProviderNotAvailableError
-from .remote_provider import (RemoteFile, RemoteProvider,
-                              RemoteSingleFileProvider)
+from .remote_provider import RemoteFile, RemoteProvider, RemoteSingleFileProvider
 
 
 class FtpSimpleAuthenticator:

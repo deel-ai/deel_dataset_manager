@@ -24,8 +24,7 @@ import logging
 import pathlib
 import random
 from collections import defaultdict
-from typing import (TYPE_CHECKING, Callable, Dict, List, Optional, Tuple,
-                    TypeVar, Union)
+from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Tuple, TypeVar, Union
 
 from PIL import Image
 

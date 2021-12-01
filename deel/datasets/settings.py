@@ -30,8 +30,7 @@ import yaml
 from . import logger
 from .providers import Provider
 from .providers import make_provider as make_provider
-from .providers.exceptions import (DatasetNotFoundError,
-                                   InvalidConfigurationError)
+from .providers.exceptions import DatasetNotFoundError, InvalidConfigurationError
 
 # Name of the environment variable containing the path to
 # the settings:

@@ -32,8 +32,11 @@ import zipfile
 from tqdm import tqdm
 
 from . import logger
-from .exceptions import (DatasetNotFoundError, DatasetVersionNotFoundError,
-                         VersionNotFoundError)
+from .exceptions import (
+    DatasetNotFoundError,
+    DatasetVersionNotFoundError,
+    VersionNotFoundError,
+)
 from .local_provider import LocalProvider
 
 
