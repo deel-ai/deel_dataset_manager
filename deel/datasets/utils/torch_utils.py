@@ -21,11 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import pathlib
-from typing import Callable
-from typing import List
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
+from typing import Callable, List, Optional, Sequence, Tuple
 
 import torch
 import torchvision.transforms.functional as F

@@ -23,16 +23,8 @@
 import logging
 import pathlib
 import random
-from typing import Callable
-from typing import Dict
-from typing import List
-from typing import Optional
-from typing import Sequence
-from typing import Set
-from typing import Tuple
-from typing import TYPE_CHECKING
-from typing import TypeVar
-from typing import Union
+from typing import (TYPE_CHECKING, Callable, Dict, List, Optional, Sequence,
+                    Set, Tuple, TypeVar, Union)
 
 from PIL import Image
 

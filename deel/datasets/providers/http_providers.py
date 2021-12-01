@@ -29,8 +29,7 @@ import urllib.request
 from tqdm import tqdm
 
 from . import logger
-from .remote_provider import RemoteFile
-from .remote_provider import RemoteProvider
+from .remote_provider import RemoteFile, RemoteProvider
 
 
 class HttpSimpleAuthenticator:

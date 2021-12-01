@@ -26,10 +26,10 @@ repos:
       exclude: LICENSES/headers
     - id: check-added-large-files
 
-  # - repo: https://github.com/timothycrosley/isort
-  #   rev: 5.10.1
-  #   hooks:
-  #   - id: isort
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.10.1
+    hooks:
+    - id: isort
 
   # - repo: https://github.com/ambv/black
   #   rev: 21.11b1

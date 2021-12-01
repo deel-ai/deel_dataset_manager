@@ -27,16 +27,15 @@ import typing
 
 import pytest
 
-from deel.datasets.providers import make_provider
-from deel.datasets.providers import Provider
-from deel.datasets.providers.exceptions import DatasetNotFoundError
-from deel.datasets.providers.exceptions import InvalidConfigurationError
-from deel.datasets.providers.exceptions import VersionNotFoundError
+from deel.datasets.providers import Provider, make_provider
+from deel.datasets.providers.exceptions import (DatasetNotFoundError,
+                                                InvalidConfigurationError,
+                                                VersionNotFoundError)
 from deel.datasets.providers.ftp_providers import FtpProvider
 from deel.datasets.providers.http_providers import HttpSingleFileProvider
 from deel.datasets.providers.local_provider import LocalProvider
-from deel.datasets.providers.webdav_provider import WebDavProvider
-from deel.datasets.providers.webdav_provider import WebDavSimpleAuthenticator
+from deel.datasets.providers.webdav_provider import (WebDavProvider,
+                                                     WebDavSimpleAuthenticator)
 
 LOCAL_PATH = pathlib.Path(
     os.path.join(

@@ -4,18 +4,13 @@ import argparse
 import sys
 
 from . import load as load_dataset
-from .settings import (
-    read_settings,
-    get_default_settings,
-    get_settings_for_local,
-)
+from .providers.exceptions import (DatasetNotFoundError,
+                                   DatasetVersionNotFoundError,
+                                   InvalidConfigurationError)
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
-from .providers.exceptions import (
-    DatasetNotFoundError,
-    DatasetVersionNotFoundError,
-    InvalidConfigurationError,
-)
+from .settings import (get_default_settings, get_settings_for_local,
+                       read_settings)
 
 
 def _store_dataset(args: argparse.Namespace, settings):

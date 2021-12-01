@@ -25,8 +25,7 @@ import typing
 from abc import abstractmethod
 
 from .providers.provider import Provider
-from .settings import get_default_settings
-from .settings import Settings
+from .settings import Settings, get_default_settings
 
 
 class InvalidModeError(Exception):

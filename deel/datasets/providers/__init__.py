@@ -77,11 +77,8 @@ def make_provider(
         return GCloudProvider(disk="google-" + provider_options["disk"])
 
     elif provider_type == "webdav":
-        from .webdav_provider import (
-            WebDavAuthenticator,
-            WebDavProvider,
-            WebDavSimpleAuthenticator,
-        )
+        from .webdav_provider import (WebDavAuthenticator, WebDavProvider,
+                                      WebDavSimpleAuthenticator)
 
         # Remote path:
         remote_path = ""
