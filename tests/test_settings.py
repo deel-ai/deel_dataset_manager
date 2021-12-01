@@ -25,7 +25,8 @@ from pathlib import Path
 
 import pytest
 
-from deel.datasets.settings import ParseSettingsError, read_settings
+from deel.datasets.settings import ParseSettingsError
+from deel.datasets.settings import read_settings
 
 
 def test_constructor():

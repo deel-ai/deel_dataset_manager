@@ -28,8 +28,11 @@ from pathlib import Path
 from tqdm import tqdm
 
 from . import logger
-from .exceptions import DatasetNotFoundError, ProviderNotAvailableError
-from .remote_provider import RemoteFile, RemoteProvider, RemoteSingleFileProvider
+from .exceptions import DatasetNotFoundError
+from .exceptions import ProviderNotAvailableError
+from .remote_provider import RemoteFile
+from .remote_provider import RemoteProvider
+from .remote_provider import RemoteSingleFileProvider
 
 
 class FtpSimpleAuthenticator:

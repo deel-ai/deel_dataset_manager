@@ -1,17 +1,16 @@
 # -*- encoding: utf-8 -*-
-
 import argparse
 import sys
 
 from . import load as load_dataset
-from .providers.exceptions import (
-    DatasetNotFoundError,
-    DatasetVersionNotFoundError,
-    InvalidConfigurationError,
-)
+from .providers.exceptions import DatasetNotFoundError
+from .providers.exceptions import DatasetVersionNotFoundError
+from .providers.exceptions import InvalidConfigurationError
 from .providers.local_provider import LocalProvider
 from .providers.remote_provider import RemoteProvider
-from .settings import get_default_settings, get_settings_for_local, read_settings
+from .settings import get_default_settings
+from .settings import get_settings_for_local
+from .settings import read_settings
 
 
 def _store_dataset(args: argparse.Namespace, settings):

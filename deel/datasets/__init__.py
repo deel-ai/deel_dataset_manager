@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 import logging
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 import pkg_resources
 

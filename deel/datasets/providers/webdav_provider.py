@@ -33,7 +33,8 @@ from webdav3.urn import Urn
 
 from . import logger
 from .exceptions import DatasetNotFoundError
-from .remote_provider import RemoteFile, RemoteProvider
+from .remote_provider import RemoteFile
+from .remote_provider import RemoteProvider
 
 
 class WebDavAuthenticator(abc.ABC):

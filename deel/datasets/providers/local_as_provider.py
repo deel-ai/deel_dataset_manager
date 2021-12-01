@@ -28,7 +28,8 @@ import typing
 from tqdm import tqdm
 
 from .exceptions import DatasetNotFoundError
-from .remote_provider import RemoteFile, RemoteProvider
+from .remote_provider import RemoteFile
+from .remote_provider import RemoteProvider
 
 # from .remote_provider import RemoteFile andRemoteProvider
 
