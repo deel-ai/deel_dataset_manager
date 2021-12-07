@@ -125,7 +125,7 @@ def list_datasets(args: argparse.Namespace):
     for name, sp in provider_list.items():
         try:
             print(
-                "======================================================================"
+                "===================================================================="
             )
             print(
                 "              Datasets list of the provider {}                ".format(
@@ -133,7 +133,7 @@ def list_datasets(args: argparse.Namespace):
                 )
             )
             print(
-                "======================================================================"
+                "===================================================================="
             )
             provider = sp.create_provider(settings._base)
             _list_dataset_for_provider(provider)
