@@ -51,7 +51,7 @@ setup(
     packages=find_namespace_packages(include=["deel.*"]),
     # Author information:
     author="DEEL",
-    author_email="collaborateurs.du.projet.deel@irt-saintexupery.com",
+    author_email="justin.plakoo@irt-saintexupery.com",
     # Description of the package:
     description="Dataset loader for DEEL datasets",
     long_description=open("README.md").read(),
