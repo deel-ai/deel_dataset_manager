@@ -4,17 +4,17 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>deel.datasets.providers package &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>deel.datasets.providers package &mdash; DEEL Dataset Manager 0.0.6 documentation</title>
       <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,7 +37,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
@@ -114,10 +114,10 @@
            <div itemprop="articleBody">
              
   <section id="module-deel.datasets.providers">
-<span id="deel-datasets-providers-package"></span><h1>deel.datasets.providers package<a class="headerlink" href="#module-deel.datasets.providers" title="Permalink to this headline"></a></h1>
+<span id="deel-datasets-providers-package"></span><h1>deel.datasets.providers package<a class="headerlink" href="#module-deel.datasets.providers" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt id="deel.datasets.providers.make_provider">
-<code class="sig-prename descclassname">deel.datasets.providers.</code><code class="sig-name descname">make_provider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">provider_type</span></em>, <em class="sig-param"><span class="n">root_path</span></em>, <em class="sig-param"><span class="n">provider_options</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.make_provider" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.make_provider">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.</span></span><span class="sig-name descname"><span class="pre">make_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.make_provider" title="Permalink to this definition"></a></dt>
 <dd><p>Create a new provider using the given arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -144,13 +144,13 @@
 </dd></dl>
 
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-deel.datasets.providers.exceptions">
-<span id="deel-datasets-providers-exceptions-module"></span><h2>deel.datasets.providers.exceptions module<a class="headerlink" href="#module-deel.datasets.providers.exceptions" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-exceptions-module"></span><h2>deel.datasets.providers.exceptions module<a class="headerlink" href="#module-deel.datasets.providers.exceptions" title="Permalink to this heading"></a></h2>
 <dl class="py exception">
-<dt id="deel.datasets.providers.exceptions.DatasetNotFoundError">
-<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">DatasetNotFoundError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.exceptions.DatasetNotFoundError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.exceptions.</span></span><span class="sig-name descname"><span class="pre">DatasetNotFoundError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception thrown by providers when the requested dataset
 is not found.</p>
@@ -162,9 +162,9 @@ is not found.</p>
 </dd></dl>
 
 <dl class="py exception">
-<dt id="deel.datasets.providers.exceptions.DatasetVersionNotFoundError">
-<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">DatasetVersionNotFoundError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.DatasetVersionNotFoundError" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.exceptions.DatasetNotFoundError</span></code></a>, <a class="reference internal" href="#deel.datasets.providers.exceptions.VersionNotFoundError" title="deel.datasets.providers.exceptions.VersionNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.exceptions.VersionNotFoundError</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.exceptions.DatasetVersionNotFoundError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.exceptions.</span></span><span class="sig-name descname"><span class="pre">DatasetVersionNotFoundError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.DatasetVersionNotFoundError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.exceptions.DatasetNotFoundError" title="deel.datasets.providers.exceptions.DatasetNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetNotFoundError</span></code></a>, <a class="reference internal" href="#deel.datasets.providers.exceptions.VersionNotFoundError" title="deel.datasets.providers.exceptions.VersionNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">VersionNotFoundError</span></code></a></p>
 <p>Exception thrown by providers when the requested dataset
 version is not found.</p>
 <p>This exception is meant to be more specific than DatasetNotFoundError.</p>
@@ -179,22 +179,22 @@ version is not found.</p>
 </dd></dl>
 
 <dl class="py exception">
-<dt id="deel.datasets.providers.exceptions.InvalidConfigurationError">
-<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">InvalidConfigurationError</code><a class="headerlink" href="#deel.datasets.providers.exceptions.InvalidConfigurationError" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.exceptions.InvalidConfigurationError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidConfigurationError</span></span><a class="headerlink" href="#deel.datasets.providers.exceptions.InvalidConfigurationError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception raised if the provider configuration is invalid.</p>
 </dd></dl>
 
 <dl class="py exception">
-<dt id="deel.datasets.providers.exceptions.ProviderNotAvailableError">
-<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">ProviderNotAvailableError</code><a class="headerlink" href="#deel.datasets.providers.exceptions.ProviderNotAvailableError" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.exceptions.ProviderNotAvailableError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.exceptions.</span></span><span class="sig-name descname"><span class="pre">ProviderNotAvailableError</span></span><a class="headerlink" href="#deel.datasets.providers.exceptions.ProviderNotAvailableError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception raised if the provider is not available.</p>
 </dd></dl>
 
 <dl class="py exception">
-<dt id="deel.datasets.providers.exceptions.VersionNotFoundError">
-<em class="property">exception </em><code class="sig-prename descclassname">deel.datasets.providers.exceptions.</code><code class="sig-name descname">VersionNotFoundError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.VersionNotFoundError" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.exceptions.VersionNotFoundError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.exceptions.</span></span><span class="sig-name descname"><span class="pre">VersionNotFoundError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.exceptions.VersionNotFoundError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception thrown by providers when the requested version
 is not found.</p>
@@ -207,11 +207,11 @@ is not found.</p>
 
 </section>
 <section id="module-deel.datasets.providers.ftp_providers">
-<span id="deel-datasets-providers-ftp-providers-module"></span><h2>deel.datasets.providers.ftp_providers module<a class="headerlink" href="#module-deel.datasets.providers.ftp_providers" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-ftp-providers-module"></span><h2>deel.datasets.providers.ftp_providers module<a class="headerlink" href="#module-deel.datasets.providers.ftp_providers" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.providers.ftp_providers.FtpProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.ftp_providers.</span></span><span class="sig-name descname"><span class="pre">FtpProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authenticator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteProvider</span></code></a></p>
 <p>The <cite>FtpProvider</cite> is a <cite>RemoteProvider</cite> associated to a FTP
 server.</p>
 <dl class="field-list simple">
@@ -225,8 +225,8 @@ server.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.ftp_providers.FtpProvider.list_datasets">
-<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpProvider.list_datasets">
+<span class="sig-name descname"><span class="pre">list_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider.list_datasets" title="Permalink to this definition"></a></dt>
 <dd><p>List the available datasets for this provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -239,8 +239,8 @@ server.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.ftp_providers.FtpProvider.list_versions">
-<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpProvider.list_versions">
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpProvider.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List the available versions of the given dataset for this
 provider.</p>
 <dl class="field-list simple">
@@ -260,9 +260,9 @@ provider.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.ftp_providers.FtpRemoteFile">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpRemoteFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">remote_path</span></em>, <em class="sig-param"><span class="n">local_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpRemoteFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.ftp_providers.</span></span><span class="sig-name descname"><span class="pre">FtpRemoteFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteFile</span></code></a></p>
 <p>Class representing a remote file for the FTP provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -276,8 +276,8 @@ folder.</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.ftp_providers.FtpRemoteFile.download">
-<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile.download" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpRemoteFile.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile.download" title="Permalink to this definition"></a></dt>
 <dd><p>Download this file from the remote storage to the local path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -286,9 +286,9 @@ folder.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.ftp_providers.FtpRemoteFile.relative_path">
-<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpRemoteFile.relative_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relative_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The path of this file relative to the dataset and version it belongs.</p>
 <dl class="field-list simple">
@@ -301,8 +301,8 @@ The path of this file relative to the dataset and version it belongs.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpSimpleAuthenticator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.ftp_providers.</span></span><span class="sig-name descname"><span class="pre">FtpSimpleAuthenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Authenticator for a simple FTP authentication with a
 username and a password.</p>
@@ -314,9 +314,9 @@ username and a password.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.password">
-<em class="property">property </em><code class="sig-name descname">password</code><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.password">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
 <dd><p>The password to use for authentication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -325,9 +325,9 @@ username and a password.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.username">
-<em class="property">property </em><code class="sig-name descname">username</code><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.username">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
 <dd><p>The username to use for authentication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -339,9 +339,9 @@ username and a password.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.ftp_providers.FtpSingleFileProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.ftp_providers.</code><code class="sig-name descname">FtpSingleFileProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSingleFileProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider" title="deel.datasets.providers.remote_provider.RemoteSingleFileProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteSingleFileProvider</span></code></a>, <a class="reference internal" href="#deel.datasets.providers.ftp_providers.FtpProvider" title="deel.datasets.providers.ftp_providers.FtpProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.ftp_providers.FtpProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.ftp_providers.FtpSingleFileProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.ftp_providers.</span></span><span class="sig-name descname"><span class="pre">FtpSingleFileProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authenticator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.ftp_providers.FtpSingleFileProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider" title="deel.datasets.providers.remote_provider.RemoteSingleFileProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteSingleFileProvider</span></code></a>, <a class="reference internal" href="#deel.datasets.providers.ftp_providers.FtpProvider" title="deel.datasets.providers.ftp_providers.FtpProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">FtpProvider</span></code></a></p>
 <p>The <cite>FtpProvider</cite> is a <cite>RemoteProvider</cite> associated to a FTP server.</p>
 <p>This provider currently does not supported encrypted connection.</p>
 <dl class="field-list simple">
@@ -360,23 +360,27 @@ username and a password.</p>
 
 </section>
 <section id="module-deel.datasets.providers.gcloud_provider">
-<span id="deel-datasets-providers-gcloud-provider-module"></span><h2>deel.datasets.providers.gcloud_provider module<a class="headerlink" href="#module-deel.datasets.providers.gcloud_provider" title="Permalink to this headline"></a></h2>
-<dl class="py class">
-<dt id="deel.datasets.providers.gcloud_provider.GCloudProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.gcloud_provider.</code><code class="sig-name descname">GCloudProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">disk</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.gcloud_provider.GCloudProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.local_provider.LocalProvider" title="deel.datasets.providers.local_provider.LocalProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.local_provider.LocalProvider</span></code></a></p>
+<span id="deel-datasets-providers-gcloud-provider-module"></span><h2>deel.datasets.providers.gcloud_provider module<a class="headerlink" href="#module-deel.datasets.providers.gcloud_provider" title="Permalink to this heading"></a></h2>
 <p>The <cite>GCloudProvider</cite> is a simple alias for <cite>LocalProvider</cite>.</p>
-<p>Args:
-root_folder: Root folder to look-up datasets.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="deel.datasets.providers.gcloud_provider.GCloudProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.gcloud_provider.</span></span><span class="sig-name descname"><span class="pre">GCloudProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.gcloud_provider.GCloudProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.local_provider.LocalProvider" title="deel.datasets.providers.local_provider.LocalProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalProvider</span></code></a></p>
+<p>The <cite>GCloudProvider</cite> is a simple alias for <cite>LocalProvider</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root_folder</strong> – Root folder to look-up datasets.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-deel.datasets.providers.http_providers">
-<span id="deel-datasets-providers-http-providers-module"></span><h2>deel.datasets.providers.http_providers module<a class="headerlink" href="#module-deel.datasets.providers.http_providers" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-http-providers-module"></span><h2>deel.datasets.providers.http_providers module<a class="headerlink" href="#module-deel.datasets.providers.http_providers" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.providers.http_providers.HttpMultiFilesProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpMultiFilesProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url_list</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpMultiFilesProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.http_providers.</span></span><span class="sig-name descname"><span class="pre">HttpMultiFilesProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authenticator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteProvider</span></code></a></p>
 <p>This provider is a <cite>RemoteProvider</cite> that can serve a list of
 files over the HTTP protocol.</p>
 <dl class="field-list simple">
@@ -391,8 +395,8 @@ files over the HTTP protocol.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_datasets">
-<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_datasets">
+<span class="sig-name descname"><span class="pre">list_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_datasets" title="Permalink to this definition"></a></dt>
 <dd><p>List the available datasets for this provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -405,8 +409,8 @@ files over the HTTP protocol.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_versions">
-<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_versions">
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List the available versions of the given dataset for this
 provider.</p>
 <dl class="field-list simple">
@@ -426,9 +430,9 @@ provider.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.http_providers.HttpRemoteFile">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpRemoteFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">relative_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpRemoteFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.http_providers.</span></span><span class="sig-name descname"><span class="pre">HttpRemoteFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteFile</span></code></a></p>
 <p>Class representing a remote file for the WebDAV provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -440,8 +444,8 @@ folder.</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.http_providers.HttpRemoteFile.download">
-<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile.download" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpRemoteFile.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile.download" title="Permalink to this definition"></a></dt>
 <dd><p>Download this file from the remote storage to the local path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -450,9 +454,9 @@ folder.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.http_providers.HttpRemoteFile.relative_path">
-<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpRemoteFile.relative_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relative_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The path of this file relative to the dataset and version it belongs.</p>
 <dl class="field-list simple">
@@ -465,8 +469,8 @@ The path of this file relative to the dataset and version it belongs.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpSimpleAuthenticator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.http_providers.</span></span><span class="sig-name descname"><span class="pre">HttpSimpleAuthenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Authenticator for a simple HTTP authentication with a
 username and a password.</p>
@@ -478,9 +482,9 @@ username and a password.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator.password">
-<em class="property">property </em><code class="sig-name descname">password</code><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator.password">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
 <dd><p>The password to use for authentication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -489,9 +493,9 @@ username and a password.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator.username">
-<em class="property">property </em><code class="sig-name descname">username</code><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpSimpleAuthenticator.username">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
 <dd><p>The username to use for authentication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -503,9 +507,9 @@ username and a password.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.http_providers.HttpSingleFileProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.http_providers.</code><code class="sig-name descname">HttpSingleFileProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSingleFileProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider" title="deel.datasets.providers.http_providers.HttpMultiFilesProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.http_providers.HttpMultiFilesProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.http_providers.HttpSingleFileProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.http_providers.</span></span><span class="sig-name descname"><span class="pre">HttpSingleFileProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1.0.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authenticator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.http_providers.HttpSingleFileProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.http_providers.HttpMultiFilesProvider" title="deel.datasets.providers.http_providers.HttpMultiFilesProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpMultiFilesProvider</span></code></a></p>
 <p>This provider is a <cite>RemoteProvider</cite> that can only serve a single
 file over the HTTP protocol.</p>
 <dl class="field-list simple">
@@ -523,11 +527,11 @@ file over the HTTP protocol.</p>
 
 </section>
 <section id="module-deel.datasets.providers.local_as_provider">
-<span id="deel-datasets-providers-local-as-provider-module"></span><h2>deel.datasets.providers.local_as_provider module<a class="headerlink" href="#module-deel.datasets.providers.local_as_provider" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-local-as-provider-module"></span><h2>deel.datasets.providers.local_as_provider module<a class="headerlink" href="#module-deel.datasets.providers.local_as_provider" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.providers.local_as_provider.LocalAsProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.local_as_provider.</code><code class="sig-name descname">LocalAsProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">source_folder</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalAsProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.local_as_provider.</span></span><span class="sig-name descname"><span class="pre">LocalAsProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_folder</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteProvider</span></code></a></p>
 <p>The <cite>LocalAsProvider</cite> is a <cite>Provider</cite> associated to a local source of
 datasets.</p>
 <dl class="field-list simple">
@@ -539,8 +543,8 @@ datasets.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.local_as_provider.LocalAsProvider.list_datasets">
-<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalAsProvider.list_datasets">
+<span class="sig-name descname"><span class="pre">list_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider.list_datasets" title="Permalink to this definition"></a></dt>
 <dd><p>List the available datasets for this provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -553,8 +557,8 @@ datasets.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.local_as_provider.LocalAsProvider.list_versions">
-<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalAsProvider.list_versions">
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalAsProvider.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List the available versions of the given dataset for this
 provider.</p>
 <dl class="field-list simple">
@@ -574,13 +578,13 @@ provider.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.local_as_provider.LocalFile">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.local_as_provider.</code><code class="sig-name descname">LocalFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset_path</span></em>, <em class="sig-param"><span class="n">source_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.local_as_provider.</span></span><span class="sig-name descname"><span class="pre">LocalFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteFile</span></code></a></p>
 <p>Representing a local file as local provider file.</p>
 <dl class="py method">
-<dt id="deel.datasets.providers.local_as_provider.LocalFile.download">
-<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.download" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalFile.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.download" title="Permalink to this definition"></a></dt>
 <dd><p>Copy this file from the local provider directory to the local path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -589,9 +593,9 @@ provider.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.local_as_provider.LocalFile.relative_path">
-<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.relative_path" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalFile.relative_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relative_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.relative_path" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The path of this file relative to the local provider directory
 and version it belongs.</p>
@@ -602,9 +606,9 @@ and version it belongs.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.local_as_provider.LocalFile.size">
-<em class="property">property </em><code class="sig-name descname">size</code><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.size" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalFile.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.size" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The size of the file, in bytes.</p>
 <dl class="field-list simple">
@@ -614,9 +618,9 @@ The size of the file, in bytes.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.local_as_provider.LocalFile.source_path">
-<em class="property">property </em><code class="sig-name descname">source_path</code><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.source_path" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.local_as_provider.LocalFile.source_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">source_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#deel.datasets.providers.local_as_provider.LocalFile.source_path" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The full path to the source file.</p>
 <dl class="field-list simple">
@@ -630,11 +634,11 @@ The full path to the source file.</p>
 
 </section>
 <section id="module-deel.datasets.providers.local_provider">
-<span id="deel-datasets-providers-local-provider-module"></span><h2>deel.datasets.providers.local_provider module<a class="headerlink" href="#module-deel.datasets.providers.local_provider" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-local-provider-module"></span><h2>deel.datasets.providers.local_provider module<a class="headerlink" href="#module-deel.datasets.providers.local_provider" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.providers.local_provider.LocalProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.local_provider.</code><code class="sig-name descname">LocalProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.provider.Provider" title="deel.datasets.providers.provider.Provider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.provider.Provider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_provider.LocalProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.local_provider.</span></span><span class="sig-name descname"><span class="pre">LocalProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.provider.Provider" title="deel.datasets.providers.provider.Provider"><code class="xref py py-class docutils literal notranslate"><span class="pre">Provider</span></code></a></p>
 <p>A <cite>LocalProvider</cite> is a provider that look-up datasets in
 a local location (a folder).</p>
 <dl class="field-list simple">
@@ -643,8 +647,8 @@ a local location (a folder).</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.local_provider.LocalProvider.del_folder">
-<code class="sig-name descname">del_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span></em>, <em class="sig-param"><span class="n">keep_dataset</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.del_folder" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_provider.LocalProvider.del_folder">
+<span class="sig-name descname"><span class="pre">del_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.del_folder" title="Permalink to this definition"></a></dt>
 <dd><p>Delete the folder corresponding to the given dataset version.
 If after deleting this dataset, there are no versions remaining,
 the dataset folder is also removed, unless <cite>keep_dataset</cite> is <cite>True</cite>.</p>
@@ -654,15 +658,15 @@ the dataset folder is also removed, unless <cite>keep_dataset</cite> is <cite>Tr
 <li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset to delete.</p></li>
 <li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version of the dataset to delete.</p></li>
 <li><p><strong>keep_dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – <cite>True</cite> to not remove the dataset folder</p></li>
-<li><p><strong>there are no remaining versions.</strong> (<em>when</em>) – </p></li>
+<li><p><strong>versions.</strong> (<em>when there are no remaining</em>) – </p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.local_provider.LocalProvider.get_folder">
-<code class="sig-name descname">get_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'latest'</span></em>, <em class="sig-param"><span class="n">force_update</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">returns_version</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.get_folder" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_provider.LocalProvider.get_folder">
+<span class="sig-name descname"><span class="pre">get_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'latest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returns_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.get_folder" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve the root folder for the given dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -696,8 +700,8 @@ the path and the exact version.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.local_provider.LocalProvider.list_datasets">
-<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_provider.LocalProvider.list_datasets">
+<span class="sig-name descname"><span class="pre">list_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.list_datasets" title="Permalink to this definition"></a></dt>
 <dd><p>List the available datasets for this provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -710,8 +714,8 @@ the path and the exact version.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.local_provider.LocalProvider.list_versions">
-<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.local_provider.LocalProvider.list_versions">
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List the available versions of the given dataset for this
 provider.</p>
 <dl class="field-list simple">
@@ -728,9 +732,9 @@ provider.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.local_provider.LocalProvider.root_folder">
-<em class="property">property </em><code class="sig-name descname">root_folder</code><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.root_folder" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.local_provider.LocalProvider.root_folder">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root_folder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#deel.datasets.providers.local_provider.LocalProvider.root_folder" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The local path to root folder for the datasets.</p>
 <dl class="field-list simple">
@@ -744,11 +748,11 @@ The local path to root folder for the datasets.</p>
 
 </section>
 <section id="module-deel.datasets.providers.provider">
-<span id="deel-datasets-providers-provider-module"></span><h2>deel.datasets.providers.provider module<a class="headerlink" href="#module-deel.datasets.providers.provider" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-provider-module"></span><h2>deel.datasets.providers.provider module<a class="headerlink" href="#module-deel.datasets.providers.provider" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.providers.provider.Provider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.provider.</code><code class="sig-name descname">Provider</code><a class="headerlink" href="#deel.datasets.providers.provider.Provider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.provider.Provider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.provider.</span></span><span class="sig-name descname"><span class="pre">Provider</span></span><a class="headerlink" href="#deel.datasets.providers.provider.Provider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>The <cite>Provider</cite> class is an abstract interface for classes
 that provides access to dataset storages.</p>
 <p>The list of methods that should be overriden by all child classes
@@ -756,8 +760,8 @@ are indicated with the <cite>abc.abstractmethod</cite> decorator. If a class
 requires specific clean-up, the <cite>__enter__</cite> and <cite>__exit__</cite> special
 functions can be overriden.</p>
 <dl class="py method">
-<dt id="deel.datasets.providers.provider.Provider.get_folder">
-<em class="property">abstract </em><code class="sig-name descname">get_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'latest'</span></em>, <em class="sig-param"><span class="n">force_update</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">returns_version</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.get_folder" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.provider.Provider.get_folder">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'latest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returns_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.get_folder" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve the root folder for the given dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -791,18 +795,18 @@ the path and the exact version.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.provider.Provider.get_version">
-<code class="sig-name descname">get_version</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">version</span></em>, <em class="sig-param"><span class="n">versions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.get_version" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.provider.Provider.get_version">
+<span class="sig-name descname"><span class="pre">get_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">versions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.get_version" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve the version from the list of <cite>versions</cite> that best match
 the given one.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Version to retrieve. Can be an exact version, e.g., <cite>“3.1.2”</cite>,</p></li>
-<li><p><strong>a wildcard &quot;3.1.*&quot;</strong> (<em>or</em>) – </p></li>
+<li><p><strong>&quot;3.1.*&quot;</strong> (<em>or a wildcard</em>) – </p></li>
 <li><p><strong>&quot;latest&quot;.</strong> (<em>or</em>) – </p></li>
 <li><p><strong>versions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of versions to retrieve the version from. Versions should</p></li>
-<li><p><strong>be of the form x.y.z.</strong> (<em>all</em>) – </p></li>
+<li><p><strong>x.y.z.</strong> (<em>all be of the form</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -821,8 +825,8 @@ the given one.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.provider.Provider.list_datasets">
-<em class="property">abstract </em><code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.list_datasets" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.provider.Provider.list_datasets">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.list_datasets" title="Permalink to this definition"></a></dt>
 <dd><p>List the available datasets for this provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -835,8 +839,8 @@ the given one.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.provider.Provider.list_versions">
-<em class="property">abstract </em><code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.list_versions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.provider.Provider.list_versions">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.provider.Provider.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List the available versions of the given dataset for this
 provider.</p>
 <dl class="field-list simple">
@@ -857,16 +861,16 @@ provider.</p>
 
 </section>
 <section id="module-deel.datasets.providers.remote_provider">
-<span id="deel-datasets-providers-remote-provider-module"></span><h2>deel.datasets.providers.remote_provider module<a class="headerlink" href="#module-deel.datasets.providers.remote_provider" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-remote-provider-module"></span><h2>deel.datasets.providers.remote_provider module<a class="headerlink" href="#module-deel.datasets.providers.remote_provider" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.providers.remote_provider.FileModifier">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">FileModifier</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.FileModifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.remote_provider.</span></span><span class="sig-name descname"><span class="pre">FileModifier</span></span><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Abstract class representing a modifier to apply to the file
 downloaded by the WebDAV provider.</p>
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.FileModifier.accept">
-<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier.accept" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.FileModifier.accept">
+<span class="sig-name descname"><span class="pre">accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier.accept" title="Permalink to this definition"></a></dt>
 <dd><p>Check if the given file can be modified by this modifier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -882,8 +886,8 @@ downloaded by the WebDAV provider.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.FileModifier.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier.apply" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.FileModifier.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.FileModifier.apply" title="Permalink to this definition"></a></dt>
 <dd><p>Apply this modifier to the given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -898,14 +902,14 @@ downloaded by the WebDAV provider.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.remote_provider.GzExtractor">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">GzExtractor</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.FileModifier</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.GzExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.remote_provider.</span></span><span class="sig-name descname"><span class="pre">GzExtractor</span></span><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileModifier</span></code></a></p>
 <p>Modifier that extract files from gz archives and delete
 them afterwards.</p>
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.GzExtractor.accept">
-<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor.accept" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.GzExtractor.accept">
+<span class="sig-name descname"><span class="pre">accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor.accept" title="Permalink to this definition"></a></dt>
 <dd><p>Check if the given file can be modified by this modifier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -921,8 +925,8 @@ them afterwards.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.GzExtractor.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor.apply" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.GzExtractor.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.GzExtractor.apply" title="Permalink to this definition"></a></dt>
 <dd><p>Apply this modifier to the given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -937,13 +941,13 @@ them afterwards.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.remote_provider.RemoteFile">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">RemoteFile</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.remote_provider.</span></span><span class="sig-name descname"><span class="pre">RemoteFile</span></span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Abstraction representing a remote file.</p>
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.RemoteFile.download">
-<em class="property">abstract </em><code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile.download" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteFile.download">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile.download" title="Permalink to this definition"></a></dt>
 <dd><p>Download this file from the remote storage to the local path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -952,9 +956,9 @@ them afterwards.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.RemoteFile.relative_path">
-<em class="property">abstract property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteFile.relative_path">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relative_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteFile.relative_path" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The path of this file relative to the dataset and version it belongs.</p>
 <dl class="field-list simple">
@@ -967,9 +971,9 @@ The path of this file relative to the dataset and version it belongs.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.remote_provider.RemoteProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">RemoteProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.local_provider.LocalProvider" title="deel.datasets.providers.local_provider.LocalProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.local_provider.LocalProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.remote_provider.</span></span><span class="sig-name descname"><span class="pre">RemoteProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.local_provider.LocalProvider" title="deel.datasets.providers.local_provider.LocalProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalProvider</span></code></a></p>
 <p>The <cite>RemoteProvider</cite> extends <cite>LocalProvider</cite> by fetching datasets
 from a remote server if they are not found on the local storage.</p>
 <p>If a dataset is not found locally (or a force download is required), the
@@ -984,8 +988,8 @@ and then extract all archived files (.zip, .gz, .tgz) in the local folder.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.RemoteProvider.get_folder">
-<code class="sig-name descname">get_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'latest'</span></em>, <em class="sig-param"><span class="n">force_update</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">returns_version</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.get_folder" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteProvider.get_folder">
+<span class="sig-name descname"><span class="pre">get_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'latest'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returns_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.get_folder" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve the root folder for the given dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1019,8 +1023,8 @@ the path and the exact version.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.RemoteProvider.local_provider">
-<code class="sig-name descname">local_provider</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.local_provider" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteProvider.local_provider">
+<span class="sig-name descname"><span class="pre">local_provider</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.local_provider" title="Permalink to this definition"></a></dt>
 <dd><p>Create and returns a <cite>LocalProvider</cite> corresponding to the local
 storage for this provider.</p>
 <dl class="field-list simple">
@@ -1035,13 +1039,13 @@ provider stores the datasets to.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="deel.datasets.providers.remote_provider.RemoteProvider.modifiers">
-<code class="sig-name descname">modifiers</code><em class="property">: List<span class="p">[</span><a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier">deel.datasets.providers.remote_provider.FileModifier</a><span class="p">]</span></em><em class="property"> = [&lt;deel.datasets.providers.remote_provider.ZipExtractor object&gt;, &lt;deel.datasets.providers.remote_provider.TarZExtractor object&gt;, &lt;deel.datasets.providers.remote_provider.GzExtractor object&gt;]</em><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.modifiers" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteProvider.modifiers">
+<span class="sig-name descname"><span class="pre">modifiers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><span class="pre">FileModifier</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;deel.datasets.providers.remote_provider.ZipExtractor</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;deel.datasets.providers.remote_provider.TarZExtractor</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;deel.datasets.providers.remote_provider.GzExtractor</span> <span class="pre">object&gt;]</span></em><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.modifiers" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.RemoteProvider.remote_url">
-<em class="property">property </em><code class="sig-name descname">remote_url</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.remote_url" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteProvider.remote_url">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remote_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteProvider.remote_url" title="Permalink to this definition"></a></dt>
 <dd><p>The remote URL from where the datasets are fetched.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -1056,9 +1060,9 @@ provider stores the datasets to.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">RemoteSingleFileProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'1.0.0'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.remote_provider.</span></span><span class="sig-name descname"><span class="pre">RemoteSingleFileProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1.0.0'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteProvider</span></code></a></p>
 <p>The <cite>RemoteSingleFileProvider</cite> extends <cite>RemoteProvider</cite> and should be used
 to fetch files from custom web servers (HTTP, FTP) that only provide a single
 file. The only methods that should be implemented are <cite>_is_available</cite> and
@@ -1076,8 +1080,8 @@ from publicly available files.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_datasets">
-<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_datasets">
+<span class="sig-name descname"><span class="pre">list_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_datasets" title="Permalink to this definition"></a></dt>
 <dd><p>List the available datasets for this provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1090,8 +1094,8 @@ from publicly available files.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_versions">
-<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_versions">
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.RemoteSingleFileProvider.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List the available versions of the given dataset for this
 provider.</p>
 <dl class="field-list simple">
@@ -1111,16 +1115,16 @@ provider.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.remote_provider.TarZExtractor">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">TarZExtractor</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.FileModifier</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.TarZExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.remote_provider.</span></span><span class="sig-name descname"><span class="pre">TarZExtractor</span></span><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileModifier</span></code></a></p>
 <p>Modifier that extract files from tar archives, with or
 without comrpession and delete them afterwards.</p>
 <p>See the <cite>tarfile</cite> library for the list of supported compression
 methods.</p>
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.TarZExtractor.accept">
-<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor.accept" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.TarZExtractor.accept">
+<span class="sig-name descname"><span class="pre">accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor.accept" title="Permalink to this definition"></a></dt>
 <dd><p>Check if the given file can be modified by this modifier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1136,8 +1140,8 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.TarZExtractor.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor.apply" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.TarZExtractor.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.TarZExtractor.apply" title="Permalink to this definition"></a></dt>
 <dd><p>Apply this modifier to the given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1152,13 +1156,13 @@ methods.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.remote_provider.ZipExtractor">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.remote_provider.</code><code class="sig-name descname">ZipExtractor</code><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.FileModifier</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.ZipExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.remote_provider.</span></span><span class="sig-name descname"><span class="pre">ZipExtractor</span></span><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.FileModifier" title="deel.datasets.providers.remote_provider.FileModifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileModifier</span></code></a></p>
 <p>Modifier that unzip files and delete them afterwards.</p>
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.ZipExtractor.accept">
-<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor.accept" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.ZipExtractor.accept">
+<span class="sig-name descname"><span class="pre">accept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor.accept" title="Permalink to this definition"></a></dt>
 <dd><p>Check if the given file can be modified by this modifier.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1174,8 +1178,8 @@ methods.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.remote_provider.ZipExtractor.apply">
-<code class="sig-name descname">apply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor.apply" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.remote_provider.ZipExtractor.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.remote_provider.ZipExtractor.apply" title="Permalink to this definition"></a></dt>
 <dd><p>Apply this modifier to the given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1191,19 +1195,19 @@ methods.</p>
 
 </section>
 <section id="module-deel.datasets.providers.webdav_provider">
-<span id="deel-datasets-providers-webdav-provider-module"></span><h2>deel.datasets.providers.webdav_provider module<a class="headerlink" href="#module-deel.datasets.providers.webdav_provider" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-providers-webdav-provider-module"></span><h2>deel.datasets.providers.webdav_provider module<a class="headerlink" href="#module-deel.datasets.providers.webdav_provider" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.providers.webdav_provider.WebDavAuthenticator">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavAuthenticator</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavAuthenticator" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavAuthenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.webdav_provider.</span></span><span class="sig-name descname"><span class="pre">WebDavAuthenticator</span></span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavAuthenticator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Base class for WebDAV authenticators.</p>
 <p>Authenticator classes are used for dispatching and storing eventual parameters.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.webdav_provider.WebDavProvider">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavProvider</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_folder</span></em>, <em class="sig-param"><span class="n">remote_url</span></em>, <em class="sig-param"><span class="n">remote_path</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">authenticator</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteProvider</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.webdav_provider.</span></span><span class="sig-name descname"><span class="pre">WebDavProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authenticator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteProvider" title="deel.datasets.providers.remote_provider.RemoteProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteProvider</span></code></a></p>
 <p>The <cite>WebDavProvider</cite> is a <cite>RemoteProvider</cite> associated to a WebDAV
 server.</p>
 <dl class="field-list simple">
@@ -1216,13 +1220,13 @@ server.</p>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt id="deel.datasets.providers.webdav_provider.WebDavProvider.VERSION_REGEX">
-<code class="sig-name descname">VERSION_REGEX</code><em class="property">: Pattern</em><em class="property"> = re.compile('[0-9]+[.][0-9]+[.][0-9]+')</em><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.VERSION_REGEX" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavProvider.VERSION_REGEX">
+<span class="sig-name descname"><span class="pre">VERSION_REGEX</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Pattern</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">re.compile('[0-9]+[.][0-9]+[.][0-9]+')</span></em><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.VERSION_REGEX" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.webdav_provider.WebDavProvider.list_datasets">
-<code class="sig-name descname">list_datasets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.list_datasets" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavProvider.list_datasets">
+<span class="sig-name descname"><span class="pre">list_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.list_datasets" title="Permalink to this definition"></a></dt>
 <dd><p>List the available datasets for this provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -1235,8 +1239,8 @@ server.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="deel.datasets.providers.webdav_provider.WebDavProvider.list_versions">
-<code class="sig-name descname">list_versions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.list_versions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavProvider.list_versions">
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavProvider.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List the available versions of the given dataset for this
 provider.</p>
 <dl class="field-list simple">
@@ -1256,9 +1260,9 @@ provider.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.webdav_provider.WebDavRemoteFile">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavRemoteFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em>, <em class="sig-param"><span class="n">dataset_path</span></em>, <em class="sig-param"><span class="n">file_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.remote_provider.RemoteFile</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavRemoteFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.webdav_provider.</span></span><span class="sig-name descname"><span class="pre">WebDavRemoteFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.remote_provider.RemoteFile" title="deel.datasets.providers.remote_provider.RemoteFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteFile</span></code></a></p>
 <p>Class representing a remote file for the WebDAV provider.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1270,8 +1274,8 @@ provider.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="deel.datasets.providers.webdav_provider.WebDavRemoteFile.download">
-<code class="sig-name descname">download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">local_file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile.download" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavRemoteFile.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile.download" title="Permalink to this definition"></a></dt>
 <dd><p>Download this file from the remote storage to the local path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1280,9 +1284,9 @@ provider.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.webdav_provider.WebDavRemoteFile.relative_path">
-<em class="property">property </em><code class="sig-name descname">relative_path</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavRemoteFile.relative_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relative_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavRemoteFile.relative_path" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
 The path of this file relative to the dataset and version it belongs.</p>
 <dl class="field-list simple">
@@ -1295,9 +1299,9 @@ The path of this file relative to the dataset and version it belongs.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.providers.webdav_provider.</code><code class="sig-name descname">WebDavSimpleAuthenticator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.webdav_provider.WebDavAuthenticator" title="deel.datasets.providers.webdav_provider.WebDavAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deel.datasets.providers.webdav_provider.WebDavAuthenticator</span></code></a></p>
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.providers.webdav_provider.</span></span><span class="sig-name descname"><span class="pre">WebDavSimpleAuthenticator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deel.datasets.providers.webdav_provider.WebDavAuthenticator" title="deel.datasets.providers.webdav_provider.WebDavAuthenticator"><code class="xref py py-class docutils literal notranslate"><span class="pre">WebDavAuthenticator</span></code></a></p>
 <p>Authenticator for a simple HTTP authentication with a username and a
 password.</p>
 <dl class="field-list simple">
@@ -1308,9 +1312,9 @@ password.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.password">
-<em class="property">property </em><code class="sig-name descname">password</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.password">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.password" title="Permalink to this definition"></a></dt>
 <dd><p>The password to use for authentication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -1319,9 +1323,9 @@ password.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.username">
-<em class="property">property </em><code class="sig-name descname">username</code><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.username">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#deel.datasets.providers.webdav_provider.WebDavSimpleAuthenticator.username" title="Permalink to this definition"></a></dt>
 <dd><p>The username to use for authentication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>

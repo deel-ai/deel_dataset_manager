@@ -4,17 +4,17 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Configuration &mdash; DEEL Dataset Manager 0.0.6 documentation</title>
       <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,7 +37,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#configuration-example">Configuration Example</a></li>
@@ -113,7 +113,7 @@
            <div itemprop="articleBody">
              
   <section id="configuration">
-<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h1>
 <p>The configuration file specifies how the datasets should be downloaded, or
 if the datasets do no have to be downloaded (e.g. on Google Cloud).</p>
 <p>The configuration file should be at <code class="docutils literal notranslate"><span class="pre">$HOME/.deel/config.yml</span></code>:</p>
@@ -154,56 +154,56 @@ locate the dataset storage location automatically based on a mounted drive.
 The <code class="docutils literal notranslate"><span class="pre">disk</span></code> configuration parameter is mandatory and specify the name of the GCloud drive.</p></li>
 </ul>
 <section id="configuration-example">
-<h2>Configuration Example<a class="headerlink" href="#configuration-example" title="Permalink to this headline"></a></h2>
-<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="c1"># Version of the configuration (currently 2):</span>
-<span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+<h2>Configuration Example<a class="headerlink" href="#configuration-example" title="Permalink to this heading"></a></h2>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="c1"># Version of the configuration (currently 2):</span><span class="w"></span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
 
-<span class="c1"># Provider for the datasets - The names of the providers do not have to match</span>
-<span class="c1"># their types:</span>
-<span class="nt">providers</span><span class="p">:</span>
+<span class="c1"># Provider for the datasets - The names of the providers do not have to match</span><span class="w"></span>
+<span class="c1"># their types:</span><span class="w"></span>
+<span class="nt">providers</span><span class="p">:</span><span class="w"></span>
 
-<span class="c1"># A GCloud provider with a shared GCloud drive named &quot;my-disk-name&quot;.</span>
-<span class="nt">gcloud</span><span class="p">:</span>
-   <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcloud</span>
-   <span class="nt">disk</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my-disk-name</span>
+<span class="c1"># A GCloud provider with a shared GCloud drive named &quot;my-disk-name&quot;.</span><span class="w"></span>
+<span class="nt">gcloud</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcloud</span><span class="w"></span>
+<span class="w">   </span><span class="nt">disk</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-disk-name</span><span class="w"></span>
 
-<span class="c1"># A local storage at &quot;/data/dataset&quot;.</span>
-<span class="nt">local</span><span class="p">:</span>
-   <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
-   <span class="nt">source</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/data/dataset/</span>
+<span class="c1"># A local storage at &quot;/data/dataset&quot;.</span><span class="w"></span>
+<span class="nt">local</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span><span class="w"></span>
+<span class="w">   </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/dataset/</span><span class="w"></span>
 
-<span class="c1"># An FTP provider.</span>
-<span class="nt">ftp</span><span class="p">:</span>
-   <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ftp</span>
+<span class="c1"># An FTP provider.</span><span class="w"></span>
+<span class="nt">ftp</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ftp</span><span class="w"></span>
 
-   <span class="c1"># The &quot;url&quot; parameter contains the full path (server + folder):</span>
-   <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ftp://ftp.softronics.ch/mvtec_anomaly_detection</span>
+<span class="w">   </span><span class="c1"># The &quot;url&quot; parameter contains the full path (server + folder):</span><span class="w"></span>
+<span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ftp://ftp.softronics.ch/mvtec_anomaly_detection</span><span class="w"></span>
 
-   <span class="c1"># The &quot;auth&quot; is optional if the FTP server is public:</span>
-   <span class="nt">auth</span><span class="p">:</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="s">&quot;simple&quot;</span>
-      <span class="nt">username</span><span class="p">:</span> <span class="s">&quot;${username}&quot;</span>
-      <span class="nt">password</span><span class="p">:</span> <span class="s">&quot;${password}&quot;</span>
+<span class="w">   </span><span class="c1"># The &quot;auth&quot; is optional if the FTP server is public:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">auth</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;simple&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${username}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${password}&quot;</span><span class="w"></span>
 
-<span class="c1"># A public WebDAV server.</span>
-<span class="nt">webdav_public</span><span class="p">:</span>
-   <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">webdav</span>
-   <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://my-public-webdav.com</span>
+<span class="c1"># A public WebDAV server.</span><span class="w"></span>
+<span class="nt">webdav_public</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webdav</span><span class="w"></span>
+<span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://my-public-webdav.com</span><span class="w"></span>
 
-<span class="c1"># A private WebDAV server where the datasets are not at the root.</span>
-<span class="c1"># Note: This example can be used with Cloud storage such as Nextcloud with</span>
-<span class="c1"># a shared &quot;datasets&quot; drive.</span>
-<span class="nt">webdav_private</span><span class="p">:</span>
-   <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">webdav</span>
-   <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://my-cloud-provider.com/remote.php/webdav</span>
-   <span class="nt">folder</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">datasets</span>
-   <span class="nt">auth</span><span class="p">:</span>
-      <span class="nt">method</span><span class="p">:</span> <span class="s">&quot;simple&quot;</span>
-      <span class="nt">username</span><span class="p">:</span> <span class="s">&quot;${username}&quot;</span>
-      <span class="nt">password</span><span class="p">:</span> <span class="s">&quot;${password}&quot;</span>
+<span class="c1"># A private WebDAV server where the datasets are not at the root.</span><span class="w"></span>
+<span class="c1"># Note: This example can be used with Cloud storage such as Nextcloud with</span><span class="w"></span>
+<span class="c1"># a shared &quot;datasets&quot; drive.</span><span class="w"></span>
+<span class="nt">webdav_private</span><span class="p">:</span><span class="w"></span>
+<span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webdav</span><span class="w"></span>
+<span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://my-cloud-provider.com/remote.php/webdav</span><span class="w"></span>
+<span class="w">   </span><span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">datasets</span><span class="w"></span>
+<span class="w">   </span><span class="nt">auth</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;simple&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${username}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${password}&quot;</span><span class="w"></span>
 
-<span class="c1"># The local path where datasets are stored when they are from a remote provider:</span>
-<span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/home/${username}/.deel/datasets</span>
+<span class="c1"># The local path where datasets are stored when they are from a remote provider:</span><span class="w"></span>
+<span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/${username}/.deel/datasets</span><span class="w"></span>
 </pre></div>
 </div>
 </section>

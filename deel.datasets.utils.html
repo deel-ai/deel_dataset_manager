@@ -4,17 +4,17 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>deel.datasets.utils package &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>deel.datasets.utils package &mdash; DEEL Dataset Manager 0.0.6 documentation</title>
       <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -36,7 +36,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
@@ -113,15 +113,15 @@
            <div itemprop="articleBody">
              
   <section id="module-deel.datasets.utils">
-<span id="deel-datasets-utils-package"></span><h1>deel.datasets.utils package<a class="headerlink" href="#module-deel.datasets.utils" title="Permalink to this headline"></a></h1>
+<span id="deel-datasets-utils-package"></span><h1>deel.datasets.utils package<a class="headerlink" href="#module-deel.datasets.utils" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-deel.datasets.utils.numpy_utils">
-<span id="deel-datasets-utils-numpy-utils-module"></span><h2>deel.datasets.utils.numpy_utils module<a class="headerlink" href="#module-deel.datasets.utils.numpy_utils" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-utils-numpy-utils-module"></span><h2>deel.datasets.utils.numpy_utils module<a class="headerlink" href="#module-deel.datasets.utils.numpy_utils" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt id="deel.datasets.utils.numpy_utils.numpy_split_on_label">
-<code class="sig-prename descclassname">deel.datasets.utils.numpy_utils.</code><code class="sig-name descname">numpy_split_on_label</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">labels_in</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.numpy_utils.numpy_split_on_label" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.numpy_utils.numpy_split_on_label">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.numpy_utils.</span></span><span class="sig-name descname"><span class="pre">numpy_split_on_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_in</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.numpy_utils.numpy_split_on_label" title="Permalink to this definition"></a></dt>
 <dd><p>Allows to split a numpy dataset in in-dataset and out-dataset according to labels_in
 :type dataset: <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>]
 :param dataset: a numpy dataset
@@ -139,10 +139,10 @@
 
 </section>
 <section id="module-deel.datasets.utils.supervised">
-<span id="deel-datasets-utils-supervised-module"></span><h2>deel.datasets.utils.supervised module<a class="headerlink" href="#module-deel.datasets.utils.supervised" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-utils-supervised-module"></span><h2>deel.datasets.utils.supervised module<a class="headerlink" href="#module-deel.datasets.utils.supervised" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.load_hierarchical_python_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">load_hierarchical_python_image_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">folder</span></em>, <em class="sig-param"><span class="n">dispatch_fn</span></em>, <em class="sig-param"><span class="n">unique_labels</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_hierarchical_python_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.load_hierarchical_python_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">load_hierarchical_python_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatch_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_hierarchical_python_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Walk the given folder applying the given function to
 find to which dataset and class each file should be associated
 to.</p>
@@ -175,8 +175,8 @@ which would result in creating two distinct datasets.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.load_hierarchical_pytorch_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">load_hierarchical_pytorch_image_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">folder</span></em>, <em class="sig-param"><span class="n">dispatch_fn</span></em>, <em class="sig-param"><span class="n">image_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">unique_labels</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">transform</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_hierarchical_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.load_hierarchical_pytorch_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">load_hierarchical_pytorch_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatch_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_hierarchical_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a pytorch image dataset from the given folder and
 parameters.</p>
 <dl class="field-list simple">
@@ -208,8 +208,8 @@ second element is mapping from class labels to class names.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.load_numpy_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">load_numpy_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">image_size=None</em>, <em class="sig-param">train_split=0.8</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">aggregate_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_numpy_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.load_numpy_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">load_numpy_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_split=0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregate_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_numpy_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a numpy image dataset from the given folder and
 parameters.</p>
 <p>The image dataset are 4-dimensional (N, H, W, C) numpy array where (H, W)
@@ -250,8 +250,8 @@ containing images and <cite>y</cite> a one-dimensional numpy array containing cl
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.load_python_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">load_python_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">aggregate_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_python_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.load_python_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">load_python_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregate_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_python_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Load a python “dataset” from the given folder. This methods
 returns a list of paths, labels, and class names from the given folder.</p>
 <dl class="field-list simple">
@@ -283,8 +283,8 @@ from labels to names.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.load_pytorch_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">load_pytorch_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">image_size=None</em>, <em class="sig-param">train_split=0.8</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">aggregate_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">transform=None</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.load_pytorch_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">load_pytorch_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_split=0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregate_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a pytorch image dataset from the given folder and
 parameters.</p>
 <dl class="field-list simple">
@@ -323,8 +323,8 @@ second element is mapping from class labels to class names.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.load_tensorflow_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">load_tensorflow_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">image_size=None</em>, <em class="sig-param">train_split=0.8</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">aggregate_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_tensorflow_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.load_tensorflow_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">load_tensorflow_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_split=0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregate_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.load_tensorflow_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a tensorflow image dataset from the given folder and
 parameters.</p>
 <dl class="field-list simple">
@@ -359,20 +359,20 @@ second element is mapping from class labels to class names.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.split_datasets_on_label">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">split_datasets_on_label</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datasets</span></em>, <em class="sig-param"><span class="n">labels_in</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.split_datasets_on_label" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.split_datasets_on_label">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">split_datasets_on_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_in</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.split_datasets_on_label" title="Permalink to this definition"></a></dt>
 <dd><p>Allows to split a list of datasets in in-dataset and out-dataset
 according to the given labels.
 See <cite>split_on_label</cite> for more details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datasets</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ForwardRef</span></code>]) – List of numpy, pytorch or tensorflow datasets.</p></li>
+<li><p><strong>datasets</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">DatasetType</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>)]) – List of numpy, pytorch or tensorflow datasets.</p></li>
 <li><p><strong>labels_in</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Array containing ‘normal’ labels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ForwardRef</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ForwardRef</span></code>]]</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">DatasetType</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>), <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">DatasetType</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>)]]</p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A list of split datasets
@@ -382,19 +382,19 @@ See <cite>split_on_label</cite> for more details.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.supervised.split_on_label">
-<code class="sig-prename descclassname">deel.datasets.utils.supervised.</code><code class="sig-name descname">split_on_label</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">labels_in</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.split_on_label" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.supervised.split_on_label">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.supervised.</span></span><span class="sig-name descname"><span class="pre">split_on_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_in</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.supervised.split_on_label" title="Permalink to this definition"></a></dt>
 <dd><p>Allows to split a dataset in in-dataset and out-dataset according to the
 given labels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>DatasetType</em>) – A numpy, pytorch or tensorflow dataset.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">DatasetType</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>)) – A numpy, pytorch or tensorflow dataset.</p></li>
 <li><p><strong>labels_in</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Array containing ‘normal’ labels.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ForwardRef</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ForwardRef</span></code>]</p>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">DatasetType</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>), <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">DatasetType</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>)]</p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A tuple of split datasets (<cite>dataset_in</cite>, <cite>dataset_out</cite>), where <cite>dataset_in</cite>
@@ -406,10 +406,10 @@ the remaining part of the dataset.</p>
 
 </section>
 <section id="module-deel.datasets.utils.tensorflow_utils">
-<span id="deel-datasets-utils-tensorflow-utils-module"></span><h2>deel.datasets.utils.tensorflow_utils module<a class="headerlink" href="#module-deel.datasets.utils.tensorflow_utils" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-utils-tensorflow-utils-module"></span><h2>deel.datasets.utils.tensorflow_utils module<a class="headerlink" href="#module-deel.datasets.utils.tensorflow_utils" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt id="deel.datasets.utils.tensorflow_utils.tf_split_on_label">
-<code class="sig-prename descclassname">deel.datasets.utils.tensorflow_utils.</code><code class="sig-name descname">tf_split_on_label</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">labels_in</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.tensorflow_utils.tf_split_on_label" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.tensorflow_utils.tf_split_on_label">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.tensorflow_utils.</span></span><span class="sig-name descname"><span class="pre">tf_split_on_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_in</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.tensorflow_utils.tf_split_on_label" title="Permalink to this definition"></a></dt>
 <dd><p>Allows to split a tensoflow dataset in in-dataset and
 out-dataset according to labels_in
 :type dataset: <code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetV2</span></code>
@@ -428,14 +428,14 @@ out-dataset according to labels_in
 
 </section>
 <section id="module-deel.datasets.utils.torch_utils">
-<span id="deel-datasets-utils-torch-utils-module"></span><h2>deel.datasets.utils.torch_utils module<a class="headerlink" href="#module-deel.datasets.utils.torch_utils" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-utils-torch-utils-module"></span><h2>deel.datasets.utils.torch_utils module<a class="headerlink" href="#module-deel.datasets.utils.torch_utils" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt id="deel.datasets.utils.torch_utils.ImageDataset">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.utils.torch_utils.</code><code class="sig-name descname">ImageDataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span></em>, <em class="sig-param"><span class="n">labels</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">transform</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.torch_utils.ImageDataset" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<dt class="sig sig-object py" id="deel.datasets.utils.torch_utils.ImageDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.torch_utils.</span></span><span class="sig-name descname"><span class="pre">ImageDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.torch_utils.ImageDataset" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
 <dl class="py method">
-<dt id="deel.datasets.utils.torch_utils.ImageDataset.loader">
-<code class="sig-name descname">loader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.torch_utils.ImageDataset.loader" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.torch_utils.ImageDataset.loader">
+<span class="sig-name descname"><span class="pre">loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.torch_utils.ImageDataset.loader" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></p>
@@ -446,15 +446,15 @@ out-dataset according to labels_in
 </dd></dl>
 
 <dl class="py class">
-<dt id="deel.datasets.utils.torch_utils.OptionalToTensor">
-<em class="property">class </em><code class="sig-prename descclassname">deel.datasets.utils.torch_utils.</code><code class="sig-name descname">OptionalToTensor</code><a class="headerlink" href="#deel.datasets.utils.torch_utils.OptionalToTensor" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.torch_utils.OptionalToTensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.torch_utils.</span></span><span class="sig-name descname"><span class="pre">OptionalToTensor</span></span><a class="headerlink" href="#deel.datasets.utils.torch_utils.OptionalToTensor" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Optional call to ToTensor() if the object is not already a tensor.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.torch_utils.torch_split_on_label">
-<code class="sig-prename descclassname">deel.datasets.utils.torch_utils.</code><code class="sig-name descname">torch_split_on_label</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">labels_in</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.torch_utils.torch_split_on_label" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.torch_utils.torch_split_on_label">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.torch_utils.</span></span><span class="sig-name descname"><span class="pre">torch_split_on_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_in</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.torch_utils.torch_split_on_label" title="Permalink to this definition"></a></dt>
 <dd><p>Allows to split a torch dataset in in-dataset and out-dataset according to labels_in
 :type dataset: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>
 :param dataset: a torch dataset
@@ -472,10 +472,10 @@ out-dataset according to labels_in
 
 </section>
 <section id="module-deel.datasets.utils.unsupervised">
-<span id="deel-datasets-utils-unsupervised-module"></span><h2>deel.datasets.utils.unsupervised module<a class="headerlink" href="#module-deel.datasets.utils.unsupervised" title="Permalink to this headline"></a></h2>
+<span id="deel-datasets-utils-unsupervised-module"></span><h2>deel.datasets.utils.unsupervised module<a class="headerlink" href="#module-deel.datasets.utils.unsupervised" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt id="deel.datasets.utils.unsupervised.load_hierarchical_python_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.unsupervised.</code><code class="sig-name descname">load_hierarchical_python_image_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">folder</span></em>, <em class="sig-param"><span class="n">dispatch_fn</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_hierarchical_python_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.unsupervised.load_hierarchical_python_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.unsupervised.</span></span><span class="sig-name descname"><span class="pre">load_hierarchical_python_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatch_fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_hierarchical_python_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Walk the given folder applying the given function to
 find to which dataset and class each file should be associated
 to.</p>
@@ -498,8 +498,8 @@ of dictionary, indexed by string, whose leaves are list of paths).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.unsupervised.load_hierarchical_pytorch_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.unsupervised.</code><code class="sig-name descname">load_hierarchical_pytorch_image_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">folder</span></em>, <em class="sig-param"><span class="n">dispatch_fn</span></em>, <em class="sig-param"><span class="n">image_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">transform</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_hierarchical_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.unsupervised.load_hierarchical_pytorch_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.unsupervised.</span></span><span class="sig-name descname"><span class="pre">load_hierarchical_pytorch_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatch_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_hierarchical_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a pytorch image dataset from the given folder and
 parameters.</p>
 <dl class="field-list simple">
@@ -526,8 +526,8 @@ and testing dataset.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.unsupervised.load_numpy_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.unsupervised.</code><code class="sig-name descname">load_numpy_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">image_size=None</em>, <em class="sig-param">train_split=0.8</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_numpy_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.unsupervised.load_numpy_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.unsupervised.</span></span><span class="sig-name descname"><span class="pre">load_numpy_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_split=0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_numpy_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a numpy image dataset from the given folder and
 parameters.</p>
 <p>The image dataset are 4-dimensional (N, H, W, C) numpy array where (H, W)
@@ -562,8 +562,8 @@ validation and testing datasets.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.unsupervised.load_python_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.unsupervised.</code><code class="sig-name descname">load_python_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_python_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.unsupervised.load_python_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.unsupervised.</span></span><span class="sig-name descname"><span class="pre">load_python_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_python_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Load a python “dataset” from the given folder. This methods
 returns a list of paths from the given folder.</p>
 <dl class="field-list simple">
@@ -592,8 +592,8 @@ from labels to names.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.unsupervised.load_pytorch_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.unsupervised.</code><code class="sig-name descname">load_pytorch_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">image_size=None</em>, <em class="sig-param">train_split=0.8</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">aggregate_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">transform=None</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.unsupervised.load_pytorch_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.unsupervised.</span></span><span class="sig-name descname"><span class="pre">load_pytorch_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_split=0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregate_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_pytorch_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a pytorch image dataset from the given folder and
 parameters.</p>
 <dl class="field-list simple">
@@ -628,8 +628,8 @@ and testing datasets.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="deel.datasets.utils.unsupervised.load_tensorflow_image_dataset">
-<code class="sig-prename descclassname">deel.datasets.utils.unsupervised.</code><code class="sig-name descname">load_tensorflow_image_dataset</code><span class="sig-paren">(</span><em class="sig-param">folder</em>, <em class="sig-param">image_size=None</em>, <em class="sig-param">train_split=0.8</em>, <em class="sig-param">shuffle=True</em>, <em class="sig-param">aggregate_fn=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">filter_fn=&lt;function &lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_tensorflow_image_dataset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="deel.datasets.utils.unsupervised.load_tensorflow_image_dataset">
+<span class="sig-prename descclassname"><span class="pre">deel.datasets.utils.unsupervised.</span></span><span class="sig-name descname"><span class="pre">load_tensorflow_image_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_size=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_split=0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregate_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_fn=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#deel.datasets.utils.unsupervised.load_tensorflow_image_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a tensorflow image dataset from the given folder and
 parameters.</p>
 <dl class="field-list simple">

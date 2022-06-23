@@ -4,17 +4,17 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plugins &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Plugins &mdash; DEEL Dataset Manager 0.0.6 documentation</title>
       <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,7 +37,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
@@ -113,7 +113,7 @@
            <div itemprop="articleBody">
              
   <section id="plugins">
-<span id="id1"></span><h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this heading"></a></h1>
 <p>A DEEL dataset plugin is an extension of the
 <a class="reference internal" href="deel.datasets.html#deel.datasets.dataset.Dataset" title="deel.datasets.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> or
 <a class="reference internal" href="deel.datasets.html#deel.datasets.dataset.VolatileDataset" title="deel.datasets.dataset.VolatileDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">VolatileDataset</span></code></a> class defined in the DEEL
@@ -121,7 +121,7 @@ dataset manager project.
 It allows to access to specific datasets files using the load method of defined
 modes.</p>
 <section id="extending-the-dataset-class">
-<h2>Extending the <a class="reference internal" href="deel.datasets.html#deel.datasets.dataset.Dataset" title="deel.datasets.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> class<a class="headerlink" href="#extending-the-dataset-class" title="Permalink to this headline"></a></h2>
+<h2>Extending the <a class="reference internal" href="deel.datasets.html#deel.datasets.dataset.Dataset" title="deel.datasets.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> class<a class="headerlink" href="#extending-the-dataset-class" title="Permalink to this heading"></a></h2>
 <p>Below is an example implementation of a dataset class <code class="docutils literal notranslate"><span class="pre">ExampleDataset</span></code>.
 The <code class="docutils literal notranslate"><span class="pre">load_XXX</span></code> methods defines the various mode, e.g. <code class="docutils literal notranslate"><span class="pre">load_pytorch</span></code> adds
 a <code class="docutils literal notranslate"><span class="pre">pytorch</span></code> mode to the dataset.
@@ -199,7 +199,7 @@ If you want to provide extra information, you can return a dictionary from the
 </div>
 </section>
 <section id="utility-functions">
-<h2>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline"></a></h2>
+<h2>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">deel.datasets.utils</span></code> package contains utility functions to load <code class="docutils literal notranslate"><span class="pre">numpy</span></code>,
 <code class="docutils literal notranslate"><span class="pre">pytorch</span></code> and <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> image dataset in a consistent way, and the <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>
 class contains some utility methods to generate the information dictionary from
@@ -222,7 +222,7 @@ Here is a very simple example for loading a dataset:</p>
 </div>
 </section>
 <section id="packaging-the-dataset-s">
-<h2>Packaging the dataset(s)<a class="headerlink" href="#packaging-the-dataset-s" title="Permalink to this headline"></a></h2>
+<h2>Packaging the dataset(s)<a class="headerlink" href="#packaging-the-dataset-s" title="Permalink to this heading"></a></h2>
 <p>To be found by the dataset manager, the <code class="docutils literal notranslate"><span class="pre">ExampleDataset</span></code> class must be put in
 a package with a specific <code class="docutils literal notranslate"><span class="pre">entrypoint</span></code> (defined in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>).</p>
 <p>The entry point provides to the plugin to be discovered and used by DEEL dataset

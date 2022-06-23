@@ -4,17 +4,17 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to DEEL Dataset Manager’s documentation! &mdash; DEEL Dataset Manager 0.0.6 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Welcome to DEEL Dataset Manager’s documentation! &mdash; DEEL Dataset Manager 0.0.6 documentation</title>
       <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -36,7 +36,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
@@ -112,11 +112,11 @@
            <div itemprop="articleBody">
              
   <section id="welcome-to-deel-dataset-manager-s-documentation">
-<h1>Welcome to DEEL Dataset Manager’s documentation!<a class="headerlink" href="#welcome-to-deel-dataset-manager-s-documentation" title="Permalink to this headline"></a></h1>
+<h1>Welcome to DEEL Dataset Manager’s documentation!<a class="headerlink" href="#welcome-to-deel-dataset-manager-s-documentation" title="Permalink to this heading"></a></h1>
 <p>This project aims to ease the installation and usage of self-hosted and proprietary
 datasets in artificial intelligence projects.</p>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <p>You can install the manager directly from pypi:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note: This currently does not work, see the README.</span>
 pip install deel-datasets
@@ -124,7 +124,7 @@ pip install deel-datasets
 </div>
 </section>
 <section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h2>
 <p>The configuration file specifies how the datasets should be downloaded, or
 if the datasets do no have to be downloaded (e.g. on Google Cloud).</p>
 <p>The configuration file should be at <code class="docutils literal notranslate"><span class="pre">$HOME/.deel/config.yml</span></code>:</p>
@@ -137,7 +137,7 @@ location of the configuration file if you do not want to use the default one.</p
 <p>The configuration file is a <strong>YAML</strong> file, see <a class="reference internal" href="configuration.html#configuration"><span class="std std-ref">Configuration</span></a> for more details.</p>
 </section>
 <section id="deel-dataset-plugin">
-<h2>DEEL dataset plugin<a class="headerlink" href="#deel-dataset-plugin" title="Permalink to this headline"></a></h2>
+<h2>DEEL dataset plugin<a class="headerlink" href="#deel-dataset-plugin" title="Permalink to this heading"></a></h2>
 <p>Without plugins, the manager is only able to download a dataset and returns the path to
 the local folder containing it (after download).
 By installing plugins, you gain access to automatic way of loading datasets or pre-processing
@@ -147,7 +147,7 @@ data.</p>
 See <a class="reference internal" href="plugins.html#plugins"><span class="std std-ref">Plugins</span></a> for more information on how to create plugins.</p>
 </section>
 <section id="basic-usage">
-<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline"></a></h2>
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading"></a></h2>
 <p>To load a dataset, you can simply do:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">deel.datasets</span>
 
@@ -189,13 +189,13 @@ dataset:</p>
 </div>
 </section>
 <section id="uninstalling">
-<h2>Uninstalling<a class="headerlink" href="#uninstalling" title="Permalink to this headline"></a></h2>
+<h2>Uninstalling<a class="headerlink" href="#uninstalling" title="Permalink to this heading"></a></h2>
 <p>To uninstall the DEEL dataset manager package , simply run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall deel-datasets
 </pre></div>
 </div>
 <div class="toctree-wrapper compound">
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#configuration-example">Configuration Example</a></li>
@@ -249,7 +249,7 @@ dataset:</p>
 </section>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>

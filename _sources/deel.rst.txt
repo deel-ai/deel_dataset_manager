@@ -1,0 +1,12 @@
+deel namespace
+==============
+
+.. py:module:: deel
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   deel.datasets
