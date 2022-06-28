@@ -21,13 +21,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # flake8: noqa
-from .supervised import (
-    load_hierarchical_python_image_dataset,
-    load_hierarchical_pytorch_image_dataset,
-    load_numpy_image_dataset,
-    load_python_image_dataset,
-    load_pytorch_image_dataset,
-    load_tensorflow_image_dataset,
-    split_datasets_on_label,
-    split_on_label,
-)
+from .supervised import load_hierarchical_python_image_dataset
+from .supervised import load_hierarchical_pytorch_image_dataset
+from .supervised import load_numpy_image_dataset
+from .supervised import load_python_image_dataset
+from .supervised import load_pytorch_image_dataset
+from .supervised import load_tensorflow_image_dataset
+from .supervised import split_datasets_on_label
+from .supervised import split_on_label
