@@ -19,6 +19,7 @@ prepare-dev:
 	. ddm_dev_env/bin/activate && pip install --upgrade pip
 	. ddm_dev_env/bin/activate && pip install -r requirements.txt
 	. ddm_dev_env/bin/activate && pip install -r requirements_dev.txt
+	. ddm_dev_env/bin/activate && pip install -e .
 	. ddm_dev_env/bin/activate && pre-commit install
 	. ddm_dev_env/bin/activate && pre-commit install-hooks
 
