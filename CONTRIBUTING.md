@@ -4,7 +4,7 @@ Thanks for taking the time to contribute!
 
 From opening a bug report to creating a pull request: every contribution is
 appreciated and welcome. If you're planning to implement a new feature or change
-the api please create an issue first [a new issue](https://github.com/deel-ai/deel_dataset_manager/issues/new). This way we can ensure that your precious
+the api please create an [issue first](https://github.com/deel-ai/deel_dataset_manager/issues/new). This way we can ensure that your precious
 work is not in vain.
 
 
@@ -15,9 +15,6 @@ work is not in vain.
 - Create a virtual environment and install the necessary dependencies for development:
 
   `make prepare-dev && source ddm_dev_env/bin/activate`.
-- You are ready to install the library:
-
-  `pip install -e .`
 
 Welcome to the team !
 

@@ -181,7 +181,10 @@ import deel.datasets
 # Load the default mode of dataset-a dataset:
 dataset-a-lpath = deel.datasets.load("dataset-a")
 
+# dataset-c plugin is installed with tensorflow mode implemented
 # Load the tensorflow version of the dataset-b dataset (default mode for dataset-b):
+dataset-b-lpath = deel.datasets.load("dataset-b", mode="tensorflow")
+#or tensorflow mode is default mode
 dataset-b-lpath = deel.datasets.load("dataset-b")
 
 # If dataset-c plugin is installed with pytorch mode implemented,
@@ -404,63 +407,6 @@ setup(
 ```
 
 A single plugin can expose multiple datasets through different entry points.
-
-#### Environment
-
-In order to locally run the test suite, you need a proper `tox` installation:
-
-```bash
-# You should install tox globally on your system, not on a dedicated
-# environment:
-pip install tox
-```
-
-You can install the development dependencies by running the following
-command within the repository:
-
-```bash
-# You should do this in a dedicated virtual environment:
-pip install -e .[dev]
-```
-
-This will install the required linters (`black`, `flake8`, `mypy`) and the
-unit test library `pytest`.
-
-Once you are done, you can run `tox` to check that your code is correct:
-
-```
-tox
-```
-
-## Contributing
-
-The first step for contributing is to open
-[a new issue](https://github.com/deel-ai/deel_dataset_manager/issues/new).
-
-You then need to fork this repository, or create a dedicated branch if you have
-sufficient privileges.
-Once you are done, you can open a merge request for your changes to be integrated
-in this repository.
-
-The development environment with all required dependencies should be installed by running:
-
-```shell
-$ make prepare-dev
-```
-
-Code formatting and linting are performed with `black` and `flake8`. Tests are run with
-`pytest`. These three commands are gathered in:
-
-```shell
-$ make test
-```
-
-Finally, commits should respect pre-commit hooks. To be sure that your code changes are
-accepted, you can run the following target:
-
-```shell
-$ make check_all
-```
 
 ## License
 
