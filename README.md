@@ -2,8 +2,8 @@
 [![PyPI](https://img.shields.io/pypi/v/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
 [![Python](https://img.shields.io/pypi/pyversions/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
 [![Documentation](https://img.shields.io/badge/doc-url-blue.svg)](https://deel-ai.github.io/deel-datasets)
-[![Tests](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml)
-[![Linters](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml)
+[![Tests](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-tests.yml)
+[![Linters](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-lints.yml)
 [![License](https://img.shields.io/github/license/deel-ai/deel-datasets.svg)](https://github.com/deel-ai/deel-datasets/blob/master/LICENSE)
 
 [deel-datasets manager](https://deel-ai.github.io/deel-datasets) project aims to ease the installation and usage of self-hosted or public datasets. It is an open framework to manage any dataset through a plugin mechanism.
