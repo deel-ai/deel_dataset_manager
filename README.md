@@ -1,27 +1,25 @@
 # DEEL dataset manager
+[![PyPI](https://img.shields.io/pypi/v/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
+[![Python](https://img.shields.io/pypi/pyversions/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
+[![Documentation](https://img.shields.io/badge/doc-url-blue.svg)](https://deel-ai.github.io/deel-datasets)
+[![Tests](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml)
+[![Linters](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml)
+[![License](https://img.shields.io/github/license/deel-ai/deel-datasets.svg)](https://github.com/deel-ai/deel-datasets/blob/master/LICENSE)
 
-This project aims to ease the installation and usage of the datasets for the DEEL
-project.
+[deel-datasets manager](https://deel-ai.github.io/deel-datasets) project aims to ease the installation and usage of self-hosted or public datasets. It is an open framework to manage any dataset through a plugin mechanism.
 
 ## Installation
 
-You can install the manager directly from pypi:
+The latest release can be installed from pypi. All needed python packages will also be installed as a dependency.
+
 ```bash
 pip install deel-datasets
 ```
 
-You can also install this package by using `pip`. If you have set-up SSH keys properly
-for [https://forge.deel.ai](https://forge.deel.ai), you can use the SSH version:
+Otherwize the HTTPS version should work but you will have to enter your credentials manually:
 
-```
-pip install git+ssh://git@forge.deel.ai:22012/devops/deel_dataset_manager.git
-```
-
-Otherwize the HTTPS version should work but you will have to enter your credentials
-manually:
-
-```
-pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
+```bash
+pip install git+https://github.com/deel-ai/deel_dataset_manager.git
 ```
 
 ## Configuration
@@ -29,7 +27,9 @@ pip install git+https://forge.deel.ai/devops/deel_dataset_manager.git
 The configuration file specifies how the datasets should be downloaded, or
 if the datasets do no have to be downloaded (e.g. on Google Cloud).
 
-The configuration file should be at `$HOME/.deel/config.yml`:
+It allows to define a list of datasets providers.
+
+The configuration file should be by default at `$HOME/.deel/config.yml`:
 
 - On Windows system it is `C:\Users\$USERNAME\.deel\config.yml` unless you
   have set the `HOME` environment variable.
@@ -38,19 +38,24 @@ The configuration file should be at `$HOME/.deel/config.yml`:
 
 The configuration file is a **YAML** file.
 
-The second version of the providers configuration file allows to define a list
-of providers.
-
-Two key words are mandatory to specify the use of this version:
-- `version: 2` (indicates the version of the configuration file)
+Two two root nodes are mandatory in configuration file:
 - `providers:` (value = list of providers)
+- `path`: local destination directory path (by default = ${HOME}/.deel/datasets)
+
+      providers:
+        |-provider1
+        |-provider2
+        .
+        .
+        |-providerN
+      path: local destination path
 
 `providers` is the root node of the provider configurations list.
 Each child node of `providers` node define a provider configuration.
-The name of child node is the name of the configuration.
+The name of child node is the name of the provider.
 It may be used in command line to specify the provider (e.g., option `-p` for `download`).
 
-Currently available providers are `webdav`, `ftp`, `http`, `local` and `gcloud`.
+Currently the following types of provider are implemented: `webdav`, `ftp`, `http`, `local` and `gcloud`.
 
 - The `webdav` provider will fetch datasets from a WebDAV server and needs at least the `url`
 configuration parameter.
@@ -62,23 +67,20 @@ specify the remote path (see example below).
 from a FTP server instead of a WebDAV one and needs at least the `url` configuration parameter.
 
 - The `local` provider does not require any extra configuration and will simply
-fetch data from the specified `path`.
-
-When using remote providers such as `webdav`, `http` or `ftp` provider, the `path` parameter indicates
-where the datasets should be stored locally.
+fetch data from the specified `path`. The `copy`configuation (true or false) allows to specify
+if dataset must be copied from `path` to destination `path` or not. `copy`is false by default.
 
 - The `gcloud` provider is similar to the `local` provider, except that it will try to
 locate the dataset storage location automatically based on a mounted drive.
 The `disk` configuration parameter is mandatory and specify the name of the GCloud drive.
+
+`path` parameter indicates where the datasets should be stored locally when using remote providers such as `webdav`, `http` or `ftp` provider.
 
 #### Configuration example
 
 Below is an example of a configuration for the DEEL dataset manager:
 
 ```yaml
-# Version of the configuration (currently 2):
-version: 2
-
 # Provider for the datasets - The names of the providers do not have to match
 # their types:
 providers:
@@ -91,15 +93,16 @@ providers:
   # A local storage at "/data/dataset".
   local:
     type: local
-    source: /data/dataset/
+    path: /data/dataset/
+    copy: true
 
   # An FTP provider.
   ftp:
     type: ftp
-
     # The "url" parameter contains the full path (server + folder):
-    url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
-
+    url: ftp://<server_name>/<dataset path on ftp server>
+    # or folder to set the the path to dataset remote directory
+    # folder: <dataset path on ftp server>
     # The "auth" is optional if the FTP server is public:
     auth:
       method: "simple"
@@ -124,7 +127,8 @@ providers:
         password: "${password}"
 
 # The local path where datasets are stored when they are from a remote provider:
-path: /home/${username}/.deel/datasets
+# by default ${HOME}/.deel/datasets
+path: ${HOME}/.deel/datasets
 ```
 
 You can name a provider `default` to use it by-default.
@@ -143,7 +147,7 @@ pip uninstall deel-datasets
 
 ## DEEL dataset plugin
 
-Without plugins, the manager is only able to download a dataset and returns the path to
+Without plugins, DEEL datasets manager is only able to download a dataset and returns the path to
 the local folder containing it (after download).
 By installing plugins, you gain access to automatic way of loading datasets or pre-processing
 data.
@@ -152,14 +156,18 @@ data.
 
 Plugins can be installed using `pip`.
 
-Some plugins are available on *forge.deel.ai* project and can be installed.
-You can browse https://forge.deel.ai/DevOps/datasets for the list of available datasets.
+Some plugins are available on [github.com/deel-ai](https://github.com/deel-ai) and can be installed.
+
+For DEEL project members, private plugins for DEEL project datasets are available on
+[here](https://forge.deel.ai/DevOps/datasets).
+
+They can browse [here](https://forge.deel.ai/DevOps/datasets/all) for the list of available datasets.
 
     # SSH version (with proper SSH key setup):
-    pip install git+ssh://forge.deel.ai:22012/devops/datasets/${name}_dataset.git
+    pip install git+ssh://git@forge.deel.ai:<port>/DevOps/datasets/all.git
 
     # HTTPS version:
-    pip install git+https://forge.deel.ai/devops/datasets/${name}_dataset.git
+    pip install git+https://forge.deel.ai/DevOps/datasets/all.git
 
 ## Examples of usage
 
@@ -171,13 +179,17 @@ To load a dataset, you can simply do:
 import deel.datasets
 
 # Load the default mode of dataset-a dataset:
-landcover = deel.datasets.load("dataset-a")
+dataset-a-lpath = deel.datasets.load("dataset-a")
 
+# dataset-c plugin is installed with tensorflow mode implemented
 # Load the tensorflow version of the dataset-b dataset (default mode for dataset-b):
-blink = deel.datasets.load("dataset-b")
+dataset-b-lpath = deel.datasets.load("dataset-b", mode="tensorflow")
+#or tensorflow mode is default mode
+dataset-b-lpath = deel.datasets.load("dataset-b")
 
-# Load the pytorch version of the dataset-b dataset:
-blink = deel.datasets.load("dataset-b", mode="pytorch")
+# If dataset-c plugin is installed with pytorch mode implemented,
+# load the pytorch version of the dataset-b dataset:
+dataset-c-lpath = deel.datasets.load("dataset-c", mode="pytorch")
 ```
 
 The `deel.datasets.load` function is the basic entry to access the datasets.
@@ -194,11 +206,10 @@ implementation below).
 import deel.datasets
 
 # Load the tensorflow version of the dataset-b dataset:
-blink, info = deel.datasets.load("dataset-b", mode="tensorflow", with_info=True)
+dataset-b-lpath, info = deel.datasets.load("dataset-b", mode="tensorflow", with_info=True)
 
 print(info["classes"])
 ```
-
 
 The function can take extra parameters depending on the chosen dataset and mode,
 for instance, you can specify the percentage of training data for the `blink`
@@ -226,18 +237,19 @@ argument can be used to specified a custom configuration file.
 
 The following commands are available (not exhaustive):
 
-- `list` &mdash; List the available datasets. If the configuration specify a remote provider
-  (e.g., WebDAV), this will list the datasets available remotely. To list the dataset already
-  downloaded, you can use the `--local` option.
+- `list` &mdash; List the available datasets on all providers in configuration file.
+If the `-p` option is used to specify a provider, this will list the datasets available on it.
+
+To list the dataset already downloaded, you can use the `--local` option.
 
 ```bash
 $ python -m deel.datasets list
-Listing datasets at https://datasets.deel.ai:
+Listing datasets at https://datasets.server1:
   dataset-a: 3.0.1 [latest], 3.0.0
   dataset-b: 1.0 [latest]
   dataset-c: 1.0 [latest]
 $ python -m deel.datasets list --local
-Listing datasets at /opt/datasets:
+Listing datasets at ${HOME}/.deel/datasets:
   dataset-a: 3.0.1 [latest], 3.0.0
   dataset-c: 1.0 [latest]
 ```
@@ -251,31 +263,21 @@ Listing datasets at /opt/datasets:
 $ python -m deel.datasets download dataset-a:3.0.0
 Fetching dataset-a:3.0.0...
 dataset-a-3.0.0-20191004.zip: 100%|█████████████████████████████████████████| 122M/122M [00:03<00:00, 39.3Mbytes/s]
-Dataset dataset-a:3.0.0 stored at '/opt/datasets/dataset-a/3.0.0'.
+Dataset dataset-a:3.0.0 stored at '${HOME}/.deel/datasets/dataset-a/3.0.0'.
 ```
 
 - `remove NAME[:VERSION]` &mdash; Remove the specified dataset from the local storage (if
   possible). If `:VERSION` is omitted, the whole dataset corresponding to `NAME` is
   deleted. If the `--all` option is used, all datasets are removed from the local storage.
 
-## Contributing
+## Adding a new dataset
 
-The first step for contributing is to open
-[a new issue](https://forge.deel.ai/DevOps/deel_dataset_manager/issues/new).
-
-You then need to fork this repository, or create a dedicated branch if you have
-sufficient privileges.
-Once you are done, you can open a merge request for your changes to be integrated
-in this repository.
-
-### Adding a new dataset
-
-## Dell dataset plugin implementation
+### Deel dataset plugin implementation
 
 A deel dataset plugin is an extension of the `Dataset` class defined in the DEEL dataset manager project.
-It allows to access to specific datasets files using the load method of defined modes.
+It allows to access to specific dataset files using the load method of defined modes.
 
-### The dataset class
+#### The dataset class
 
 Below is an example implementation of a dataset class `ExampleDataset`.
 The `load_XXX` methods defines the various mode, e.g. `load_pytorch` adds
@@ -350,7 +352,7 @@ def load_pytorch(self, path: pathlib.Path):
     # Load a pytorch dataset:
     dataset = ...
 
-    return dataset, {"classes": ["foo", "bar"}
+    return dataset, {"classes": ["foo", "bar"]}
 ```
 
 The `deel.datasets.utils` package contains utility functions to load `numpy`, `pytorch`
@@ -374,7 +376,7 @@ def load_pytorch(self, path: pathlib.Path, image_size: Tuple[int, int]):
     return dataset, self._make_class_info(idx_to_class)
 ```
 
-### Packaging the dataset(s)
+#### Packaging the dataset(s)
 
 To be found by the dataset manager, the `ExampleDataset` class must be put in
 a package with a specific `entrypoint` (defined in `setup.py`).
@@ -406,29 +408,31 @@ setup(
 
 A single plugin can expose multiple datasets through different entry points.
 
-### Environment
+## License
 
-In order to locally run the test suite, you need a proper `tox` installation:
+Copyright IRT Antoine de Saint Exupéry et Université Paul Sabatier Toulouse III - All
+rights reserved. DEEL is a research program operated by IVADO, IRT Saint Exupéry, CRIAQ
+and ANITI - https://www.deel.ai/
 
-```bash
-# You should install tox globally on your system, not on a dedicated
-# environment:
-pip install tox
-```
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following
+conditions:
 
-You can install the development dependencies by running the following
-command within the repository:
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-```bash
-# You should do this in a dedicated virtual environment:
-pip install -e .[dev]
-```
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
-This will install the required linters (`black`, `flake8`, `mypy`) and the
-unit test library `pytest`.
+## Acknowledgments
 
-Once you are done, you can run `tox` to check that your code is correct:
-
-```
-tox
-```
+This project received funding from the French "Investing for the Future – PIA3" program
+within the Artiﬁcial and Natural Intelligence Toulouse Institute (ANITI). The authors
+gratefully acknowledge the support of the [DEEL project](https://www.deel.ai/).

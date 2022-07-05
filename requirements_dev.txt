@@ -4,7 +4,7 @@ black
 flake8
 flake8-black
 numpy
-sphinx==3.3.1
+sphinx
 sphinx_rtd_theme
 sphinx_autodoc_typehints
 sphinx_markdown_builder

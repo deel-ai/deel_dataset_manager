@@ -256,7 +256,8 @@ def read_settings(stream: TextIO, default_provider: str = "") -> Settings:
 
     # Retrieve the version:
     if "version" not in data:
-        raise ParseSettingsError("Missing version.")
+        # raise ParseSettingsError("Missing version.")
+        data["version"] = 2
     version = int(data["version"])
 
     if version == 1:
