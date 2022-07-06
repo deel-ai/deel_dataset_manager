@@ -1,7 +1,7 @@
 # DEEL dataset manager
 [![PyPI](https://img.shields.io/pypi/v/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
 [![Python](https://img.shields.io/pypi/pyversions/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
-[![Documentation](https://img.shields.io/badge/doc-url-blue.svg)](https://deel-ai.github.io/deel-datasets)
+[![Documentation](https://img.shields.io/badge/doc-url-blue.svg)]( https://deel-ai.github.io/deel_dataset_manager/)
 [![deel_dataset tests](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-tests.yml/badge.svg)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-tests.yml)
 [![deel_dataset lints](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-lints.yml/badge.svg)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-lints.yml)
 [![License](https://img.shields.io/github/license/deel-ai/deel-datasets.svg)](https://github.com/deel-ai/deel_dataset_manager/blob/master/LICENSE)

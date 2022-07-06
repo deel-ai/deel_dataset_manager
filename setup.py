@@ -20,8 +20,16 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+from os import path
+
 from setuptools import find_namespace_packages
 from setuptools import setup
+
+# read the contents of your README file
+
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
+    long_description = f.read()
 
 dev_requires = [
     "black",
@@ -54,9 +62,10 @@ setup(
     author_email="justin.plakoo@irt-saintexupery.com",
     # Description of the package:
     description="Dataset loader for DEEL datasets",
-    long_description=open("README.md").read(),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     # URL for sources:
-    url="https://forge.deel.ai/devops/deel_dataset_manager",
+    url="https://github.com/deel-ai/deel_dataset_manager",
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
