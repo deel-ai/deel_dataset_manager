@@ -183,13 +183,13 @@ dataset-a-lpath = deel.datasets.load("dataset-a")
 
 # dataset-c plugin is installed with tensorflow mode implemented
 # Load the tensorflow version of the dataset-b dataset (default mode for dataset-b):
-dataset-b-lpath = deel.datasets.load("dataset-b", mode="tensorflow")
+dataset-b-tf = deel.datasets.load("dataset-b", mode="tensorflow")
 #or tensorflow mode is default mode
-dataset-b-lpath = deel.datasets.load("dataset-b")
+dataset-b-pt = deel.datasets.load("dataset-b")
 
 # If dataset-c plugin is installed with pytorch mode implemented,
 # load the pytorch version of the dataset-b dataset:
-dataset-c-lpath = deel.datasets.load("dataset-c", mode="pytorch")
+dataset-c-pt = deel.datasets.load("dataset-c", mode="pytorch")
 ```
 
 The `deel.datasets.load` function is the basic entry to access the datasets.

@@ -20,7 +20,7 @@ copyright = "2020, Mikaël Capelle, Justin Plakoo"
 author = "Mikaël Capelle, Justin Plakoo"
 
 # The full version, including alpha/beta/rc tags
-release = "0.0.6"
+release = "0.0.7"
 
 
 # -- General configuration ---------------------------------------------------
