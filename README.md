@@ -2,9 +2,9 @@
 [![PyPI](https://img.shields.io/pypi/v/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
 [![Python](https://img.shields.io/pypi/pyversions/deel-datasets.svg)](https://pypi.org/project/deel-datasets)
 [![Documentation](https://img.shields.io/badge/doc-url-blue.svg)](https://deel-ai.github.io/deel-datasets)
-[![Tests](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml)
-[![Linters](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml)
-[![License](https://img.shields.io/github/license/deel-ai/deel-datasets.svg)](https://github.com/deel-ai/deel-datasets/blob/master/LICENSE)
+[![Tests](https://github.com/deel-ai/deel-datasets/actions/workflows/python-tests.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-tests.yml)
+[![Linters](https://github.com/deel-ai/deel-datasets/actions/workflows/python-lints.yml/badge.svg?branch=master)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-lints.yml)
+[![License](https://img.shields.io/github/license/deel-ai/deel-datasets.svg)](https://github.com/deel-ai/deel_dataset_manager/blob/master/LICENSE)
 
 [deel-datasets manager](https://deel-ai.github.io/deel-datasets) project aims to ease the installation and usage of self-hosted or public datasets. It is an open framework to manage any dataset through a plugin mechanism.
 
@@ -183,13 +183,13 @@ dataset-a-lpath = deel.datasets.load("dataset-a")
 
 # dataset-c plugin is installed with tensorflow mode implemented
 # Load the tensorflow version of the dataset-b dataset (default mode for dataset-b):
-dataset-b-lpath = deel.datasets.load("dataset-b", mode="tensorflow")
-#or tensorflow mode is default mode
-dataset-b-lpath = deel.datasets.load("dataset-b")
+dataset-b-tf = deel.datasets.load("dataset-b", mode="tensorflow")
+#or because tensorflow mode is default mode
+dataset-b-tf = deel.datasets.load("dataset-b")
 
 # If dataset-c plugin is installed with pytorch mode implemented,
 # load the pytorch version of the dataset-b dataset:
-dataset-c-lpath = deel.datasets.load("dataset-c", mode="pytorch")
+dataset-c-pt = deel.datasets.load("dataset-c", mode="pytorch")
 ```
 
 The `deel.datasets.load` function is the basic entry to access the datasets.
@@ -355,9 +355,12 @@ def load_pytorch(self, path: pathlib.Path):
     return dataset, {"classes": ["foo", "bar"]}
 ```
 
-The `deel.datasets.utils` package contains utility functions to load `numpy`, `pytorch`
-and `tensorflow` image dataset in a consistent way, and the `Dataset` class contains some
-utiity methods to generate the information dictionary from the return of these methods.
+* The `deel.datasets.utils` package contains utility functions to load `numpy`, `pytorch`
+and `tensorflow` image dataset in a consistent way.
+
+* The `Dataset` class contains some utiity methods to generate the information dictionary
+from the return of these methods.
+
 Here is a very simple example for loading a dataset:
 
 ```python

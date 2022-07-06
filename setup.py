@@ -46,7 +46,7 @@ setup(
     # Name of the package:
     name="deel-datasets",
     # Version of the package:
-    version="0.0.6",
+    version="0.0.7",
     # Find the package automatically (include everything):
     packages=find_namespace_packages(include=["deel.*"]),
     # Author information:
