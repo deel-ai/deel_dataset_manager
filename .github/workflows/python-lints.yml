@@ -1,4 +1,4 @@
-name: deel_dataset lints
+name: lints
 
 on: [push, pull_request]
 

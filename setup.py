@@ -41,7 +41,7 @@ dev_requires = [
 ]
 
 docs_requires = [
-    "sphinx==3.3.1",
+    "sphinx",
     "recommonmark",
     "sphinx_rtd_theme",
     "sphinx_markdown_builder",
