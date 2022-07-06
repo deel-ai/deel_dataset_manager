@@ -4,7 +4,7 @@
 [![Documentation](https://img.shields.io/badge/doc-url-blue.svg)](https://deel-ai.github.io/deel-datasets)
 [![deel_dataset tests](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-tests.yml/badge.svg)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-tests.yml)
 [![deel_dataset lints](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-lints.yml/badge.svg)](https://github.com/deel-ai/deel_dataset_manager/actions/workflows/python-lints.yml)
-[![License](https://img.shields.io/github/license/deel-ai/deel-datasets.svg)](https://github.com/deel-ai/deel_dataset_manager/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/deel-ai/deel-datasets.svg)](https://github.com/deel-ai/deel_dataset_manager/blob/7c292d0a0ca595c3ac13f58222d16438bfa864df/LICENSE)
 
 [deel-datasets manager](https://deel-ai.github.io/deel-datasets) project aims to ease the installation and usage of self-hosted or public datasets. It is an open framework to manage any dataset through a plugin mechanism.
 
