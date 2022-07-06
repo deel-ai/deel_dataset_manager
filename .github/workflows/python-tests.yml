@@ -1,4 +1,4 @@
-name: deel_dataset tests
+name: tests
 
 on: [push, pull_request]
 

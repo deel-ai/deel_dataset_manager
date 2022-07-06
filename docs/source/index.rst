@@ -115,13 +115,6 @@ To uninstall the DEEL dataset manager package , simply run ``pip uninstall``:
 
    deel.datasets
 
-.. basic_example.rst
-.. wasserstein_toy.rst
-.. wassersteinClassif_toy.rst
-.. wassersteinClassif_MNIST08.rst
-
-
-
 Indices and tables
 ==================
 

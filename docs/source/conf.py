@@ -16,7 +16,11 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "DEEL Dataset Manager"
-copyright = "2020, Mikaël Capelle, Justin Plakoo"
+copyright = (
+    "2022, IRT Antoine de Saint Exupéry"
+    " - All rights reserved. DEEL is a research program operated by IVADO, "
+    "IRT Saint Exupéry, CRIAQ and ANITI."
+)
 author = "Mikaël Capelle, Justin Plakoo"
 
 # The full version, including alpha/beta/rc tags
@@ -40,7 +44,7 @@ autoclass_content = "both"
 autoapi_root = "../deel"
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
+# templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -69,8 +73,7 @@ html_sidebars = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-html_context = {
-    "css_files": [
-        "_static/theme_overrides.css",
-    ],  # override wide tables in RTD theme
-}
+
+html_css_files = [
+    "_static/theme_overrides.css",
+]

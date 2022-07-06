@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
 
@@ -24,7 +25,7 @@ jobs:
       - name: "Install Python dependencies"
         run: |
           python -m pip install --upgrade pip
-          pip install wheel sphinx sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder tensorflow torch torchvision
+          pip install wheel sphinx recommonmark sphinxcontrib_katex sphinx-rtd-theme sphinx_autodoc_typehints sphinx_markdown_builder ipython tensorflow torch torchvision
           pip install .
 
       - name: "Build Sphinx Doc"
