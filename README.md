@@ -355,9 +355,12 @@ def load_pytorch(self, path: pathlib.Path):
     return dataset, {"classes": ["foo", "bar"]}
 ```
 
-The `deel.datasets.utils` package contains utility functions to load `numpy`, `pytorch`
-and `tensorflow` image dataset in a consistent way, and the `Dataset` class contains some
-utiity methods to generate the information dictionary from the return of these methods.
+* The `deel.datasets.utils` package contains utility functions to load `numpy`, `pytorch`
+and `tensorflow` image dataset in a consistent way.
+
+* The `Dataset` class contains some utiity methods to generate the information dictionary
+from the return of these methods.
+
 Here is a very simple example for loading a dataset:
 
 ```python
