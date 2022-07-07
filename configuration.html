@@ -100,15 +100,17 @@ location of the configuration file if you do not want to use the default one.</p
 <li><p><code class="docutils literal notranslate"><span class="pre">providers:</span></code> (value = list of providers)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: local destination directory path (by default = ${HOME}/.deel/datasets)</p>
 <blockquote>
-<div><p>providers:</p>
-<blockquote>
-<div><p><a href="#id2"><span class="problematic" id="id3">|</span></a>-provider1</p>
-<p><a href="#id4"><span class="problematic" id="id5">|</span></a>-provider2</p>
-<p>.</p>
-<p>.</p>
-<p><a href="#id6"><span class="problematic" id="id7">|</span></a>-providerN</p>
-</div></blockquote>
-<p>path: local destination path</p>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>providers:
+    ├── provider1
+    ├── provider1
+    ├── provider1
+    ├── .
+    ├── .
+    ├── .
+    └── providerN
+path: <span class="nb">local</span> destination path
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 </ul>
@@ -118,26 +120,20 @@ The name of child node is the name of the provider.
 It may be used in command line to specify the provider (e.g., option <code class="docutils literal notranslate"><span class="pre">-p</span></code> for <code class="docutils literal notranslate"><span class="pre">download</span></code>).</p>
 <p>Currently the following types of provider are implemented: <code class="docutils literal notranslate"><span class="pre">webdav</span></code>, <code class="docutils literal notranslate"><span class="pre">ftp</span></code>, <code class="docutils literal notranslate"><span class="pre">http</span></code>, <code class="docutils literal notranslate"><span class="pre">local</span></code> and <code class="docutils literal notranslate"><span class="pre">gcloud</span></code>.</p>
 <ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">webdav</span></code> provider will fetch datasets from a WebDAV server and needs at least the <code class="docutils literal notranslate"><span class="pre">url</span></code></p></li>
-</ul>
-<p>configuration parameter.
+<li><p>The <code class="docutils literal notranslate"><span class="pre">webdav</span></code> provider will fetch datasets from a WebDAV server and needs at least the <code class="docutils literal notranslate"><span class="pre">url</span></code>
+configuration parameter.
 The WebDAV provider supports basic authentication (see example below).
 If the datasets are not at the root of the WebDAV server, the <cite>folder</cite> configuration can be used to
-specify the remote path (see example below).</p>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">ftp</span></code> provider is similar to the <code class="docutils literal notranslate"><span class="pre">webdav</span></code> provider except that it will fetch datasets</p></li>
+specify the remote path (see example below).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ftp</span></code> provider is similar to the <code class="docutils literal notranslate"><span class="pre">webdav</span></code> provider except that it will fetch datasets
+from a FTP server instead of a WebDAV one and needs at least the <code class="docutils literal notranslate"><span class="pre">url</span></code> configuration parameter.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">local</span></code> provider does not require any extra configuration and will simply fetch data from
+the specified <code class="docutils literal notranslate"><span class="pre">path</span></code>. The <code class="docutils literal notranslate"><span class="pre">copy``configuation</span> <span class="pre">(true</span> <span class="pre">or</span> <span class="pre">false)</span> <span class="pre">allows</span> <span class="pre">to</span> <span class="pre">specify</span> <span class="pre">if</span> <span class="pre">dataset</span>
+<span class="pre">must</span> <span class="pre">be</span> <span class="pre">copied</span> <span class="pre">from</span> <span class="pre">``path</span></code> to destination <code class="docutils literal notranslate"><span class="pre">path</span></code> or not. <code class="docutils literal notranslate"><span class="pre">copy</span></code> is false by default.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">gcloud</span></code> provider is similar to the <code class="docutils literal notranslate"><span class="pre">local</span></code> provider, except that it will try to
+locate the dataset storage location automatically based on a mounted drive.
+The <code class="docutils literal notranslate"><span class="pre">disk</span></code> configuration parameter is mandatory and specify the name of the GCloud drive.</p></li>
 </ul>
-<p>from a FTP server instead of a WebDAV one and needs at least the <code class="docutils literal notranslate"><span class="pre">url</span></code> configuration parameter.</p>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">local</span></code> provider does not require any extra configuration and will simply</p></li>
-</ul>
-<p>fetch data from the specified <code class="docutils literal notranslate"><span class="pre">path</span></code>. The <code class="docutils literal notranslate"><span class="pre">copy``configuation</span> <span class="pre">(true</span> <span class="pre">or</span> <span class="pre">false)</span> <span class="pre">allows</span> <span class="pre">to</span> <span class="pre">specify</span>
-<span class="pre">if</span> <span class="pre">dataset</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">copied</span> <span class="pre">from</span> <span class="pre">``path</span></code> to destination <code class="docutils literal notranslate"><span class="pre">path</span></code> or not. <a href="#id8"><span class="problematic" id="id9">``</span></a>copy``is false by default.</p>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">gcloud</span></code> provider is similar to the <code class="docutils literal notranslate"><span class="pre">local</span></code> provider, except that it will try to</p></li>
-</ul>
-<p>locate the dataset storage location automatically based on a mounted drive.
-The <code class="docutils literal notranslate"><span class="pre">disk</span></code> configuration parameter is mandatory and specify the name of the GCloud drive.</p>
 <p><code class="docutils literal notranslate"><span class="pre">path</span></code> parameter indicates where the datasets should be stored locally when using remote providers such as <cite>webdav</cite>, <cite>http</cite> or <cite>ftp</cite> provider.</p>
 <section id="configuration-example">
 <h2>Configuration Example<a class="headerlink" href="#configuration-example" title="Permalink to this heading"></a></h2>
