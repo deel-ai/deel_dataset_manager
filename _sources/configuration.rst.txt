@@ -15,16 +15,24 @@ The configuration file should be at ``$HOME/.deel/config.yml``:
 
 The configuration file is a **YAML** file.
 
-Two two root nodes are mandatory in configuration file:
+Two root nodes are mandatory in configuration file:
+
 * ``providers:`` (value = list of providers)
+
 * ``path``: local destination directory path (by default = ${HOME}/.deel/datasets)
 
       providers:
+
         |-provider1
+
         |-provider2
+
         .
+
         .
+
         |-providerN
+
       path: local destination path
 
 ``providers`` is the root node of the provider configurations list.
@@ -101,6 +109,6 @@ Configuration Example
         username: "${username}"
         password: "${password}"
 
-# The local path where datasets are stored when they are from a remote provider:
-# by default ${HOME}/.deel/datasets
-path: ${HOME}/.deel/datasets
+  # The local path where datasets are stored when they are from a remote provider:
+  # by default ${HOME}/.deel/datasets
+  path: ${HOME}/.deel/datasets

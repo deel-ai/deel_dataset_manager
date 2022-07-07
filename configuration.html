@@ -95,20 +95,23 @@ have set the <cite>HOME</cite> environment variable.</p></li>
 location of the configuration file if you do not want to use the default one.</p></li>
 </ul>
 <p>The configuration file is a <strong>YAML</strong> file.</p>
-<p>Two two root nodes are mandatory in configuration file:
-* <code class="docutils literal notranslate"><span class="pre">providers:</span></code> (value = list of providers)
-* <code class="docutils literal notranslate"><span class="pre">path</span></code>: local destination directory path (by default = ${HOME}/.deel/datasets)</p>
+<p>Two root nodes are mandatory in configuration file:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">providers:</span></code> (value = list of providers)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: local destination directory path (by default = ${HOME}/.deel/datasets)</p>
 <blockquote>
-<div><dl class="simple">
-<dt>providers:</dt><dd><p><a href="#id2"><span class="problematic" id="id3">|</span></a>-provider1
-<a href="#id4"><span class="problematic" id="id5">|</span></a>-provider2
-.
-.
-<a href="#id6"><span class="problematic" id="id7">|</span></a>-providerN</p>
-</dd>
-</dl>
+<div><p>providers:</p>
+<blockquote>
+<div><p><a href="#id2"><span class="problematic" id="id3">|</span></a>-provider1</p>
+<p><a href="#id4"><span class="problematic" id="id5">|</span></a>-provider2</p>
+<p>.</p>
+<p>.</p>
+<p><a href="#id6"><span class="problematic" id="id7">|</span></a>-providerN</p>
+</div></blockquote>
 <p>path: local destination path</p>
 </div></blockquote>
+</li>
+</ul>
 <p><code class="docutils literal notranslate"><span class="pre">providers</span></code> is the root node of the provider configurations list.
 Each child node of <cite>providers</cite> node define a provider configuration.
 The name of child node is the name of the provider.
@@ -180,11 +183,12 @@ The <code class="docutils literal notranslate"><span class="pre">disk</span></co
 <span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;simple&quot;</span><span class="w"></span>
 <span class="w">      </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${username}&quot;</span><span class="w"></span>
 <span class="w">      </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;${password}&quot;</span><span class="w"></span>
+
+<span class="c1"># The local path where datasets are stored when they are from a remote provider:</span><span class="w"></span>
+<span class="c1"># by default ${HOME}/.deel/datasets</span><span class="w"></span>
+<span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${HOME}/.deel/datasets</span><span class="w"></span>
 </pre></div>
 </div>
-<p># The local path where datasets are stored when they are from a remote provider:
-# by default ${HOME}/.deel/datasets
-path: ${HOME}/.deel/datasets</p>
 </section>
 </section>
 
