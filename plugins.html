@@ -57,6 +57,15 @@
 <li class="toctree-l2"><a class="reference internal" href="cli.html#removing-datasets">Removing datasets</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="deel.datasets.html">deel.datasets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#subpackages">Subpackages</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.dataset">deel.datasets.dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deel.datasets.html#module-deel.datasets.settings">deel.datasets.settings module</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -86,13 +95,13 @@
   <section id="plugins">
 <span id="id1"></span><h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this heading"></a></h1>
 <p>A DEEL dataset plugin is an extension of the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> or
-<code class="xref py py-class docutils literal notranslate"><span class="pre">VolatileDataset</span></code> class defined in the DEEL
+<a class="reference internal" href="deel.datasets.html#deel.datasets.dataset.Dataset" title="deel.datasets.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> or
+<a class="reference internal" href="deel.datasets.html#deel.datasets.dataset.VolatileDataset" title="deel.datasets.dataset.VolatileDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">VolatileDataset</span></code></a> class defined in the DEEL
 dataset manager project.
 It allows to access to specific datasets files using the load method of defined
 modes.</p>
 <section id="extending-the-dataset-class">
-<h2>Extending the <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> class<a class="headerlink" href="#extending-the-dataset-class" title="Permalink to this heading"></a></h2>
+<h2>Extending the <a class="reference internal" href="deel.datasets.html#deel.datasets.dataset.Dataset" title="deel.datasets.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> class<a class="headerlink" href="#extending-the-dataset-class" title="Permalink to this heading"></a></h2>
 <p>Below is an example implementation of a dataset class <code class="docutils literal notranslate"><span class="pre">ExampleDataset</span></code>.
 The <code class="docutils literal notranslate"><span class="pre">load_XXX</span></code> methods defines the various mode, e.g. <code class="docutils literal notranslate"><span class="pre">load_pytorch</span></code> adds
 a <code class="docutils literal notranslate"><span class="pre">pytorch</span></code> mode to the dataset.
