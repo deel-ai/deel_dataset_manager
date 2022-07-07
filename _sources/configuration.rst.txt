@@ -15,91 +15,92 @@ The configuration file should be at ``$HOME/.deel/config.yml``:
 
 The configuration file is a **YAML** file.
 
-The second version of the providers configuration file allows to define a list
-of providers.
+Two two root nodes are mandatory in configuration file:
+* ``providers:`` (value = list of providers)
+* ``path``: local destination directory path (by default = ${HOME}/.deel/datasets)
 
-Two key words are mandatory to specify the use of this version:
-* ``version: 2`` (indicates the version of the configuration file);
-* ``providers:`` (value = list of providers).
+      providers:
+        |-provider1
+        |-provider2
+        .
+        .
+        |-providerN
+      path: local destination path
 
 ``providers`` is the root node of the provider configurations list.
 Each child node of `providers` node define a provider configuration.
-The name of child node is the name of the configuration.
-It may be used in command line to specify the provider (e.g., option ``-p``
-for ``download``).
+The name of child node is the name of the provider.
+It may be used in command line to specify the provider (e.g., option ``-p`` for ``download``).
 
-Currently available providers are ``webdav``, ``ftp``, ``http``, ``local`` and ``gcloud``.
+Currently the following types of provider are implemented: ``webdav``, ``ftp``, ``http``, ``local`` and ``gcloud``.
 
-*  The ``webdav`` provider will fetch datasets from a WebDAV server and needs at least the ``url``
-   configuration parameter.
-   The WebDAV provider supports basic authentication (see example below).
-   If the datasets are not at the root of the WebDAV server, the ``folder`` configuration can be used to
-   specify the remote path (see example below).
+* The ``webdav`` provider will fetch datasets from a WebDAV server and needs at least the ``url``
+configuration parameter.
+The WebDAV provider supports basic authentication (see example below).
+If the datasets are not at the root of the WebDAV server, the `folder` configuration can be used to
+specify the remote path (see example below).
 
-*  The ``ftp`` provider is similar to the ``webdav`` provider except that it will fetch datasets
-   from a FTP server instead of a WebDAV one and needs at least the ``url`` configuration parameter.
+* The ``ftp`` provider is similar to the ``webdav`` provider except that it will fetch datasets
+from a FTP server instead of a WebDAV one and needs at least the ``url`` configuration parameter.
 
-*  The ``local`` provider does not require any extra configuration and will simply
-   fetch data from the specified ``path``.
+* The ``local`` provider does not require any extra configuration and will simply
+fetch data from the specified ``path``. The ``copy``configuation (true or false) allows to specify
+if dataset must be copied from ``path`` to destination ``path`` or not. ``copy``is false by default.
 
-When using remote providers such as ``webdav``, ``http`` or ``ftp`` provider, the ``path`` parameter indicates
-where the datasets should be stored locally.
+* The ``gcloud`` provider is similar to the ``local`` provider, except that it will try to
+locate the dataset storage location automatically based on a mounted drive.
+The ``disk`` configuration parameter is mandatory and specify the name of the GCloud drive.
 
-*  The ``gcloud`` provider is similar to the ``local`` provider, except that it will try to
-   locate the dataset storage location automatically based on a mounted drive.
-   The ``disk`` configuration parameter is mandatory and specify the name of the GCloud drive.
+``path`` parameter indicates where the datasets should be stored locally when using remote providers such as `webdav`, `http` or `ftp` provider.
 
 Configuration Example
 .....................
 
 .. code-block:: YAML
 
-   # Version of the configuration (currently 2):
-   version: 2
-
-   # Provider for the datasets - The names of the providers do not have to match
-   # their types:
    providers:
 
-   # A GCloud provider with a shared GCloud drive named "my-disk-name".
-   gcloud:
-      type: gcloud
-      disk: my-disk-name
+  # A GCloud provider with a shared GCloud drive named "my-disk-name".
+  gcloud:
+    type: gcloud
+    disk: my-disk-name
 
-   # A local storage at "/data/dataset".
-   local:
-      type: local
-      source: /data/dataset/
+  # A local storage at "/data/dataset".
+  local:
+    type: local
+    path: /data/dataset/
+    copy: true
 
-   # An FTP provider.
-   ftp:
-      type: ftp
+  # An FTP provider.
+  ftp:
+    type: ftp
+    # The "url" parameter contains the full path (server + folder):
+    url: ftp://<server_name>/<dataset path on ftp server>
+    # or folder to set the the path to dataset remote directory
+    # folder: <dataset path on ftp server>
+    # The "auth" is optional if the FTP server is public:
+    auth:
+      method: "simple"
+      username: "${username}"
+      password: "${password}"
 
-      # The "url" parameter contains the full path (server + folder):
-      url: ftp://ftp.softronics.ch/mvtec_anomaly_detection
+  # A public WebDAV server.
+  webdav_public:
+    type: webdav
+    url: https://my-public-webdav.com
 
-      # The "auth" is optional if the FTP server is public:
-      auth:
-         method: "simple"
-         username: "${username}"
-         password: "${password}"
+  # A private WebDAV server where the datasets are not at the root.
+  # Note: This example can be used with Cloud storage such as Nextcloud with
+  # a shared "datasets" drive.
+  webdav_private:
+    type: webdav
+    url: https://my-cloud-provider.com/remote.php/webdav
+    folder: datasets
+    auth:
+        method: "simple"
+        username: "${username}"
+        password: "${password}"
 
-   # A public WebDAV server.
-   webdav_public:
-      type: webdav
-      url: https://my-public-webdav.com
-
-   # A private WebDAV server where the datasets are not at the root.
-   # Note: This example can be used with Cloud storage such as Nextcloud with
-   # a shared "datasets" drive.
-   webdav_private:
-      type: webdav
-      url: https://my-cloud-provider.com/remote.php/webdav
-      folder: datasets
-      auth:
-         method: "simple"
-         username: "${username}"
-         password: "${password}"
-
-   # The local path where datasets are stored when they are from a remote provider:
-   path: /home/${username}/.deel/datasets
+# The local path where datasets are stored when they are from a remote provider:
+# by default ${HOME}/.deel/datasets
+path: ${HOME}/.deel/datasets

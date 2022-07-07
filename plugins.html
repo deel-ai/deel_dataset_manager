@@ -165,13 +165,13 @@ If you want to provide extra information, you can return a dictionary from the
     <span class="c1"># Load a pytorch dataset:</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="o">...</span>
 
-    <span class="k">return</span> <span class="n">dataset</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">dataset</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">]}</span>
 </pre></div>
 </div>
 </section>
 <section id="utility-functions">
 <h2>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this heading"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">deel.datasets.utils</span></code> package contains utility functions to load <code class="docutils literal notranslate"><span class="pre">numpy</span></code>,
+<p>The <code class="docutils literal notranslate"><span class="pre">deel.datasets.utils</span></code> package contains utility functions to load or split <code class="docutils literal notranslate"><span class="pre">numpy</span></code>,
 <code class="docutils literal notranslate"><span class="pre">pytorch</span></code> and <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> image dataset in a consistent way, and the <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>
 class contains some utility methods to generate the information dictionary from
 the return of these methods.

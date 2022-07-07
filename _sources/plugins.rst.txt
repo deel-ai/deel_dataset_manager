@@ -91,12 +91,12 @@ If you want to provide extra information, you can return a dictionary from the
         # Load a pytorch dataset:
         dataset = ...
 
-        return dataset, {"classes": ["foo", "bar"}
+        return dataset, {"classes": ["foo", "bar"]}
 
 Utility functions
 .................
 
-The ``deel.datasets.utils`` package contains utility functions to load ``numpy``,
+The ``deel.datasets.utils`` package contains utility functions to load or split ``numpy``,
 ``pytorch`` and ``tensorflow`` image dataset in a consistent way, and the ``Dataset``
 class contains some utility methods to generate the information dictionary from
 the return of these methods.
