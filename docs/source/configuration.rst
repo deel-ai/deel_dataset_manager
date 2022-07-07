@@ -21,18 +21,16 @@ Two root nodes are mandatory in configuration file:
 
 * ``path``: local destination directory path (by default = ${HOME}/.deel/datasets)
 
+    .. code-block:: bash
+
       providers:
-
-        |-provider1
-
-        |-provider2
-
-        .
-
-        .
-
-        |-providerN
-
+          ├── provider1
+          ├── provider1
+          ├── provider1
+          ├── .
+          ├── .
+          ├── .
+          └── providerN
       path: local destination path
 
 ``providers`` is the root node of the provider configurations list.
@@ -43,21 +41,21 @@ It may be used in command line to specify the provider (e.g., option ``-p`` for 
 Currently the following types of provider are implemented: ``webdav``, ``ftp``, ``http``, ``local`` and ``gcloud``.
 
 * The ``webdav`` provider will fetch datasets from a WebDAV server and needs at least the ``url``
-configuration parameter.
-The WebDAV provider supports basic authentication (see example below).
-If the datasets are not at the root of the WebDAV server, the `folder` configuration can be used to
-specify the remote path (see example below).
+  configuration parameter.
+  The WebDAV provider supports basic authentication (see example below).
+  If the datasets are not at the root of the WebDAV server, the `folder` configuration can be used to
+  specify the remote path (see example below).
 
 * The ``ftp`` provider is similar to the ``webdav`` provider except that it will fetch datasets
-from a FTP server instead of a WebDAV one and needs at least the ``url`` configuration parameter.
+  from a FTP server instead of a WebDAV one and needs at least the ``url`` configuration parameter.
 
-* The ``local`` provider does not require any extra configuration and will simply
-fetch data from the specified ``path``. The ``copy``configuation (true or false) allows to specify
-if dataset must be copied from ``path`` to destination ``path`` or not. ``copy``is false by default.
+* The ``local`` provider does not require any extra configuration and will simply fetch data from
+  the specified ``path``. The ``copy``configuation (true or false) allows to specify if dataset
+  must be copied from ``path`` to destination ``path`` or not. ``copy`` is false by default.
 
 * The ``gcloud`` provider is similar to the ``local`` provider, except that it will try to
-locate the dataset storage location automatically based on a mounted drive.
-The ``disk`` configuration parameter is mandatory and specify the name of the GCloud drive.
+  locate the dataset storage location automatically based on a mounted drive.
+  The ``disk`` configuration parameter is mandatory and specify the name of the GCloud drive.
 
 ``path`` parameter indicates where the datasets should be stored locally when using remote providers such as `webdav`, `http` or `ftp` provider.
 
