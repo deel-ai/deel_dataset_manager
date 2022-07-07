@@ -6,7 +6,7 @@
 .tox
 docs/build
 docs/source/modules.rst
-docs/source/deel.datasets.*.rst
+# docs/source/deel.datasets.*.rst
 ddm_dev_env*/
 
 # Python files
