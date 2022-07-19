@@ -15,10 +15,14 @@ The latest release can be installed from pypi. All needed python packages will a
 ```bash
 pip install deel-datasets
 ```
-
-Otherwise the HTTPS version should work but you will have to enter your credentials manually:
+The package can also be installed directly from this GitHub repository via SSH (with SSH
+keys properly set up) or via HTTPS by entering your credentials manually:
 
 ```bash
+# SSH version (with proper SSH key setup):
+pip install git+ssh://git@github.com/deel-ai/deel_dataset_manager.git
+
+# HTTPS version:
 pip install git+https://github.com/deel-ai/deel_dataset_manager.git
 ```
 
@@ -154,20 +158,36 @@ data.
 
 ### Plugins installation
 
-Plugins can be installed using `pip`.
+Plugins are available on PyPI and can be installed using `pip`. For example, for public
+datasets:
 
-Some plugins are available on [github.com/deel-ai](https://github.com/deel-ai) and can be installed.
+```bash
+pip install public_datasets
+```
+
+Plugins can also be installed from [github.com/deel-ai](https://github.com/deel-ai).
+For example, you can install the [public datasets](https://github.com/deel-ai/public_datasets):
+
+```bash
+# SSH version (with proper SSH key setup):
+pip install git+ssh://git@github.com/deel-ai/public_datasets.git
+
+# HTTPS version:
+pip install git+https://github.com/deel-ai/public_datasets.git
+```
 
 For DEEL project members, private plugins for DEEL project datasets are available on
 [here](https://forge.deel.ai/DevOps/datasets).
 
 They can browse [here](https://forge.deel.ai/DevOps/datasets/all) for the list of available datasets.
 
-    # SSH version (with proper SSH key setup):
-    pip install git+ssh://git@forge.deel.ai:<port>/DevOps/datasets/all.git
+```bash
+# SSH version (with proper SSH key setup):
+pip install git+ssh://git@forge.deel.ai:<port>/DevOps/datasets/all.git
 
-    # HTTPS version:
-    pip install git+https://forge.deel.ai/DevOps/datasets/all.git
+# HTTPS version:
+pip install git+https://forge.deel.ai/DevOps/datasets/all.git
+```
 
 ## Examples of usage
 
@@ -410,6 +430,11 @@ setup(
 ```
 
 A single plugin can expose multiple datasets through different entry points.
+
+## Contributing
+
+Contributions are welcome! Feel free to report an issue or open a pull
+request. Take a look at our guidelines [here](CONTRIBUTING.md).
 
 ## License
 
