@@ -16,7 +16,7 @@ The latest release can be installed from pypi. All needed python packages will a
 pip install deel-datasets
 ```
 
-Otherwize the HTTPS version should work but you will have to enter your credentials manually:
+Otherwise the HTTPS version should work but you will have to enter your credentials manually:
 
 ```bash
 pip install git+https://github.com/deel-ai/deel_dataset_manager.git
@@ -25,7 +25,7 @@ pip install git+https://github.com/deel-ai/deel_dataset_manager.git
 ## Configuration
 
 The configuration file specifies how the datasets should be downloaded, or
-if the datasets do no have to be downloaded (e.g. on Google Cloud).
+if the datasets do not have to be downloaded (e.g. on Google Cloud).
 
 It allows to define a list of datasets providers.
 
@@ -38,8 +38,8 @@ The configuration file should be by default at `$HOME/.deel/config.yml`:
 
 The configuration file is a **YAML** file.
 
-Two two root nodes are mandatory in configuration file:
-- `providers:` (value = list of providers)
+Two root nodes are mandatory in configuration file:
+- `providers`: (value = list of providers)
 - `path`: local destination directory path (by default = ${HOME}/.deel/datasets)
 
       providers:
@@ -67,7 +67,7 @@ specify the remote path (see example below).
 from a FTP server instead of a WebDAV one and needs at least the `url` configuration parameter.
 
 - The `local` provider does not require any extra configuration and will simply
-fetch data from the specified `path`. The `copy`configuation (true or false) allows to specify
+fetch data from the specified `path`. The `copy`configuration (true or false) allows to specify
 if dataset must be copied from `path` to destination `path` or not. `copy`is false by default.
 
 - The `gcloud` provider is similar to the `local` provider, except that it will try to
@@ -181,7 +181,7 @@ import deel.datasets
 # Load the default mode of dataset-a dataset:
 dataset-a-lpath = deel.datasets.load("dataset-a")
 
-# dataset-c plugin is installed with tensorflow mode implemented
+# dataset-b plugin is installed with tensorflow mode implemented
 # Load the tensorflow version of the dataset-b dataset (default mode for dataset-b):
 dataset-b-tf = deel.datasets.load("dataset-b", mode="tensorflow")
 #or because tensorflow mode is default mode
@@ -358,7 +358,7 @@ def load_pytorch(self, path: pathlib.Path):
 * The `deel.datasets.utils` package contains utility functions to load or **split** `numpy`, `pytorch`
 and `tensorflow` image dataset in a consistent way.
 
-* The `Dataset` class contains some utiity methods to generate the information dictionary
+* The `Dataset` class contains some utility methods to generate the information dictionary
 from the return of these methods.
 
 Here is a very simple example for loading a dataset:
