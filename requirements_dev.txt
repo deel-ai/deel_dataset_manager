@@ -1,8 +1,6 @@
 pre-commit
 tox
 black
-flake8
-flake8-black
 numpy
 sphinx
 sphinx_rtd_theme
